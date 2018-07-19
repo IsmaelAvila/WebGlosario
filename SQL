@@ -1,0 +1,93 @@
+-- phpMyAdmin SQL Dump
+-- version 4.7.7
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: localhost:8889
+-- Tiempo de generación: 19-07-2018 a las 18:38:46
+-- Versión del servidor: 5.6.38-log
+-- Versión de PHP: 7.2.1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `glosario`
+--
+CREATE DATABASE IF NOT EXISTS `glosario` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+USE `glosario`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `concepto`
+--
+
+CREATE TABLE `concepto` (
+  `nombre_Concepto` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre_Materia` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `definicion` varchar(500) COLLATE utf8_spanish_ci NOT NULL,
+  `vease` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `fuente` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `informacion_Complementaria` varchar(2000) COLLATE utf8_spanish_ci NOT NULL,
+  `documentacion_Adicional` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `material_audiovisual` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `concepto`
+--
+
+INSERT INTO `concepto` (`nombre_Concepto`, `nombre_Materia`, `definicion`, `vease`, `fuente`, `informacion_Complementaria`, `documentacion_Adicional`, `material_audiovisual`) VALUES
+('Absentismo', 'Medicina del Trabajo', 'Es la no asistencia al trabajo por parte de un empleado que se pensaba iba a asistir (Organización Internacional del Trabajo).', 'Incapacidad Temporal.', 'https://www.uco.es/servicios/dgppa/images/prevencion/glosarioprl/fichas/pdf/RealDecretoLegislativo11995.pdf', 'El principal tipo de absentismo estudiado es el atribuido a la incapacidad por enfermedad común o accidente no laboral. Otros tipos de absentismo son: legal o estatutario (permisos por vacaciones, maternidad, asistencia a comités de seguridad e higiene en el trabajo, votaciones,...), voluntario(falta por voluntad del trabajador: motivos subjetivos, huelgas,...), por enfermedad profesional o accidente laboral; y compulsivo (impuesto al trabajador por factores externos). El absentismo puede ser la manifestación de una protesta, consciente o no, contra las condiciones laborales\r\nEn el absentismo influyen distintos factores: geográficos (situación económica y social como:tipo de contrato, paro, edad de jubilación,...), de organización (tamaño de la empresa, organigrama, relaciones laborales, política de personal, condiciones de trabajo, trabajo a turnos,...), factores personales (sexo, edad, cualificación profesional, personalidad, estado de salud, distancia al trabajo, satisfacción en su trabajo,...).', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `materia`
+--
+
+CREATE TABLE `materia` (
+  `nombre_Materia` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `linkMateria` text COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `materia`
+--
+
+INSERT INTO `materia` (`nombre_Materia`, `linkMateria`) VALUES
+('Autoprotección y Emergencias', 'http://www.google.es'),
+('Coordinación act. Empresariales', ''),
+('Ergonomía y Psicosociol. Apl.', ''),
+('Gestión de la Prevención', ''),
+('Higiene Industrial', ''),
+('Instalaciones contra Incendios', ''),
+('Medicina del Trabajo', ''),
+('Seguridad en el Trabajo', '');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `concepto`
+--
+ALTER TABLE `concepto`
+  ADD PRIMARY KEY (`nombre_Concepto`),
+  ADD KEY `nombre_Materia` (`nombre_Materia`);
+
+--
+-- Indices de la tabla `materia`
+--
+ALTER TABLE `materia`
+  ADD PRIMARY KEY (`nombre_Materia`);
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `concepto`
+--
+ALTER TABLE `concepto`
+  ADD CONSTRAINT `concepto_ibfk_1` FOREIGN KEY (`nombre_Materia`) REFERENCES `materia` (`nombre_Materia`) ON UPDATE CASCADE;
