@@ -87,13 +87,7 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
 
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-    Theme Name: Imperial
-    Theme URL: https://bootstrapmade.com/imperial-free-onepage-bootstrap-theme/
-    Author: BootstrapMade.com
-    Author URL: https://bootstrapmade.com
-  ======================================================= -->
+ 
 </head>
 
 <body>
