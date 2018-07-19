@@ -13,7 +13,7 @@ $db_selected = mysqli_select_db($db, $conn);
     printf("Falló la conexión: %s\n", $mysqli->connect_error);
     exit();
 }else{
-  echo("Conexion cojonuda").'<br>';
+  echo("Conexion correcta").'<br>';
 }
 
   echo "Inicia consulta".'<br>';
