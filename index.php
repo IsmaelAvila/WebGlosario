@@ -1,12 +1,12 @@
 <!--<?php
-$user = "root";
+/*$user = "root";
 $password = "root";
 $db = "glosario";
 $host = "localhost";
-$port = 8889;
+$port = 8889;*/
 
 
-$conn = mysqli_connect($host, $user, $password, $db, $port);
+/*$conn = mysqli_connect($host, $user, $password, $db, $port);
 $db_selected = mysqli_select_db($db, $conn);
 
  if ($conn->connect_errno) {
@@ -17,19 +17,37 @@ $db_selected = mysqli_select_db($db, $conn);
 }
 
   echo "Inicia consulta".'<br>';
-  $sql = "SELECT * FROM concepto, materia";
-  $result=mysqli_query($conn,$sql);
+  
+$sql = "SELECT * FROM concepto, materia";
+$result=mysqli_query($conn,$sql);
 
   
 
-  echo "finaliza consulta".'<br>';
+echo "finaliza consulta".'<br>';
 
-echo "finalfin".'<br>';
+echo "finalfin".'<br>';*/
 
+require 'General.php';
 
+function getTextGeneral($idText, $idLang){
+     $TEXT = General::getText($idText, $idLang);
+     echo $TEXT['TEXT'];
 
+ }
 
-if ($result->num_rows > 0) {
+function getRowConceptoNombreMateria(){
+     $row = General::getConceptoMateria();
+    return $row;
+}
+
+function getAutores(){
+    $row = General::getAutores();
+    return $row;
+}
+
+$rows = getRowConceptoNombreMateria();
+
+/*if ($result->num_rows > 0) {
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) {
         echo '<br>'.$row["conceptonombre_Materia"];
@@ -44,7 +62,7 @@ foreach ($rows as $row)
 {
   
 echo '<br>'."nombre_materia:".$row["nombre_Materia"];
-}
+}*/
 ?>-->
 
 <!DOCTYPE html>
@@ -102,7 +120,8 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
       <a href="login.php" class="btn-services2">Zona Privada</a>
       <div class="wow fadeIn">
         <div class="hero-logo">
-          <img class="" src="img/GlosarioInteractivoLogo.png" alt="Imperial">
+         <h2><?php echo getTextGeneral(1,1); ?></h2>
+          <!--img class="" src="img/GlosarioInteractivoLogo.png" alt="Imperial"-->
         </div>
 
         <h2>Universidad de Córdoba</h2>
@@ -123,7 +142,7 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
   <header id="header">
     <div class="container">
       <div id="logo" class="pull-left">
-        <a href="http://www.uco.es/"><img src="img/logoUco.png" alt="" title="" /></img></a>
+        <a href="http://www.uco.es/"><img src="img/logoUco.png" alt="" title="" /></a>
       </div>
 
       <nav id="nav-menu-container">
@@ -215,21 +234,33 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
       </div>
 
       <div class="row">
-        <div class="col-md-3">
-          <div class="member">
-            <div class="pic"><img src="img/team-1.jpg" alt=""></div>
-            <h4>Jhon Honor</h4>
-            <span>Chief Executive Officer</span>
-            <div class="social">
-              <a href=""><i class="fa fa-twitter"></i></a>
-              <a href=""><i class="fa fa-facebook"></i></a>
-              <a href=""><i class="fa fa-google-plus"></i></a>
-              <a href=""><i class="fa fa-linkedin"></i></a>
-            </div>
-          </div>
-        </div>
+          <?php 
+          $autores = getAutores(); 
+         
+         foreach ($autores as $autor)
+          {
+         
+             
+            echo "<div class='col-md-3'>";
+            echo "<div class='member'>";
+            echo "<div class='pic'><img src=".$autor['IMAGEN']." alt=''></div>";
+            echo "<h4>". $autor['NOMBRE']."</h4>";
+            echo "<span>".$autor['CARGO']."</span>";
+            echo "    <div class='social'>
+              <a href=''><i class='fa fa-twitter'></i></a>
+              <a href=''><i class='fa fa-facebook'></i></a>
+              <a href=''><i class='fa fa-google-plus'></i></a>
+              <a href=''><i class='fa fa-linkedin'></i></a>
+                </div>
+                </div>
+                </div>";
+          }
+          
+          
+          ?>
+       
 
-        <div class="col-md-3">
+        <!--div class="col-md-3">
           <div class="member">
             <div class="pic"><img src="img/sara.jpg" alt=""></div>
             <h4>Sara Sepúlveda Orejuela</h4>
@@ -267,7 +298,7 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
               <a href=""><i class="fa fa-linkedin"></i></a>
             </div>
           </div>
-        </div>
+        </div-->
 
       </div>
     </div>
