@@ -81,4 +81,3 @@ class Database
 }
 
 ?>
- No newline at end of file

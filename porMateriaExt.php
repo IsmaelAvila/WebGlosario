@@ -1,5 +1,5 @@
 <?php
-$user = "root";
+/*$user = "root";
 $password = "root";
 $db = "glosario";
 $host = "localhost";
@@ -11,7 +11,13 @@ $db_selected = mysqli_select_db($db, $conn);
 
 
   $sql = "SELECT * FROM materia, concepto";
-  $result=mysqli_query($conn,$sql);
+  $result=mysqli_query($conn,$sql);*/
+require 'General.php';
+
+function getMateriaConceptoGen(){
+    $row = General::getConceptoMateria();
+    return $row;
+}
 
 ?>
 
@@ -74,7 +80,7 @@ $db_selected = mysqli_select_db($db, $conn);
   <header id="header">
     <div class="container">
       <div id="logo" class="pull-left">
-        <a href="http://www.uco.es/"><img src="img/logoUco.png" alt="" title="" /></img></a>
+          <a href="http://www.uco.es/"><img src="img/logoUco.png" alt="" title="" /></a>
         <!-- Uncomment below if you prefer to use a text image -->
         <!--<h1><a href="#hero">Header 1</a></h1>-->
       </div>
@@ -108,18 +114,19 @@ $db_selected = mysqli_select_db($db, $conn);
       </div>
 
       <div class="row">
-        
-        <?php $rows = mysqli_query ($conn, $sql);
-          foreach ($rows as $row)
+           <?php 
+          $materias = getMateriaConceptoGen(); 
+         
+         foreach ($materias as $materia)
           {
-
-         echo '<div class="col-md-4 service-item2">
-          <div class="service-icon"><i class="fa fa-buysellads"></i></div>
-          <h4 class="service-title"><a href="'.$row["linkMateria"].'">'. $row["nombre_Materia"].'</a></h4>
-          <p class="service-description">Pulsa en '. $row["nombre_Materia"] .' y podrás acceder al contenido de la materia.</p>
-        </div>';
-
-      }?>
+         echo '<div class="col-md-4 service-item2">';
+          echo '<div class="service-icon"><i class="fa fa-buysellads"></i></div>';
+          echo '<h4 class="service-title"><a href="'.$materia["linkMateria"].'">'. $materia["nombre_Materia"].'</a></h4>';
+          echo '<p class="service-description">Pulsa en '. $materia["nombre_Materia"] .' y podrás acceder al contenido de la materia.</p></div>';
+        }
+          ?>
+        
+       </div> 
     </div>
   </section>
 
@@ -134,7 +141,7 @@ $db_selected = mysqli_select_db($db, $conn);
             &copy; Copyright <strong>Universidad de Córdoba</strong>. Realizado por Ismael Ávila Ojeda
           </div>
           <div class="credits">
-            <img src="img/logoUco.png" alt="" title="" width="40" height="30"/></img></a>
+            <img src="img/logoUco.png" alt="" title="" width="40" height="30"/>
           </div>
         </div>
       </div>
@@ -158,10 +165,6 @@ $db_selected = mysqli_select_db($db, $conn);
   <script src="js/custom.js"></script>
 
   <script src="contactform/contactform.js"></script>
-
-<?php
-$conn=null;
-?>
 
 </body>
 

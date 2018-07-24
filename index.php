@@ -28,12 +28,17 @@ echo "finaliza consulta".'<br>';
 echo "finalfin".'<br>';*/
 
 require 'General.php';
+ 
+$languaje = 1;
+if (isset($_GET['lang'])) {
+    $languaje = $_GET['lang'];
+}
 
-function getTextGeneral($idText, $idLang){
-     $TEXT = General::getText($idText, $idLang);
-     echo $TEXT['TEXT'];
-
- }
+function getTextGeneral($idText){
+    global $languaje;
+    $TEXT = General::getText($idText, $languaje);
+    echo $TEXT['textLanguage'];
+}
 
 function getRowConceptoNombreMateria(){
      $row = General::getConceptoMateria();
@@ -45,7 +50,9 @@ function getAutores(){
     return $row;
 }
 
-$rows = getRowConceptoNombreMateria();
+
+
+//$rows = getRowConceptoNombreMateria();
 
 /*if ($result->num_rows > 0) {
     // output data of each row
@@ -120,17 +127,20 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
       <a href="login.php" class="btn-services2">Zona Privada</a>
       <div class="wow fadeIn">
         <div class="hero-logo">
-         <h2><?php echo getTextGeneral(1,1); ?></h2>
+         <h2><?php echo getTextGeneral(1); ?></h2>
           <!--img class="" src="img/GlosarioInteractivoLogo.png" alt="Imperial"-->
         </div>
-
-        <h2>Universidad de Córdoba</h2>
+        <h2><?php echo getTextGeneral(2); ?></h2>
+        <!--h2>Universidad de Córdoba</h2-->
         <!--<h1><?php echo '<br>'.$row["nombre_Materia"]; ?></h1>Ejemplo incrustar html y ph!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
-        <h3>Instituciones implicadas: <span class="rotating">Vicerrectorado de Coordinación institucional e infraestructuras, Dirección General de Prevención y Protección Ambiental</span></h3>
+          <h3><?php echo getTextGeneral(3); ?><span class="rotating"><?php echo getTextGeneral(4); ?></span></h3>
+        <!--h3>Instituciones implicadas: <span class="rotating">Vicerrectorado de Coordinación institucional e infraestructuras, Dirección General de Prevención y Protección Ambiental</span></h3-->
         <div class="actions">
-          <a href="#about" class="btn-get-started">Presentación</a>
-          <a href="#services" class="btn-services">Glosario</a>
+            <a href="#about" class="btn-get-started"><?php echo getTextGeneral(5); ?></a>
+          <a href="#services" class="btn-services"><?php echo getTextGeneral(6); ?></a>
+          <!--a href="#about" class="btn-get-started">Presentación</a>
+          <a href="#services" class="btn-services">Glosario</a-->
         </div>
       </div>
     </div>
@@ -152,6 +162,9 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
           <li><a href="#services">Glosario</a></li>
           <li><a href="#team">Autores</a></li>
           <li><a href="#contact">Contacto</a></li>
+          <li><a href="<?php echo 'index.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" title="Spain" /></a></li>
+          <li><a href="<?php echo 'index.php?lang=2' ?>"><img src="img/icon_en.png" alt="" title="English" /></a></li>
+          <li><a href="<?php echo 'index.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" title="France" /></a></li>
         </ul>
       </nav>
       <!-- #nav-menu-container -->
