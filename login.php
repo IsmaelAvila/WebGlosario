@@ -13,7 +13,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
    
     if (count($row) > 0){
         $_SESSION['login_user'] = $userName;
-        header("location:Console.php");
+        header("location:Adminis.php");
     }else{
         $error = "Tu nombre o usuario es invalido";
     }

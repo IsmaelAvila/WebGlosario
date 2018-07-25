@@ -223,7 +223,7 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
         
         <div class="col-md-4 col-md-offset-2">
           <div class="service-icon"><i class="fa fa-buysellads"></i></div>
-          <h4 class="service-title"><a href="">Por orden alfabético</a></h4>        
+          <h4 class="service-title"><a href="porConcepto.php">Por orden alfabético</a></h4>        
         </div>
         <div class="col-md-4">
           <div class="service-icon"><i class="fa fa-book"></i></div>
@@ -392,7 +392,7 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
             &copy; Copyright <strong>Universidad de Córdoba</strong>. Realizado por Ismael Ávila Ojeda
           </div>
           <div class="credits">
-            <img src="img/logoUco.png" alt="" title="" width="40" height="30"/></img></a>
+            <img src="img/logoUco.png" alt="" title="" width="40" height="30"/>
           </div>
         </div>
       </div>

@@ -38,7 +38,7 @@ class General
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
              $comando->execute();
-            return $comando->fetch(PDO::FETCH_ASSOC);
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
         	echo $e;
@@ -75,6 +75,23 @@ class General
             return false;
         }
     }
+   
+    public static function getConceptoGene(){
+        $consulta = "SELECT * FROM concepto ORDER BY nombreConcepto ASC";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
      public static function login($userName, $password){
         $consulta = "SELECT * FROM usuarios WHERE nombreUsuario='$userName' AND password='$password'";
         
@@ -95,21 +112,86 @@ class General
         if (!isset($_SESSION['login_user'])){
            header("location:login.php"); 
         }else{
+            
             $userCheck = $_SESSION['login_user'];
-            $consulta = "SELECT nombreUsuario FROM usuarios WHERE nombreUsuario='$userCheck'";
+            $consulta = "SELECT * FROM usuarios WHERE nombreUsuario='$userCheck'";
         
             try {
+                
                 // Preparar sentencia
                  $comando = Database::getInstance()->getDb()->prepare($consulta);
                 // Ejecutar sentencia preparada
                  $comando->execute();
-                $row = $comando->fetch(PDO::FETCH_ASSOC);
-                return $row['nombreUsuario'];
+                 return $comando->fetch(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
+                
                 echo $e;
                 return false;
             }  
             }
+        
+    }
+    public static function getMateriaSupervi(){
+       $consulta = "SELECT * FROM matSupervisada";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    public static function getMateriaExtendida($idMateria){
+       $consulta = "SELECT * FROM concepto WHERE idMateria='$idMateria'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    public static function getConcepto($idConcepto){
+       $consulta = "SELECT * FROM concepto WHERE idConcepto='$idConcepto'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+     public static function deleteConcept($idConcepto){
+       $consulta = "DELETE FROM concepto WHERE idConcepto='$idConcepto'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
         
     }
      
