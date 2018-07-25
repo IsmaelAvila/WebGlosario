@@ -10,29 +10,27 @@ $rowSupervi = General::getConceptoSupervi();
 $rowGeneral = General::getConceptoMateria();
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
-   
-    
-    if(isset($_POST['mod'])){
         $idMat = $_POST['idMat'];
         $idConcep = $_POST['idConce'];
+        $idMatRev = $_POST['idMat_rev'];
+        $idConcepRev = $_POST['idConce_rev'];
+    
+    if(isset($_POST['mod'])){
         header("location:AdminisDetail.php?idMat=".$idMat."&idConcep=".$idConcep);
     }else if(isset($_POST['del'])){
         
-       /* echo '<script language="Javascript" type="text/javascript">';
-        echo 'if (confirm("Estas seguro que quieres borrarlo")){'
+        echo '<script language="Javascript" type="text/javascript">';
+        echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+        echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
         
-        if ($user_session['rol']== "ADMIN"){
-            echo '} </script>';
-        }else{
-           echo 'location.href = "DeleteConcep.php?id='.$idConcep.'";} </script>';
-        }*/
            
     }else  if(isset($_POST['mod_rev'])){
-        $idMatRev = $_POST['idMat_rev'];
-        $idConcepRev = $_POST['idConce_rev'];
+       
         header("location:AdminisDetailRev.php?idMat=".$idMatRev."&idConcep=".$idConcepRev);
     }else if(isset($_POST['del_rev'])){
-    
+        echo '<script language="Javascript" type="text/javascript">';
+        echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+        echo 'location.href = "DeleteConcepRev.php?id='.$idConcepRev.'"; } </script>';
     }
 }
 

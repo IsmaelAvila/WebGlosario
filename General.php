@@ -304,6 +304,37 @@ class General
         }
         
     } 
+    
+   public static function updateConceptToDelete($idconcepto){
+       
+       $concepto = General::getConcepto($idconcepto);
+       
+       $consulta = "UPDATE concepto SET nombreConcepto='{$concepto['nombreConcepto']}', 
+            idMateria='{$concepto['nombreConcepto']}', 
+            definicionConcepto='{$def}',
+            idVeaseConcepto='{$vease}',
+            fuenteConcepto='{$fuente}',
+            informacionComplementariaConcepto='{$compl}',
+            documentacionAdicionalConcepto='{$doc}',
+            materialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
+       
+        
+        
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
+        
+    }
      
 }
 

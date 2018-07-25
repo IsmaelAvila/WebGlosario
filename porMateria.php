@@ -1,17 +1,4 @@
 <?php
-/*$user = "root";
-$password = "root";
-$db = "glosario";
-$host = "localhost";
-$port = 8889;
-
-
-$conn = mysqli_connect($host, $user, $password, $db, $port);
-$db_selected = mysqli_select_db($db, $conn);
-
-
-  $sql = "SELECT * FROM materia";
-  $result=mysqli_query($conn,$sql);*/
 
 require 'General.php';
 

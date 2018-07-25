@@ -1,31 +1,4 @@
 <!--<?php
-/*$user = "root";
-$password = "root";
-$db = "glosario";
-$host = "localhost";
-$port = 8889;*/
-
-
-/*$conn = mysqli_connect($host, $user, $password, $db, $port);
-$db_selected = mysqli_select_db($db, $conn);
-
- if ($conn->connect_errno) {
-    printf("Falló la conexión: %s\n", $mysqli->connect_error);
-    exit();
-}else{
-  echo("Conexion correcta").'<br>';
-}
-
-  echo "Inicia consulta".'<br>';
-  
-$sql = "SELECT * FROM concepto, materia";
-$result=mysqli_query($conn,$sql);
-
-  
-
-echo "finaliza consulta".'<br>';
-
-echo "finalfin".'<br>';*/
 
 require 'General.php';
  
@@ -40,36 +13,16 @@ function getTextGeneral($idText){
     echo $TEXT['textLanguage'];
 }
 
-function getRowConceptoNombreMateria(){
+/*function getRowConceptoNombreMateria(){
      $row = General::getConceptoMateria();
     return $row;
-}
+}*/
 
 function getAutores(){
     $row = General::getAutores();
     return $row;
 }
 
-
-
-//$rows = getRowConceptoNombreMateria();
-
-/*if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = mysqli_fetch_assoc($result)) {
-        echo '<br>'.$row["conceptonombre_Materia"];
-    }
-} else {
-    echo "0 results".'<br>';
-}
-
-echo "antes foreach".'<br>';
-$rows = mysqli_query ($conn, $sql);
-foreach ($rows as $row)
-{
-  
-echo '<br>'."nombre_materia:".$row["nombre_Materia"];
-}*/
 ?>-->
 
 <!DOCTYPE html>
@@ -162,9 +115,9 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
           <li><a href="#services">Glosario</a></li>
           <li><a href="#team">Autores</a></li>
           <li><a href="#contact">Contacto</a></li>
-          <li><a href="<?php echo 'index.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" title="Spain" /></a></li>
-          <li><a href="<?php echo 'index.php?lang=2' ?>"><img src="img/icon_en.png" alt="" title="English" /></a></li>
-          <li><a href="<?php echo 'index.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" title="France" /></a></li>
+          <li><a href="index.php?lang=1"><img src="img/icon_sp.png" alt="" title="Spain" /></a></li>
+          <li><a href="index.php?lang=2"><img src="img/icon_en.png" alt="" title="English" /></a></li>
+          <li><a href="index.php?lang=3"><img src="img/icon_fr.png" alt="" title="France" /></a></li>
         </ul>
       </nav>
       <!-- #nav-menu-container -->
@@ -256,14 +209,11 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
              
             echo "<div class='col-md-3'>";
             echo "<div class='member'>";
-            echo "<div class='pic'><img src=".$autor['IMAGEN']." alt=''></div>";
-            echo "<h4>". $autor['NOMBRE']."</h4>";
-            echo "<span>".$autor['CARGO']."</span>";
+            echo "<div class='pic'><img src=".$autor['imagenAutores']." alt=''></div>";
+            echo "<h4>". $autor['nombreAutores']."</h4>";
+            echo "<span>".$autor['cargoAutores']."</span>";
             echo "    <div class='social'>
-              <a href=''><i class='fa fa-twitter'></i></a>
-              <a href=''><i class='fa fa-facebook'></i></a>
-              <a href=''><i class='fa fa-google-plus'></i></a>
-              <a href=''><i class='fa fa-linkedin'></i></a>
+              <a href='".$autor['linkAutores']."'><i class='fa fa-linkedin'></i></a>
                 </div>
                 </div>
                 </div>";
@@ -271,47 +221,6 @@ echo '<br>'."nombre_materia:".$row["nombre_Materia"];
           
           
           ?>
-       
-
-        <!--div class="col-md-3">
-          <div class="member">
-            <div class="pic"><img src="img/sara.jpg" alt=""></div>
-            <h4>Sara Sepúlveda Orejuela</h4>
-            <span>Graduada en Relaciones Laborales y Recursos Humanos</span>
-            <div class="social">
-              <a href="https://twitter.com/sara_seor?lang=es"><i class="fa fa-twitter"></i></a>
-              <a href="https://www.facebook.com/sara.sepulvedaorejuela"><i class="fa fa-facebook"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="member">
-            <div class="pic"><img src="img/team-3.jpg" alt=""></div>
-            <h4>William Anderson</h4>
-            <span>CTO</span>
-            <div class="social">
-              <a href=""><i class="fa fa-twitter"></i></a>
-              <a href=""><i class="fa fa-facebook"></i></a>
-              <a href=""><i class="fa fa-google-plus"></i></a>
-              <a href=""><i class="fa fa-linkedin"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="member">
-            <div class="pic"><img src="img/team-4.jpg" alt=""></div>
-            <h4>Amanda Jepson</h4>
-            <span>Accountant</span>
-            <div class="social">
-              <a href=""><i class="fa fa-twitter"></i></a>
-              <a href=""><i class="fa fa-facebook"></i></a>
-              <a href=""><i class="fa fa-google-plus"></i></a>
-              <a href=""><i class="fa fa-linkedin"></i></a>
-            </div>
-          </div>
-        </div-->
 
       </div>
     </div>
