@@ -6,32 +6,34 @@ session_start();
 
 $user_session = General::getUserSession();
 
-$rowSupervi = General::getMateriaSupervi();
+$rowSupervi = General::getConceptoSupervi();
 $rowGeneral = General::getConceptoMateria();
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
+   
+    
+    if(isset($_POST['mod'])){
         $idMat = $_POST['idMat'];
         $idConcep = $_POST['idConce'];
-    if(isset($_POST['mod'])){
-       
         header("location:AdminisDetail.php?idMat=".$idMat."&idConcep=".$idConcep);
     }else if(isset($_POST['del'])){
-         
-       /* if ($user_session['rol']== "ADMIN"){
-             
+        
+       /* echo '<script language="Javascript" type="text/javascript">';
+        echo 'if (confirm("Estas seguro que quieres borrarlo")){'
+        
+        if ($user_session['rol']== "ADMIN"){
+            echo '} </script>';
         }else{
-             
+           echo 'location.href = "DeleteConcep.php?id='.$idConcep.'";} </script>';
         }*/
-       
-        echo '<script language="Javascript" type="text/javascript">';
-        echo 'if (confirm("Estas seguro que quieres borrarlo")){
-        
-        location.href = "DeleteConcep.php?id=4";
-        
-        }';
-        
-        echo '</script>';
-    } 
+           
+    }else  if(isset($_POST['mod_rev'])){
+        $idMatRev = $_POST['idMat_rev'];
+        $idConcepRev = $_POST['idConce_rev'];
+        header("location:AdminisDetailRev.php?idMat=".$idMatRev."&idConcep=".$idConcepRev);
+    }else if(isset($_POST['del_rev'])){
+    
+    }
 }
 
 ?>
@@ -79,11 +81,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <body>
  <header id="header">
     <div class="container">
-      <div><h1><center>Zona Administración</center></h></div>
+      <div><h1><center>Zona Administración</center></h1></div>
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li><form action=''><input type="submit" value='Materia/Concepto'/></form></li>
           <li><form action=''><input type="submit" value='Usuario'/></form></li>
+            <li><a href = "logout.php" tite = "Logout"><input type="submit" value='Logout'/></a></li>
         </ul>
       </nav>
       <!-- #nav-menu-container -->
@@ -95,28 +98,36 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 	<tr>
 		<td>
             <br>
-		<table frame="void" rules="rows" align='center'>
-		          <tr>
-		              <td><label> id Concepto </label></td>
-		              <td><label> Nombre Concepto </label></td>
-                      <td><label> Validar </label></td>
-		          </tr>
-             <?php 
-                
-
-                 foreach ($rowSupervi as $rowSupe)
+            <?php
+            if ($user_session['rol']!="ADMIN"){
+             echo "<table frame='void' rules='rows' align='center'>
+                    <tr>
+		              <td><a href=''>ID </a></td>
+		              <td><a href=''>Nombre Materia </a></td>
+		              <td><a href=''>Nombre Concepto </a></td>
+                      <td><a href=''>Validar </a></td>
+		             
+		          </tr>";
+                foreach ($rowSupervi as $rowSuper)
                   {
-
-
                     echo "<tr>";
-                    echo "<td><input type='text' name=''/>".$rowSupe['idMateria']."</td>";
-                    echo "<td><input type='text' name=''/>".$rowSupe['nombreMateria']."</td>";
-                    echo "<td><input type='submit' value='Validar'/></td>";
+                    echo "<td><input type='text' name=''/>".$rowSuper['idMateria']."</td>";
+                    echo "<td><input type='text' name=''/>".$rowSuper['nombreMateria']."</td>";
+                    echo "<td><input type='text' name=''/>".$rowSuper['nombreConcepto']."</td>";
+                    echo "<td><form method='post' name='form' id='form'>
+                    <input type='submit' name='mod_rev' value='Modificar'/>
+                    <input type='submit' name='del_rev' value='Eliminar'/>
+                    <input type='hidden' name='idMat_rev' value='".$rowSuper['idMateria']."'/>
+                    <input type='hidden' name='idConce_rev' value='".$rowSuper['idConcepto']."'/>
+                    </form></td>";
                     echo "</tr>";
                   }
+            
+		          
+		      echo "</table>";
+            }
             ?>
-		  
-		</table>
+		
 		<br>
         </td>
 	</tr>
@@ -134,7 +145,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 				</tr>
 		</table>
 		<br>
-		<table align="center">
+		<!--table align="center">
 				<tr>
                     <td><input type="radio" name="tipo"
                                <?php if(isset($tipo) && $tipo=="Concepto") echo "checked";?> value="Concepto">Concepto</td>
@@ -143,7 +154,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 				
 				</tr>
 		</table>
-		<br></td>
+		<br></td-->
 	</tr>
 </table>
 

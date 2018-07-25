@@ -9,7 +9,8 @@ $idconcepto = 1;
 if (isset($_GET['idConcep'])) {
     $idconcepto = $_GET['idConcep'];
 }
-$concepto = General::getConcepto($idconcepto);
+echo $idconcepto;
+$concepto = General::getConceptoSuperviGene($idconcepto);
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
  
@@ -23,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $audiovi = $_POST['audiovi'];
  
    
-    if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
+    if(General::updateConceptRev($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
         
         header("location:Adminis.php"); 
     }else{
