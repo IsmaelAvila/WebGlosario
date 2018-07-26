@@ -7,6 +7,27 @@ function getMateriaGen(){
     return $row;
 }
 
+$languaje = 1;
+if (isset($_GET['lang'])) {
+    $languaje = $_GET['lang'];
+}
+
+function getTextGeneral($idText){
+    global $languaje;
+    $TEXT = General::getText($idText, $languaje);
+    echo $TEXT['textLanguage'];
+}
+
+/*function getRowConceptoNombreMateria(){
+     $row = General::getConceptoMateria();
+    return $row;
+}*/
+
+function getAutores(){
+    $row = General::getAutores();
+    return $row;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -61,24 +82,32 @@ function getMateriaGen(){
   <header id="header">
     <div class="container">
       <div id="logo" class="pull-left">
-        <a href="http://www.uco.es/"><img src="img/logoUco.png" alt="" title="" /></a>
-        <!-- Uncomment below if you prefer to use a text image -->
-        <!--<h1><a href="#hero">Header 1</a></h1>-->
+        <a href="http://www.uco.es/" target="_blank"><img src="img/logoUco.png" alt="" title="" /></a>
       </div>
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="index.php">Home</a></li>
-          <li><a href="#about">Presentación</a></li>
-          <li><a href="#services">Glosario</a></li>
-          <li><a href="#team">Autores</a></li>
-   
-          <li><a href="#contact">Contacto</a></li>
+          <li class="menu-active"><a href="index.php#hero"><?php echo getTextGeneral(6); ?></a></li>
+          <li><a href="index.php#about"><?php echo getTextGeneral(7); ?></a></li>
+          <li><a href="index.php#services"><?php echo getTextGeneral(8); ?></a></li>
+          <li><a href="index.php#team"><?php echo getTextGeneral(9); ?></a></li>
+          <li><a href="index.php#contact"><?php echo getTextGeneral(10); ?></a></li>
+          <li><a href=""><?php echo getTextGeneral(11); ?></a></li>
+          <li><a href="<?php echo 'porMateria.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" title="Spain" /></a></li>
+          <li><a href="<?php echo 'porMateria.php?lang=2' ?>"><img src="img/icon_en.png" alt="" title="English" /></a></li>
+          <li><a href="<?php echo 'porMateria.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" title="France" /></a></li>
+          <!--li class="menu-active"><a href="#hero">Home</a></li-->
+          <!--li><a href="#about">Presentación</a></li-->
+          <!--li><a href="#services">Glosario</a></li-->
+          <!--li><a href="#team">Autores</a></li-->
+          <!--li><a href="#contact">Contacto</a></li-->
+          <!--li><a href="#contact">Buscador</a></li-->
         </ul>
       </nav>
-      
+      <!-- #nav-menu-container -->
     </div>
   </header>
+  <!-- #header -->
 
   
   <!--==========================
