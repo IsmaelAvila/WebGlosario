@@ -6,8 +6,20 @@ session_start();
 
 $user_session = General::getUserSession();
 
+$arrayTitulo = array();
+
+$page = 1;
+$method = 0;
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
+if (isset($_GET['method'])) {
+    $method = $_GET['method'];
+}
+
 $rowSupervi = General::getConceptoSupervi();
-$rowGeneral = General::getConceptoMateria();
+$rowGeneral = General::getConceptoMateria($page,$method);
+
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
         $idMat = $_POST['idMat'];
@@ -25,8 +37,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         
            
     }else  if(isset($_POST['mod_rev'])){
-       
-        header("location:AdminisDetailRev.php?idMat=".$idMatRev."&idConcep=".$idConcepRev);
+       header("location:AdminisDetailRev.php?idMat=".$idMatRev."&idConcep=".$idConcepRev);
     }else if(isset($_POST['del_rev'])){
         echo '<script language="Javascript" type="text/javascript">';
         echo 'if (confirm("Estas seguro que quieres borrarlo")){';
@@ -81,11 +92,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     <div class="container">
       <div><h1><center>Zona Administración</center></h1></div>
       <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li><form action=''><input type="submit" value='Materia/Concepto'/></form></li>
-          <li><form action=''><input type="submit" value='Usuario'/></form></li>
-            <li><a href = "logout.php" tite = "Logout"><input type="submit" value='Logout'/></a></li>
-        </ul>
+        <div id="myBtnContainer">
+            <button class="btn" onclick="filterSelection('0')"> Concepto</button>
+            <button class="btn" onclick="filterSelection('1')"> Materia</button>
+            <button class="btn" onclick="filterSelection('2')"> Autores</button>
+            <button class="btn" onclick="filterSelection('3')"> Usuarios</button>
+        </div>
       </nav>
       <!-- #nav-menu-container -->
     </div>
@@ -161,35 +173,163 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <!--Concepto he pensado en estructurarlo primero accediendo alfabeticamente. El siguiente nivel es un listado de todos los conceptos de esa letra. Por último nivel mostrar el detalle de la letra.
 
 En el caso de la materia, sería mostrar listado de todas las materias y al pulsar en una de ellas mandarte al detalle para modificarlo.-->
-
-<table frame="void" rules="rows" align='center'>
-                    <tr>
-		              <td><a href="">ID </a></td>
-		              <td><a href="">Nombre Materia </a></td>
-		              <td><a href="">Nombre Concepto </a></td>
-                      <td><a href="">Validar </a></td>
+<input type="text" id="searchInput" onkeyup="search()" placeholder="Buscar....">
+    <table frame="void" rules="rows" align='center' id="tableAdmi">
+    
+                   <tr class="header">
+                       <?php
+                    if ($method == 0){
+                        echo "<th style='width:10%;'><a href=''>ID </a></td>
+		                  <th style='width:40%;'><a href=''>Nombre Materia </a></td>
+		                  <th style='width:30%;'><a href=''>Nombre Concepto </a></td>";
+                    }else  if ($method == 1){
+                         echo "<th style='width:10%;'><a href=''>ID </a></td>
+		                  <th style='width:70%;'><a href=''>Nombre Materia </a></td>";
+		              
+                    }else  if ($method == 2){
+                         echo "<th style='width:10%;'><a href=''>ID </a></td>
+		                  <th style='width:10%;'><a href=''>Nombre  </a></td>
+                        <th style='width:30%;'><a href=''>Cargo  </a></td>
+                        <th style='width:20%;'><a href=''>Image  </a></td>
+                        <th style='width:20%;'><a href=''>Link  </a></td>";
+                    }else  if ($method == 3){
+                        echo "<th style='width:10%;'><a href=''>ID </a></td>
+		                  <th style='width:50%;'><a href=''>Nombre  </a></td>
+                          <th style='width:20%;'><a href=''>Rol  </a></td>";
+                    }
+		              
+                       echo " <th style='width:20%;'><a href=''>Validar </a></th>";
+                    ?>
+		          
 		             
 		          </tr>
             <?php 
                 
-
+                   
                  foreach ($rowGeneral as $rowGene)
                   {
                     echo "<tr>";
-                    echo "<td><input type='text' name=''/>".$rowGene['idMateria']."</td>";
-                    echo "<td><input type='text' name=''/>".$rowGene['nombreMateria']."</td>";
-                    echo "<td><input type='text' name=''/>".$rowGene['nombreConcepto']."</td>";
-                    echo "<td><form method='post' name='form' id='form'>
-                    <input type='submit' name='mod' value='Modificar'/>
-                    <input type='submit' name='del' value='Eliminar'/>
-                    <input type='hidden' name='idMat' value='".$rowGene['idMateria']."'/>
-                    <input type='hidden' name='idConce' value='".$rowGene['idConcepto']."'/>
-                    </form></td>";
+                     if ($method == 0){
+                        echo "<td>".$rowGene['idMateria']."</td>";
+                        echo "<td>".$rowGene['nombreMateria']."</td>";
+                        echo "<td>".$rowGene['nombreConcepto']."</td>";
+                        echo "<td><form method='post' name='form' id='form'>
+                        <input type='submit' name='mod' value='Modificar'/>
+                        <input type='submit' name='del' value='Eliminar'/>
+                        <input type='hidden' name='idConce' value='".$rowGene['idConcepto']."'/>
+                        </form></td>";
+                    }else  if ($method == 1){
+                        echo "<td>".$rowGene['idMateria']."</td>";
+                        echo "<td>".$rowGene['nombreMateria']."</td>";
+                        echo "<td><form method='post' name='form' id='form'>
+                        <input type='submit' name='mod' value='Modificar'/>
+                        <input type='submit' name='del' value='Eliminar'/>
+                        <input type='hidden' name='idMat' value='".$rowGene['idMateria']."'/>
+                        </form></td>";
+		              
+                    }else  if ($method == 2){
+                        echo "<td>".$rowGene['idAutores']."</td>";
+                        echo "<td>".$rowGene['nombreAutores']."</td>";
+                        echo "<td>".$rowGene['cargoAutores']."</td>";
+                        echo "<td>".$rowGene['imagenAutores']."</td>";
+                        echo "<td>".$rowGene['linkAutores']."</td>";
+                        echo "<td><form method='post' name='form' id='form'>
+                        <input type='submit' name='mod' value='Modificar'/>
+                        <input type='submit' name='del' value='Eliminar'/>
+                        <input type='hidden' name='idMat' value='".$rowGene['idAutores']."'/>
+                        </form></td>";
+                    }else  if ($method == 3){
+                        echo "<td>".$rowGene['idUsuario']."</td>";
+                        echo "<td>".$rowGene['nombreUsuario']."</td>";
+                        echo "<td>".$rowGene['rol']."</td>";
+                        echo "<td><form method='post' name='form' id='form'>
+                        <input type='submit' name='mod' value='Modificar'/>
+                        <input type='submit' name='del' value='Eliminar'/>
+                        <input type='hidden' name='idMat' value='".$rowGene['idUsuario']."'/>
+                        </form></td>";
+                    
+                    }
+                    
                     echo "</tr>";
                   }
             ?>
-		          
+        <tr class="footer">
+		              <th colspan= "6" style=" text-align: right;">
+                          <?php
+                          
+                          $totalRecods = General::getCountGeneral($method);
+                          $total_pages = ceil($totalRecods/10);
+                          
+                          $pageLink = "<div class='pagination'>";
+                          for($i; $i<=$total_pages;$i++){
+                              $pageLink .= "<a href='Adminis.php?page=".$i."&method=".$method."'>".$i."</a>";
+                          }
+                          echo $pageLink . "</div>";
+                          ?>
+                         
+		             
+         </tr>
 		</table>
+    
+    <!-- Required JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+  <script src="lib/morphext/morphext.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/stickyjs/sticky.js"></script>
+  <script src="lib/easing/easing.js"></script>
+
+  <!-- Template Specisifc Custom Javascript File -->
+  <script src="js/custom.js"></script>
+
+  <script src="contactform/contactform.js"></script>
+    <script>
+function search() {
+  // Declare variables
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tableAdmi");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+function filterSelection(selection) {
+    
+    if (selection == '0'){
+      location.href = "Adminis.php?page=1&method=0";
+    }else  if (selection == '1'){
+                location.href = "Adminis.php?page=1&method=1";
+    }else  if (selection == '2'){
+            location.href = "Adminis.php?page=1&method=2";
+    }else  if (selection == '3'){
+           location.href = "Adminis.php?page=1&method=3";   
+    }
+            
+}
+        
+ // Add active class to the current button (highlight it)
+var btnContainer = document.getElementById("myBtnContainer");
+var btns = btnContainer.getElementsByClassName("btn");
+
+var selec = <?php Print($method); ?>;
+btns[selec].className += " active";
+  
+
+</script>
 </body>
 
 </html>
