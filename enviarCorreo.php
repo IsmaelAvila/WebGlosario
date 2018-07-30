@@ -1,20 +1,38 @@
-<?php  
-$nombre = $_POST['name'];
-$para = "ismaelavilaojeda@gmail.com"; 
-$correo = $_POST['email'];
-$asunto = $_POST['subject'];
-$message1 = $_POST['message'];   
+<?php
+   //Reseteamos variables a 0.
+   $name = $email = $subject = $message = $para = $headers = $msjCorreo = NULL;
+   echo "1";
 
-$mensaje .= "Este mensaje fue enviado por " . $nombre . " \n"; 
-$mensaje .= "Su e-mail es: " . $correo . " \n"; 
-$mensaje .= "Asunto: ".$asunto . " \n"; 
-$mensaje .= "Mensaje: ".$message1 . " \n";
-$mensaje .= "Enviado el " . date('d/m/Y', time()); 
+   if (isset($_POST['submit'])) {
+      //Obtenemos valores input formulario
+      $name = $_POST['name'];
+      $email = $_POST['email'];
+      $subject = $_POST['subject'];   
+      $message = $_POST['message'];
+      $para = 'ismaelavilaojeda@gmail.com';
 
-   
+      //Creamos cabecera.
+      $headers = 'From' . " " . $email . "\r\n";
+      $headers .= "Content-type: text/html; charset=utf-8";
 
-mail($para, $correo, $asunto, utf8_decode($mensaje), $header); 
+      //Componemos cuerpo correo.
+      $msjCorreo = "Nombre: " . $name;
+      $msjCorreo .= "\r\n";
+      $msjCorreo .= "Email: " . $email;
+      $msjCorreo .= "\r\n";
+      $msjCorreo .= "Asunto: " . $subject;
+      $msjCorreo .= "\r\n";
+      $msjCorreo .= "Mensaje: " . $message;
+      $msjCorreo .= "\r\n";
 
-echo 'mensaje enviado correctamente'; 
-
-?> 
+    if (mail($para, $subject, $msjCorreo, $headers)) {
+         echo "<script language='javascript'>
+            alert('Mensaje enviado, muchas gracias.');
+         </script>";
+    } else {
+         echo "<script language='javascript'>
+            alert('fallado');
+         </script>";
+    }
+  }
+?>

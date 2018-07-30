@@ -81,12 +81,13 @@ function getAutores(){
       <!--a href="login.php" class="btn-services2">Zona Privada</a-->
       <div class="wow fadeIn">
         <div class="hero-logo">
-         <h2><?php echo getTextGeneral(1); ?></h2>
-          <!--img class="" src="img/GlosarioInteractivoLogo.png" alt="Imperial"-->
+         <!--h2><?php echo getTextGeneral(1); ?></h2-->
+         <img class="" src="<?php getTextGeneral(1);?>">
+         <!--h2>Glosario interactivo de seguridad, salud y bienestar en el trabajo</h2-->
+          <!--img class="" src="img/GlosarioInteractivoLogo.png"-->
         </div>
         <h2><?php echo getTextGeneral(2); ?></h2>
         <!--h2>Universidad de Córdoba</h2-->
-        <!--<h1><?php echo '<br>'.$row["nombre_Materia"]; ?></h1>Ejemplo incrustar html y ph!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
           <h3><span class="rotating"><?php echo getTextGeneral(3); ?></span></h3>
         <!--h3>Instituciones implicadas: <span class="rotating">Vicerrectorado de Coordinación institucional e infraestructuras, Dirección General de Prevención y Protección Ambiental</span></h3-->
@@ -117,9 +118,9 @@ function getAutores(){
           <li><a href="#team"><?php echo getTextGeneral(9); ?></a></li>
           <li><a href="#contact"><?php echo getTextGeneral(10); ?></a></li>
           <li><a href=""><?php echo getTextGeneral(11); ?></a></li>
-          <li><a href="<?php echo 'index.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" title="Spain" /></a></li>
-          <li><a href="<?php echo 'index.php?lang=2' ?>"><img src="img/icon_en.png" alt="" title="English" /></a></li>
-          <li><a href="<?php echo 'index.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" title="France" /></a></li>
+          <li><a href="<?php echo 'index.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
+          <li><a href="<?php echo 'index.php?lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
+          <li><a href="<?php echo 'index.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
           <!--li class="menu-active"><a href="#hero">Home</a></li-->
           <!--li><a href="#about">Presentación</a></li-->
           <!--li><a href="#services">Glosario</a></li-->
@@ -182,21 +183,30 @@ function getAutores(){
     <div class="container wow fadeInUp">
       <div class="row">
         <div class="col-md-12">
-          <h3 class="section-title">Glosario</h3>
+          <h3 class="section-title"><?php echo getTextGeneral(5); ?></h3>
+          <!--h3 class="section-title">Glosario</h3-->
           <div class="section-title-divider"></div>
-          <p class="section-description">Seleccione las distintas secciones del Glosario Interactivo según:</p>
+          <p class="section-description"><?php echo getTextGeneral(17); ?></p>
+          <!--p class="section-description">Seleccione las distintas secciones del Glosario Interactivo según:</p-->
         </div>
       </div>
 
       <div class="row">
         
-        <div class="col-md-4 col-md-offset-2">
+        <div class="col-md-3 col-md-offset-2">
           <div class="service-icon"><i class="fa fa-buysellads"></i></div>
-          <h4 class="service-title"><a href="porConcepto.php?$lang=$languaje">Por orden alfabético</a></h4>        
+          <h4 class="service-title"><a href="porConcepto.php?$lang=$languaje"><?php echo getTextGeneral(18); ?></a></h4>
+          <!--h4 class="service-title"><a href="porConcepto.php?$lang=$languaje">Por orden alfabético</a></h4-->        
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="service-icon"><i class="fa fa-book"></i></div>
-          <h4 class="service-title"><a href="porMateria.php">Por materia</a></h4>
+          <h4 class="service-title"><a href="porMateria.php"><?php echo getTextGeneral(19); ?></a></h4>
+          <!--h4 class="service-title"><a href="porMateria.php">Por materia</a></h4-->
+        </div>
+        <div class="col-md-3">
+          <div class="service-icon"><i class="fa fa-search"></i></div>
+          <h4 class="service-title"><a href=""><?php echo getTextGeneral(11); ?></a></h4>
+          <!--h4 class="service-title"><a href="">Buscador</a></h4-->
         </div>
       </div>      
     </div>
@@ -209,9 +219,9 @@ function getAutores(){
     <div class="container wow fadeInUp">
       <div class="row">
         <div class="col-md-12">
-          <h3 class="section-title">Autores</h3>
+          <h3 class="section-title"><?php echo getTextGeneral(9); ?></h3>
+          <!--h3 class="section-title">Autores</h3-->
           <div class="section-title-divider"></div>
-          <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
         </div>
       </div>
 
@@ -229,7 +239,7 @@ function getAutores(){
             echo "<h4>". $autor['nombreAutores']."</h4>";
             echo "<span>".$autor['cargoAutores']."</span>";
             echo "    <div class='social'>
-              <a href='".$autor['linkAutores']."'><i class='fa fa-linkedin'></i></a>
+              <a href=".$autor['linkAutores']." target='_blank'><i class='fa fa-linkedin'></i></a>
                 </div>
                 </div>
                 </div>";
@@ -249,9 +259,10 @@ function getAutores(){
     <div class="container wow fadeInUp">
       <div class="row">
         <div class="col-md-12">
-          <h3 class="section-title">Contacto</h3>
+          <h3 class="section-title"><?php echo getTextGeneral(10); ?></h3>
+          <!--h3 class="section-title">Contacto</h3-->
           <div class="section-title-divider"></div>
-          <p class="section-description">Puede ponerse en contacto con nuestro departamento rellenando los siguientes campos: </p>
+         
         </div>
       </div>
 
@@ -278,26 +289,26 @@ function getAutores(){
 
         <div class="col-md-5 col-md-push-2">
           <div class="form">
-            <div id="sendmessage">Tu mensaje ha sido enviado. !Gracias!</div>
+            <div id="sendmessage"><?php echo getTextGeneral(31); ?></div>
             <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="contactForm">
+            <form action="enviarCorreo.php" method="POST" role="form" class="contactForm">
               <div class="form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Nombre" data-rule="minlen:4" data-msg="Por favor, introduzca un mínimo 4 caracteres." />
+                <input type="text" name="name" class="form-control" id="name" placeholder="<?php echo getTextGeneral(22); ?>" data-rule="minlen:4" data-msg="<?php echo getTextGeneral(27); ?>" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico" data-rule="email" data-msg="Por favor, introduzca un correo válido." />
+                <input type="email" class="form-control" name="email" id="email" placeholder="<?php echo getTextGeneral(23); ?>" data-rule="email" data-msg="<?php echo getTextGeneral(28); ?>" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Asunto" data-rule="minlen:4" data-msg="Por favor, introduzca como mínimo 8 caracteres." />
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="<?php echo getTextGeneral(24); ?>" data-rule="minlen:4" data-msg="<?php echo getTextGeneral(29); ?>" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Por favor, escriba algo." placeholder="Escriba aquí su mensaje"></textarea>
+                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="<?php echo getTextGeneral(30); ?>" placeholder="<?php echo getTextGeneral(25); ?>"></textarea>
                 <div class="validation"></div>
               </div>
-              <div class="text-center"><button type="submit">Enviar Mensaje</button></div>
+              <div class="text-center"><button type="submit" id="submit" name="submit"><?php echo getTextGeneral(26); ?></button></div>
             </form>
           </div>
         </div>
@@ -314,10 +325,10 @@ function getAutores(){
       <div class="row">
         <div class="col-md-12">
           <div class="copyright">
-            &copy; Copyright <strong>Universidad de Córdoba</strong>. Realizado por Ismael Ávila Ojeda
+            &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2019</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
           </div>
           <div class="credits">
-            <img src="img/logoUco.png" alt="" title="" width="40" height="30"/>
+            <img src="img/logoUco.png" alt="" title="" width="50" height="30"/>
           </div>
         </div>
       </div>

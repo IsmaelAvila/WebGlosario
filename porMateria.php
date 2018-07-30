@@ -93,9 +93,9 @@ function getAutores(){
           <li><a href="index.php#team"><?php echo getTextGeneral(9); ?></a></li>
           <li><a href="index.php#contact"><?php echo getTextGeneral(10); ?></a></li>
           <li><a href=""><?php echo getTextGeneral(11); ?></a></li>
-          <li><a href="<?php echo 'porMateria.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" title="Spain" /></a></li>
-          <li><a href="<?php echo 'porMateria.php?lang=2' ?>"><img src="img/icon_en.png" alt="" title="English" /></a></li>
-          <li><a href="<?php echo 'porMateria.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" title="France" /></a></li>
+          <li><a href="<?php echo 'porMateria.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
+          <li><a href="<?php echo 'porMateria.php?lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
+          <li><a href="<?php echo 'porMateria.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
           <!--li class="menu-active"><a href="#hero">Home</a></li-->
           <!--li><a href="#about">Presentación</a></li-->
           <!--li><a href="#services">Glosario</a></li-->
@@ -130,7 +130,7 @@ function getAutores(){
          foreach ($materias as $materia)
           {
          echo '<div class="col-md-4 service-item2">';
-         echo '<div class="service-icon"><i class="fa fa-buysellads"></i></div>';
+         echo '<div class="service-icon"><i class="fa fa-book"></i></div>';
          echo '<h4 class="service-title"><a href="porMateriaExt.php?id='.$materia["idMateria"].'">'. $materia["nombreMateria"].'</a></h4>';
          echo '<p class="service-description">Pulsa en '. $materia["nombreMateria"] .' y podrás acceder al contenido de la materia.</p></div>';
         }
@@ -148,10 +148,10 @@ function getAutores(){
       <div class="row">
         <div class="col-md-12">
           <div class="copyright">
-            &copy; Copyright <strong>Universidad de Córdoba</strong>. Realizado por Ismael Ávila Ojeda
+            &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2019</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
           </div>
           <div class="credits">
-            <img src="img/logoUco.png" alt="" title="" width="40" height="30" />
+            <img src="img/logoUco.png" alt="" title="" width="50" height="30" />
           </div>
         </div>
       </div>
