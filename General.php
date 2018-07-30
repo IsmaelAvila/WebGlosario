@@ -30,8 +30,19 @@ class General
         }
     }
     
-    public static function getConceptoMateria(){
-        $consulta = "SELECT a.*, b.nombreMateria FROM concepto a LEFT JOIN materia b ON (b.idMateria = a.idMateria)";
+    public static function getConceptoMateria($page, $method){
+        $start = 10 * ($page - 1);
+        $rows = 10;
+        if ($method == 0){
+             $consulta = "SELECT a.*, b.nombreMateria FROM concepto a LEFT JOIN materia b ON (b.idMateria = a.idMateria) LIMIT $start, $rows";
+        }else if ($method == 1){
+            $consulta = "SELECT * FROM materia LIMIT $start, $rows"; 
+        }else if ($method == 2){
+             $consulta = "SELECT * FROM autores LIMIT $start, $rows";
+        }else if ($method == 3){
+             $consulta = "SELECT * FROM usuarios LIMIT $start, $rows";
+        }
+       
         
         try {
             // Preparar sentencia
@@ -39,6 +50,30 @@ class General
             // Ejecutar sentencia preparada
              $comando->execute();
             return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
+     public static function getCountGeneral($method){
+         if ($method == 0){
+              $consulta = "SELECT COUNT(idMateria) FROM concepto";
+         }else if ($method == 1){
+              $consulta = "SELECT COUNT(idMateria) FROM materia";
+         }else if ($method == 2){
+              $consulta = "SELECT COUNT(idAutores) FROM autores";
+         }else if ($method == 3){
+              $consulta = "SELECT COUNT(idUsuario) FROM usuarios";
+         }
+         
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchColumn();
 
         } catch (PDOException $e) {
         	echo $e;
@@ -336,6 +371,28 @@ class General
         
     }
      
+    public static function searchText($text){
+       
+      
+       $consulta = "SELECT * FROM concepto WHERE nombreConcepto LIKE '%$text%'";
+       
+        
+        
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+           return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
+        
+    }
 }
 
 ?>
