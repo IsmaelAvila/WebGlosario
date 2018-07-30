@@ -77,7 +77,8 @@ function getAutores(){
   <section id="hero">
     
     <div class="hero-container">
-      <a href="login.php" class="btn-services2">Zona Privada</a>
+      <a href="login.php" class="btn-services2"><?php echo getTextGeneral(16); ?></a>
+      <!--a href="login.php" class="btn-services2">Zona Privada</a-->
       <div class="wow fadeIn">
         <div class="hero-logo">
          <h2><?php echo getTextGeneral(1); ?></h2>
@@ -87,11 +88,11 @@ function getAutores(){
         <!--h2>Universidad de Córdoba</h2-->
         <!--<h1><?php echo '<br>'.$row["nombre_Materia"]; ?></h1>Ejemplo incrustar html y ph!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
-          <h3><?php echo getTextGeneral(3); ?><span class="rotating"><?php echo getTextGeneral(4); ?></span></h3>
+          <h3><span class="rotating"><?php echo getTextGeneral(3); ?></span></h3>
         <!--h3>Instituciones implicadas: <span class="rotating">Vicerrectorado de Coordinación institucional e infraestructuras, Dirección General de Prevención y Protección Ambiental</span></h3-->
         <div class="actions">
-            <a href="#about" class="btn-get-started"><?php echo getTextGeneral(5); ?></a>
-          <a href="#services" class="btn-services"><?php echo getTextGeneral(6); ?></a>
+            <a href="#about" class="btn-get-started"><?php echo getTextGeneral(4); ?></a>
+          <a href="#services" class="btn-services"><?php echo getTextGeneral(5); ?></a>
           <!--a href="#about" class="btn-get-started">Presentación</a>
           <a href="#services" class="btn-services">Glosario</a-->
         </div>
@@ -105,19 +106,26 @@ function getAutores(){
   <header id="header">
     <div class="container">
       <div id="logo" class="pull-left">
-        <a href="http://www.uco.es/"><img src="img/logoUco.png" alt="" title="" /></a>
+        <a href="http://www.uco.es/" target="_blank"><img src="img/logoUco.png" alt="" title="" /></a>
       </div>
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="#hero">Home</a></li>
-          <li><a href="#about">Presentación</a></li>
-          <li><a href="#services">Glosario</a></li>
-          <li><a href="#team">Autores</a></li>
-          <li><a href="#contact">Contacto</a></li>
-          <li><a href="index.php?lang=1"><img src="img/icon_sp.png" alt="" title="Spain" /></a></li>
-          <li><a href="index.php?lang=2"><img src="img/icon_en.png" alt="" title="English" /></a></li>
-          <li><a href="index.php?lang=3"><img src="img/icon_fr.png" alt="" title="France" /></a></li>
+          <li class="menu-active"><a href="#hero"><?php echo getTextGeneral(6); ?></a></li>
+          <li><a href="#about"><?php echo getTextGeneral(7); ?></a></li>
+          <li><a href="#services"><?php echo getTextGeneral(8); ?></a></li>
+          <li><a href="#team"><?php echo getTextGeneral(9); ?></a></li>
+          <li><a href="#contact"><?php echo getTextGeneral(10); ?></a></li>
+          <li><a href=""><?php echo getTextGeneral(11); ?></a></li>
+          <li><a href="<?php echo 'index.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" title="Spain" /></a></li>
+          <li><a href="<?php echo 'index.php?lang=2' ?>"><img src="img/icon_en.png" alt="" title="English" /></a></li>
+          <li><a href="<?php echo 'index.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" title="France" /></a></li>
+          <!--li class="menu-active"><a href="#hero">Home</a></li-->
+          <!--li><a href="#about">Presentación</a></li-->
+          <!--li><a href="#services">Glosario</a></li-->
+          <!--li><a href="#team">Autores</a></li-->
+          <!--li><a href="#contact">Contacto</a></li-->
+          <!--li><a href="#contact">Buscador</a></li-->
         </ul>
       </nav>
       <!-- #nav-menu-container -->
@@ -132,7 +140,8 @@ function getAutores(){
     <div class="container wow fadeInUp">
       <div class="row">
         <div class="col-md-12">
-          <h3 class="section-title">Presentación</h3>
+          <h3 class="section-title"><?php echo getTextGeneral(12); ?></h3>
+          <!--h3 class="section-title">Presentación</h3-->
           <div class="section-title-divider"></div>
           <!--<p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>-->
         </div>
@@ -143,17 +152,24 @@ function getAutores(){
         <div class="col-md-6 col-md-push-6 about-content">
           <!--<h2 class="about-title">Presentación del Glosario</h2>-->
           <p class="about-text">
+          <?php echo getTextGeneral(13); ?>
+          </p>
+          <!--<h2 class="about-title">Presentación del Glosario</h2>-->
+          <!--p class="about-text">
             La Prevención de Riesgos Laborales es una materia multidisciplinar que abarca grandes campos de estudio muy dispares entre sí, que sin embargo, tienen un denominador común: preservar la seguridad y salud de los trabajadores en el medio laboral. Por ello, es muy amplia la documentación y bibliografía que hay sobre esta temática en particular.
-          </p>
+          </p-->
           <p class="about-text">
+            <?php echo getTextGeneral(14); ?>
+          </p>
+          <!--p class="about-text">
             Para facilitar la labor de estudio y comprensión del estudiante de Prevención de Riesgos Laborales en particular y de cualquier trabajador en general, se ha creado este glosario, que es una herramienta interactiva que permite recopilar y refundir conceptos en materia de seguridad y salud laboral, que se encuentran en la legislación y documentos técnicos elaborados por instituciones de reconocido prestigio como el Instituto Nacional de Seguridad e Higiene en el Trabajo. Con ello, se pretende lograr que cualquier estudiante o trabajador adquiera los conocimientos básicos de salud laboral que le capacite para identificar, evaluar y controlar los riesgos, generales y específicos, derivados de las condiciones de trabajo, con el fin de evitar daños para la salud.
-            id est laborum
-          </p>
+          </p-->
           <p class="about-text">
-            Este glosario se ha estructurado en términos ordenados alfabéticamente y clasificados según la materia a la que se adscribe: autoprotección y emergencias, coordinación de actividades empresariales, ergonomía y psicosociología aplicada, gestión de la prevención, higiene industrial, instalaciones contra incendios, medicina del trabajo y seguridad en el trabajo.
-
-            <!--<br><video src="video/LDtOKO.mp4" width="300" height="200" preload="auto" controls></video>-->
+            <?php echo getTextGeneral(15); ?>
           </p>
+          <!--p class="about-text">
+            Este glosario se ha estructurado en términos ordenados alfabéticamente y clasificados según la materia a la que se adscribe: autoprotección y emergencias, coordinación de actividades empresariales, ergonomía y psicosociología aplicada, gestión de la prevención, higiene industrial, instalaciones contra incendios, medicina del trabajo y seguridad en el trabajo.
+          </p-->
         </div>
       </div>
     </div>
@@ -176,7 +192,7 @@ function getAutores(){
         
         <div class="col-md-4 col-md-offset-2">
           <div class="service-icon"><i class="fa fa-buysellads"></i></div>
-          <h4 class="service-title"><a href="porConcepto.php">Por orden alfabético</a></h4>        
+          <h4 class="service-title"><a href="porConcepto.php?$lang=$languaje">Por orden alfabético</a></h4>        
         </div>
         <div class="col-md-4">
           <div class="service-icon"><i class="fa fa-book"></i></div>
