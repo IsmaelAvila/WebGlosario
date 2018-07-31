@@ -2,9 +2,6 @@
 <?php
 
 require 'General.php';
-session_start();
-
-$user_session = General::getUserSession();
 
 $page = 1;
 if (isset($_GET['page'])) {

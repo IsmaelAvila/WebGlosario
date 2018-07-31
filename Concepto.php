@@ -8,6 +8,7 @@ if (isset($_GET['id'])) {
 }
 
 $row = General::getConcepto($idconcepto);
+$rowVease = General::getVease($row['idVeaseConcepto']);
 
 $languaje = 1;
 if (isset($_GET['lang'])) {
@@ -167,10 +168,17 @@ if (isset($_GET['lang'])) {
               <td class="large text-muted textoMagenta margin" valign="middle" height="50" align="justify">
                        
                   <ul>
-                        	
-                      <li><a class="textoMagenta" href="../s/SistemaDeComunicacionDeAlarma.html">Sistema de comunicación de alarma</a></li>
-                            
-                      <li><a class="textoMagenta" href="../s/SistemaManualDeAlarmaDeIncendio.html">Sistema manual de alarma de incendio</a></li>
+                        <?php
+                       foreach ($rowVease as $rowVer)
+                  {
+                           $idConceptoRow = $rowVer['idConcepto'];
+    
+                           $concepto = General::getConcepto($idConceptoRow);
+                          
+                            echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".$concepto['nombreConcepto']." </a></li>";
+                   
+                  }
+                      ?>
 						
                   </ul>
 

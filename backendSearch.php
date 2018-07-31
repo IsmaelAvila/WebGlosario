@@ -18,7 +18,7 @@ if (isset($_POST['query'])) {
       {
         echo "<tr>";
 
-            echo "<td>".$row['idMateria']."</td>";
+            echo "<td>".$row['idConcepto']."</td>";
             echo "<td>".$row['nombreMateria']."</td>";
             echo "<td>".$row['nombreConcepto']."</td>";
             echo "<td><form method='post' name='form' id='form'>
@@ -51,7 +51,7 @@ if (isset($_POST['query'])) {
       {
         echo "<tr>";
 
-            echo "<td>".$row['idMateria']."</td>";
+            echo "<td>".$row['idConcepto']."</td>";
             echo "<td>".$row['nombreMateria']."</td>";
             echo "<td>".$row['nombreConcepto']."</td>";
             echo "<td><form method='post' name='form' id='form'>

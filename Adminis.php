@@ -17,32 +17,63 @@ if (isset($_GET['method'])) {
     $method = $_GET['method'];
 }
 
-$rowSupervi = General::getConceptoSupervi();
+$rowSupervi = General::getConceptoSupervi($page,$method);
 $rowGeneral = General::getConceptoMateria($page,$method);
 
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
-        $idMat = $_POST['idMat'];
+    $rev = $_POST['rev'];
+     if ($method == 0){
+       
         $idConcep = $_POST['idConce'];
-        $idMatRev = $_POST['idMat_rev'];
-        $idConcepRev = $_POST['idConce_rev'];
+       
+        if(isset($_POST['mod'])){
+            header("location:AdminisDetail.php?idConcep=".$idConcep."&rev=".$rev);
+        }else if(isset($_POST['del'])){
+            echo '<script language="Javascript" type="text/javascript">';
+            echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+            echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
+        }
+     }else  if ($method == 1){
+        $idMat = $_POST['idMat'];
+       
+       if(isset($_POST['mod'])){
+            header("location:AdminisMateriaDetail.php?idMat=".$idMat."&rev=".$rev);
+        }else if(isset($_POST['del'])){
+
+            echo '<script language="Javascript" type="text/javascript">';
+            echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+            echo 'location.href = "DeleteMater.php?id='.$idMat.'"; } </script>';
+
+
+        }
+     }else  if ($method == 2){
+        $idAuto = $_POST['idAutores'];
+       
+       
     
-    if(isset($_POST['mod'])){
-        header("location:AdminisDetail.php?idMat=".$idMat."&idConcep=".$idConcep);
-    }else if(isset($_POST['del'])){
+        if(isset($_POST['mod'])){
+            header("location:AdminisDetail.php?idConcep=".$idConcep."&rev=".$rev);
+        }else if(isset($_POST['del'])){
+
+            echo '<script language="Javascript" type="text/javascript">';
+            echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+            echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
+        }
+     }else  if ($method == 3){
+         $idUser = $_POST['idUser'];
         
-        echo '<script language="Javascript" type="text/javascript">';
-        echo 'if (confirm("Estas seguro que quieres borrarlo")){';
-        echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
-        
-           
-    }else  if(isset($_POST['mod_rev'])){
-       header("location:AdminisDetailRev.php?idMat=".$idMatRev."&idConcep=".$idConcepRev);
-    }else if(isset($_POST['del_rev'])){
-        echo '<script language="Javascript" type="text/javascript">';
-        echo 'if (confirm("Estas seguro que quieres borrarlo")){';
-        echo 'location.href = "DeleteConcepRev.php?id='.$idConcepRev.'"; } </script>';
-    }
+        if(isset($_POST['mod'])){
+            header("location:AdminisDetail.php?idConcep=".$idConcep."&rev=".$rev);
+        }else if(isset($_POST['del'])){
+
+            echo '<script language="Javascript" type="text/javascript">';
+            echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+            echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
+
+
+        }
+     }
 }
 
 ?>
@@ -90,6 +121,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <body>
  <header id="header">
     <div class="container">
+        <a href="Logout.php" class="btn-services2">Cerrar Sesión</a>
       <div><h1><center>Zona Administración</center></h1></div>
       <nav id="nav-menu-container">
         <div id="myBtnContainer">
@@ -102,37 +134,89 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
       <!-- #nav-menu-container -->
     </div>
   </header>
+       <br>
+       <br>
+       <br>
+       <br>
 
 <br>
-<table frame="void" rules="rows" align='center'>
-	<tr>
-		<td>
-            <br>
+ <table frame="void" rules="rows" align='center' id="tableAdmiRev">
+	 <tr class="header">
             <?php
             if ($user_session['rol']!="ADMIN"){
-             echo "<table frame='void' rules='rows' align='center'>
-                    <tr>
-		              <td><a href=''>ID </a></td>
-		              <td><a href=''>Nombre Materia </a></td>
-		              <td><a href=''>Nombre Concepto </a></td>
-                      <td><a href=''>Validar </a></td>
-		             
-		          </tr>";
+                
+                    if ($method == 0){
+                        echo "<th style='width:10%;'><a href=''>ID </a></td>
+		                  <th style='width:40%;'><a href=''>Nombre Materia </a></td>
+		                  <th style='width:30%;'><a href=''>Nombre Concepto </a></td>";
+                    }else  if ($method == 1){
+                         echo "<th style='width:10%;'><a href=''>ID </a></td>
+		                  <th style='width:70%;'><a href=''>Nombre Materia </a></td>";
+		              
+                    }else  if ($method == 2){
+                         echo "<th style='width:10%;'><a href=''>ID </a></td>
+		                  <th style='width:10%;'><a href=''>Nombre  </a></td>
+                        <th style='width:30%;'><a href=''>Cargo  </a></td>
+                        <th style='width:20%;'><a href=''>Image  </a></td>
+                        <th style='width:20%;'><a href=''>Link  </a></td>";
+                    }else  if ($method == 3){
+                        echo "<th style='width:10%;'><a href=''>ID </a></td>
+		                  <th style='width:50%;'><a href=''>Nombre  </a></td>
+                          <th style='width:20%;'><a href=''>Rol  </a></td>";
+                    }
+		              
+                       echo " <th style='width:20%;'><a href=''>Validar </a></th>";
+                
                 foreach ($rowSupervi as $rowSuper)
                   {
                     echo "<tr>";
-                    echo "<td><input type='text' name=''/>".$rowSuper['idMateria']."</td>";
-                    echo "<td><input type='text' name=''/>".$rowSuper['nombreMateria']."</td>";
-                    echo "<td><input type='text' name=''/>".$rowSuper['nombreConcepto']."</td>";
-                    echo "<td><form method='post' name='form' id='form'>
-                    <input type='submit' name='mod_rev' value='Modificar'/>
-                    <input type='submit' name='del_rev' value='Eliminar'/>
-                    <input type='hidden' name='idMat_rev' value='".$rowSuper['idMateria']."'/>
-                    <input type='hidden' name='idConce_rev' value='".$rowSuper['idConcepto']."'/>
-                    </form></td>";
+                     if ($method == 0){
+                        echo "<td>".$rowSuper['idMateria']."</td>";
+                        echo "<td>".$rowSuper['nombreMateria']."</td>";
+                        echo "<td>".$rowSuper['nombreConcepto']."</td>";
+                        echo "<td><form method='post' name='form' id='form'>
+                        <input type='submit' name='mod' value='Modificar'/>
+                        <input type='submit' name='del' value='Eliminar'/>
+                        <input type='hidden' name='rev' value='true'/>
+                        <input type='hidden' name='idConce' value='".$rowSuper['idConcepto']."'/>
+                        </form></td>";
+                    }else  if ($method == 1){
+                        echo "<td>".$rowSuper['idMateria']."</td>";
+                        echo "<td>".$rowSuper['nombreMateria']."</td>";
+                        echo "<td><form method='post' name='form' id='form'>
+                         <input type='submit' name='mod' value='Modificar'/>
+                        <input type='submit' name='del' value='Eliminar'/>
+                         <input type='hidden' name='rev' value='true'/>
+                        <input type='hidden' name='idMat' value='".$rowSuper['idMateria']."'/>
+                        </form></td>";
+		              
+                    }else  if ($method == 2){
+                        echo "<td>".$rowSuper['idAutores']."</td>";
+                        echo "<td>".$rowSuper['nombreAutores']."</td>";
+                        echo "<td>".$rowSuper['cargoAutores']."</td>";
+                        echo "<td>".$rowSuper['imagenAutores']."</td>";
+                        echo "<td>".$rowSuper['linkAutores']."</td>";
+                        echo "<td><form method='post' name='form' id='form'>
+                         <input type='submit' name='mod' value='Modificar'/>
+                        <input type='submit' name='del' value='Eliminar'/>
+                         <input type='hidden' name='rev' value='true'/>
+                        <input type='hidden' name='idAuto' value='".$rowSuper['idAutores']."'/>
+                        </form></td>";
+                    }else  if ($method == 3){
+                        echo "<td>".$rowSuper['idUsuario']."</td>";
+                        echo "<td>".$rowSuper['nombreUsuario']."</td>";
+                        echo "<td>".$rowSuper['rol']."</td>";
+                        echo "<td><form method='post' name='form' id='form'>
+                        <input type='submit' name='mod' value='Modificar'/>
+                        <input type='submit' name='del' value='Eliminar'/>
+                        <input type='hidden' name='rev' value='true'/>
+                        <input type='hidden' name='idUser' value='".$rowSuper['idUsuario']."'/>
+                        </form></td>";
+                    
+                    }
+                    
                     echo "</tr>";
-                  }
-            
+                }
 		          
 		      echo "</table>";
             }
@@ -144,7 +228,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 	<tr>
 		<td><br>
-			<table align="center">
+			<!--table align="center">
 				<tr>
 					<td><input type="radio" name="language"
                                <?php if(isset($language) && $language=="ES") echo "checked";?> value="ES">ES</td>
@@ -153,7 +237,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                     <td><input type="radio" name="language"
                                <?php if(isset($language) && $language=="FR") echo "checked";?> value="FR">FR</td>
 				</tr>
-		</table>
+		</table-->
 		<br>
 		<!--table align="center">
 				<tr>
@@ -167,7 +251,10 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		<br></td-->
 	</tr>
 </table>
-
+   <br>
+       <br>
+       <br>
+       <br>
 
 
 <!--Concepto he pensado en estructurarlo primero accediendo alfabeticamente. El siguiente nivel es un listado de todos los conceptos de esa letra. Por último nivel mostrar el detalle de la letra.
@@ -216,6 +303,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
+                         <input type='hidden' name='rev' value='false'/>
                         <input type='hidden' name='idConce' value='".$rowGene['idConcepto']."'/>
                         </form></td>";
                     }else  if ($method == 1){
@@ -224,6 +312,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
+                         <input type='hidden' name='rev' value='false'/>
                         <input type='hidden' name='idMat' value='".$rowGene['idMateria']."'/>
                         </form></td>";
 		              
@@ -236,7 +325,8 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
-                        <input type='hidden' name='idMat' value='".$rowGene['idAutores']."'/>
+                         <input type='hidden' name='rev' value='false'/>
+                        <input type='hidden' name='idAutores' value='".$rowGene['idAutores']."'/>
                         </form></td>";
                     }else  if ($method == 3){
                         echo "<td>".$rowGene['idUsuario']."</td>";
@@ -245,7 +335,8 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
-                        <input type='hidden' name='idMat' value='".$rowGene['idUsuario']."'/>
+                         <input type='hidden' name='rev' value='false'/>
+                        <input type='hidden' name='idUser' value='".$rowGene['idUsuario']."'/>
                         </form></td>";
                     
                     }

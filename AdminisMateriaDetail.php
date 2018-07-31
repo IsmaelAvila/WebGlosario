@@ -5,31 +5,41 @@ require 'General.php';
 session_start();
 $user_session = General::getUserSession();
 
-$idconcepto = 1;
-if (isset($_GET['idConcep'])) {
-    $idconcepto = $_GET['idConcep'];
+$idMat = 1;
+if (isset($_GET['idMat'])) {
+    $idMat = $_GET['idMat'];
 }
-echo $idconcepto;
-$concepto = General::getConceptoSuperviGene($idconcepto);
+$rev = "false";
+if (isset($_GET['rev'])) {
+    $rev = $_GET['rev'];
+}
+
+if ($rev == "false"){
+    $materia = General::getMateria($idMat);
+}else{
+    $materia = General::getMateriaSupervi($idMat); 
+}
+
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
  
-        $nombre = $_POST['nombre'];
-        $materia = $_POST['materia'];
-        $def = $_POST['definicion'];
-        $vease = $_POST['vease'];
-        $fuente = $_POST['fuente'];
-        $compl = $_POST['compl'];
-        $doc = $_POST['doc'];
-        $audiovi = $_POST['audiovi'];
- 
-   
-    if(General::updateConceptRev($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
+       
+    $materiaName = $_POST['materia'];
         
-        header("location:Adminis.php"); 
-    }else{
-        $error = "No se ha podido actualizar los datos";
-    }
+ 
+   if (!rev){
+        if(General::updateMateria($user_session, $idMat,$materiaName)){
+            header("location:Adminis.php"); 
+        }else{
+            $error = "No se ha podido actualizar los datos";
+        }
+   }else{
+        if(General::updateMateriaRev($user_session, $idMat,$materiaName)){
+            header("location:Adminis.php"); 
+        }else{
+            $error = "No se ha podido actualizar los datos";
+        }
+   }
 }
 
 ?>
@@ -78,14 +88,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     <form method='post' name='form' id='form'>
 <?php
-    echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value=".$concepto['nombreConcepto']."></h1>";
-    echo "<h1>MATERIA <input type='text' name='materia' value=".$concepto['idMateria']."></h1>";
-     echo "<h1>DEFINICION <input type='text' name='definicion' value=".$concepto['definicionConcepto']."></h1>";
-     echo "<h1>VEASE <input type='text' name='vease' value=".$concepto['idVeaseConcepto']."></h1>";
-     echo "<h1>FUENTE <input type='text' name='fuente' value=".$concepto['fuenteConcepto']."></h1>";
-     echo "<h1>INFORMACION COMPLEMENTARIA <input type='text' name='compl' value=".$concepto['informacionComplementariaConcepto']."></h1>";
-    echo "<h1>DOCUMENTACION ADICIONAL <input type='text' name='doc' value=".$concepto['documentacionAdicionalConcepto']."></h1>";
-    echo "<h1>MATERIAL AUDIOVISUAL <input type='text' name='audiovi' value=".$concepto['materialAudiovisualConcepto']."></h1>";
+   
+    echo "<h1>MATERIA <input type='text' name='materia' value='".$materia['nombreMateria']."'></h1>";
+     
     ?>
         <input type='submit' name='mod' value='Modificar'/>
 </form>

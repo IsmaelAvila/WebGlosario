@@ -12,7 +12,7 @@ class General
     {
     }
 
-   
+   /********** General ***********/
     public static function getText($idText, $idLang)
     {
         $consulta = "SELECT `textLanguage` FROM `Language` WHERE idTextLanguage ='$idText' AND idLanguage='$idLang'";
@@ -29,35 +29,8 @@ class General
             return false;
         }
     }
-    
-    public static function getConceptoMateria($page, $method){
-        $start = 10 * ($page - 1);
-        $rows = 10;
-        if ($method == 0){
-             $consulta = "SELECT a.*, b.nombreMateria FROM concepto a LEFT JOIN materia b ON (b.idMateria = a.idMateria) LIMIT $start, $rows";
-        }else if ($method == 1){
-            $consulta = "SELECT * FROM materia LIMIT $start, $rows"; 
-        }else if ($method == 2){
-             $consulta = "SELECT * FROM autores LIMIT $start, $rows";
-        }else if ($method == 3){
-             $consulta = "SELECT * FROM usuarios LIMIT $start, $rows";
-        }
        
-        
-        try {
-            // Preparar sentencia
-             $comando = Database::getInstance()->getDb()->prepare($consulta);
-            // Ejecutar sentencia preparada
-             $comando->execute();
-            return $comando->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-        	echo $e;
-            return false;
-        }
-    }
-    
-     public static function getCountGeneral($method){
+    public static function getCountGeneral($method){
          if ($method == 0){
               $consulta = "SELECT COUNT(idMateria) FROM concepto";
          }else if ($method == 1){
@@ -80,54 +53,48 @@ class General
             return false;
         }
     }
-    public static function getAutores(){
-        $consulta = "SELECT * FROM Autores";
+    
+    public static function searchText($text){
+       
+      
+       $consulta = "SELECT a.*, b.nombreMateria FROM concepto a LEFT JOIN materia b ON (b.idMateria = a.idMateria) WHERE nombreConcepto LIKE '%$text%' OR definicionConcepto LIKE '%$text%' OR nombreConcepto LIKE '%$text%'";
+       
+        
         
         try {
+            
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
              $comando->execute();
-            return $comando->fetchAll(PDO::FETCH_ASSOC);
+           return $comando->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
+            
         	echo $e;
             return false;
         }
-    }
-    public static function getMateria(){
-        $consulta = "SELECT * FROM materia";
         
-        try {
-            // Preparar sentencia
-             $comando = Database::getInstance()->getDb()->prepare($consulta);
-            // Ejecutar sentencia preparada
-             $comando->execute();
-            return $comando->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-        	echo $e;
-            return false;
-        }
-    }
-   
-    public static function getConceptoGene(){
-        $consulta = "SELECT * FROM concepto ORDER BY nombreConcepto ASC";
-        
-        try {
-            // Preparar sentencia
-             $comando = Database::getInstance()->getDb()->prepare($consulta);
-            // Ejecutar sentencia preparada
-             $comando->execute();
-            return $comando->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-        	echo $e;
-            return false;
-        }
     }
     
-     public static function login($userName, $password){
+    public static function getVease($idVease){
+       $consulta = "SELECT * FROM veaseConcepto WHERE idVeaseConcepto='$idVease'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }   
+    
+    public static function login($userName, $password){
         $consulta = "SELECT * FROM usuarios WHERE nombreUsuario='$userName' AND password='$password'";
         
         try {
@@ -169,10 +136,20 @@ class General
             }
         
     }
-    public static function getConceptoSupervi(){
-       
-        $consulta = "SELECT a.*, b.nombreMateria FROM conceptoSupervi a LEFT JOIN materia b ON (b.idMateria = a.idMateria)";
+    
+    public static function getConceptoSupervi($page, $method){
         
+        $start = 10 * ($page - 1);
+        $rows = 10;
+        if ($method == 0){
+             $consulta = "SELECT a.*, b.nombreMateria FROM conceptoSupervi a LEFT JOIN materia b ON (b.idMateria = a.idMateria) LIMIT $start, $rows";
+        }else if ($method == 1){
+            $consulta = "SELECT * FROM materiaSupervi LIMIT $start, $rows"; 
+        }else if ($method == 2){
+             $consulta = "SELECT * FROM autoresSupervi LIMIT $start, $rows";
+        }else if ($method == 3){
+             $consulta = "SELECT * FROM usuariosSupervi LIMIT $start, $rows";
+        }
         try {
            
             // Preparar sentencia
@@ -189,6 +166,7 @@ class General
         }
         
     }
+    
     public static function getMateriaExtendida($idMateria){
        $consulta = "SELECT * FROM concepto WHERE idMateria='$idMateria'";
         
@@ -205,6 +183,52 @@ class General
         }
         
     }
+    
+     /***** Concepto ********/
+    
+     public static function getConceptoGene(){
+        $consulta = "SELECT * FROM concepto ORDER BY nombreConcepto ASC";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
+    public static function getConceptoMateria($page, $method){
+        $start = 10 * ($page - 1);
+        $rows = 10;
+        if ($method == 0){
+             $consulta = "SELECT a.*, b.nombreMateria FROM concepto a LEFT JOIN materia b ON (b.idMateria = a.idMateria) LIMIT $start, $rows";
+        }else if ($method == 1){
+            $consulta = "SELECT * FROM materia LIMIT $start, $rows"; 
+        }else if ($method == 2){
+             $consulta = "SELECT * FROM autores LIMIT $start, $rows";
+        }else if ($method == 3){
+             $consulta = "SELECT * FROM usuarios LIMIT $start, $rows";
+        }
+       
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
     public static function getConcepto($idConcepto){
        $consulta = "SELECT * FROM concepto WHERE idConcepto='$idConcepto'";
         
@@ -221,6 +245,7 @@ class General
         }
         
     }
+    
     public static function getConceptoSuperviGene($idConcepto){
        $consulta = "SELECT * FROM conceptoSupervi WHERE idConcepto='$idConcepto'";
         
@@ -237,7 +262,8 @@ class General
         }
         
     }
-     public static function deleteConcept($idConcepto){
+    
+    public static function deleteConcept($idConcepto){
        $consulta = "DELETE FROM concepto WHERE idConcepto='$idConcepto'";
         
         try {
@@ -252,6 +278,7 @@ class General
         }
         
     }
+    
     public static function deleteConceptRev($idConcepto){
        $consulta = "DELETE FROM conceptoSupervi WHERE idConcepto='$idConcepto'";
         
@@ -267,6 +294,7 @@ class General
         }
         
     }
+    
     public static function updateConcept($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi){
        
         if ($user_session['rol']== "ADMIN"){
@@ -371,11 +399,23 @@ class General
         
     }
      
-    public static function searchText($text){
+    
+    /***** Usuarios ********/
+    public static function updateUser($user_session, $idUser, $nombre, $pass, $rol){
        
-      
-       $consulta = "SELECT * FROM concepto WHERE nombreConcepto LIKE '%$text%'";
-       
+        if ($user_session['rol']== "ADMIN"){
+            $consulta = "INSERT INTO usuariosSupervi (`idUsuario`,`nombreUsuario`,`password`, `rol`) VALUES ('$idUser','$nombre','$pass','$rol')
+            ON DUPLICATE KEY UPDATE 
+            nombreUsuario='{$nombre}', 
+            password='{$pass}', 
+            rol='{$rol}'";
+        }else{
+            $consulta = "UPDATE usuarios SET 
+            nombreUsuario='{$nombre}', 
+            password='{$pass}',
+            rol='{$rol}'
+            WHERE idUsuario='{$idUser}'";
+        }
         
         
         try {
@@ -383,11 +423,274 @@ class General
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
-             $comando->execute();
-           return $comando->fetchAll(PDO::FETCH_ASSOC);
+            
+            return  $comando->execute();
 
         } catch (PDOException $e) {
             
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+    public static function updateUserRev($user_session, $idUser, $nombre, $pass, $rol){
+       
+            $consulta = "UPDATE usuarios SET 
+            nombreUsuario='{$nombre}', 
+            password='{$pass}',
+            rol='{$rol}'
+            WHERE idUsuario='{$idUser}'";
+        
+        
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            
+            if($comando->execute()){
+                return General::deleteConceptRev($idconcepto);
+            }else{
+                return false; 
+            }
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
+        
+    } 
+    
+    public static function deleteUser($idUser){
+       $consulta = "DELETE FROM usuarios WHERE idUsuario='$idUser'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+    /***** Autores ********/
+    public static function updateAutor($user_session, $idUser, $nombre, $pass, $rol){
+       
+        if ($user_session['rol']== "ADMIN"){
+            $consulta = "INSERT INTO usuariosSupervi (`idUsuario`,`nombreUsuario`,`password`, `rol`) VALUES ('$idUser','$nombre','$pass','$rol')
+            ON DUPLICATE KEY UPDATE 
+            nombreUsuario='{$nombre}', 
+            password='{$pass}', 
+            rol='{$rol}'";
+        }else{
+            $consulta = "UPDATE usuarios SET 
+            nombreUsuario='{$nombre}', 
+            password='{$pass}',
+            rol='{$rol}'
+            WHERE idUsuario='{$idUser}'";
+        }
+        
+        
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+    public static function updateAutorRev($user_session, $idUser, $nombre, $pass, $rol){
+       
+            $consulta = "UPDATE usuarios SET 
+            nombreUsuario='{$nombre}', 
+            password='{$pass}',
+            rol='{$rol}'
+            WHERE idUsuario='{$idUser}'";
+        
+        
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            
+            if($comando->execute()){
+                return General::deleteConceptRev($idconcepto);
+            }else{
+                return false; 
+            }
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
+        
+    } 
+    
+    public static function deleteAutor($idUser){
+       $consulta = "DELETE FROM usuarios WHERE idUsuario='$idUser'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+    public static function getAutores(){
+        $consulta = "SELECT * FROM Autores";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
+     /***** Materia ********/
+    public static function updateMateria($user_session, $idMateria, $nombre){
+       
+        if ($user_session['rol']== "ADMIN"){
+            $consulta = "INSERT INTO materiaSupervi (`idMateria`,`nombreMateria`) VALUES ('$idMateria','$nombre')
+            ON DUPLICATE KEY UPDATE 
+            nombreMateria='{$nombre}'";
+        }else{
+            $consulta = "UPDATE materia SET 
+            nombreMateria='{$nombre}'
+            WHERE idMateria='{$idMateria}'";
+        }
+        
+        
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+    public static function updateMateriaRev($user_session, $idMateria, $nombre){
+       
+           $consulta = "UPDATE materia SET 
+            nombreMateria='{$nombre}'
+            WHERE idMateria='{$idMateria}'";
+        
+        
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            
+            if($comando->execute()){
+                return General::deleteMateria($idMateria);
+            }else{
+                return false; 
+            }
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
+        
+    } 
+    
+    public static function deleteMateria($idMateria){
+       $consulta = "DELETE FROM materia WHERE idMateria='$idMateria'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+    public static function getMateriaGeneral(){
+        $consulta = "SELECT * FROM materia";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
+    public static function getMateriaSupervi($idMat){
+       $consulta = "SELECT * FROM materiaSupervi WHERE idMateria='$idMat'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+    public static function getMateria($idMat){
+       $consulta = "SELECT * FROM materia WHERE idMateria='$idMat'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            $comando->execute();
+            return $comando->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
         	echo $e;
             return false;
         }

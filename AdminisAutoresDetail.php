@@ -12,14 +12,11 @@ if (isset($_GET['idConcep'])) {
 $rev = "false";
 if (isset($_GET['rev'])) {
     $rev = $_GET['rev'];
-     
 }
 
 if ($rev == "false"){
-    
     $concepto = General::getConcepto($idconcepto);
 }else{
-   
     $concepto = General::getConceptoSuperviGene($idconcepto); 
 }
 
@@ -98,14 +95,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     <form method='post' name='form' id='form'>
 <?php
-    echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
-    echo "<h1>MATERIA <input type='text' name='materia' value='".$concepto['idMateria']."'></h1>";
-     echo "<h1>DEFINICION <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h1>";
-     echo "<h1>VEASE <input type='text' name='vease' value='".$concepto['idVeaseConcepto']."'></h1>";
-     echo "<h1>FUENTE <input type='text' name='fuente' value='".$concepto['fuenteConcepto']."'></h1>";
-     echo "<h1>INFORMACION COMPLEMENTARIA <input type='text' name='compl' value='".$concepto['informacionComplementariaConcepto']."'></h1>";
-    echo "<h1>DOCUMENTACION ADICIONAL <input type='text' name='doc' value='".$concepto['documentacionAdicionalConcepto']."'></h1>";
-    echo "<h1>MATERIAL AUDIOVISUAL <input type='text' name='audiovi' value='".$concepto['materialAudiovisualConcepto']."'></h1>";
+    echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value=".$concepto['nombreConcepto']."></h1>";
+    echo "<h1>MATERIA <input type='text' name='materia' value=".$concepto['idMateria']."></h1>";
+     echo "<h1>DEFINICION <input type='text' name='definicion' value=".$concepto['definicionConcepto']."></h1>";
+     echo "<h1>VEASE <input type='text' name='vease' value=".$concepto['idVeaseConcepto']."></h1>";
+     echo "<h1>FUENTE <input type='text' name='fuente' value=".$concepto['fuenteConcepto']."></h1>";
+     echo "<h1>INFORMACION COMPLEMENTARIA <input type='text' name='compl' value=".$concepto['informacionComplementariaConcepto']."></h1>";
+    echo "<h1>DOCUMENTACION ADICIONAL <input type='text' name='doc' value=".$concepto['documentacionAdicionalConcepto']."></h1>";
+    echo "<h1>MATERIAL AUDIOVISUAL <input type='text' name='audiovi' value=".$concepto['materialAudiovisualConcepto']."></h1>";
     ?>
         <input type='submit' name='mod' value='Modificar'/>
 </form>
