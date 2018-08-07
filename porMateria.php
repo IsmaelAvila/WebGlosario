@@ -3,7 +3,7 @@
 require 'General.php';
 
 function getMateriaGen(){
-    $row = General::getMateria();
+    $row = General::getMateriaGeneral();
     return $row;
 }
 
@@ -21,12 +21,12 @@ function getTextGeneral($idText){
 /*function getRowConceptoNombreMateria(){
      $row = General::getConceptoMateria();
     return $row;
-}*/
+}
 
 function getAutores(){
     $row = General::getAutores();
     return $row;
-}
+}*/
 
 ?>
 
