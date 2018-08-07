@@ -84,7 +84,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
             function load_data(query){
                 
                 $.ajax({
-                    url:"backendSearchVease.php",
+                    url:"backendSearch.php",
                     method:"POST",
                     data:{query:query},
                     success:function(data){
