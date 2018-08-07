@@ -5,9 +5,9 @@ require 'General.php';
 session_start();
 $user_session = General::getUserSession();
 
-$idconcepto = 1;
-if (isset($_GET['idConcep'])) {
-    $idconcepto = $_GET['idConcep'];
+$idAutor = 1;
+if (isset($_GET['idAuto'])) {
+    $idAutor = $_GET['idAuto'];
 }
 $rev = "false";
 if (isset($_GET['rev'])) {
@@ -15,38 +15,91 @@ if (isset($_GET['rev'])) {
 }
 
 if ($rev == "false"){
-    $concepto = General::getConcepto($idconcepto);
+    $autor = General::getAutor($idAutor);
 }else{
-    $concepto = General::getConceptoSuperviGene($idconcepto); 
+    $autor = General::getAutorSupervi($idAutor); 
 }
 
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
- 
+     
+    if (isset($_POST['submitMod'])){
+       
         $nombre = $_POST['nombre'];
-        $materia = $_POST['materia'];
-        $def = $_POST['definicion'];
-        $vease = $_POST['vease'];
-        $fuente = $_POST['fuente'];
-        $compl = $_POST['compl'];
-        $doc = $_POST['doc'];
-        $audiovi = $_POST['audiovi'];
- 
-   if (!rev){
-    if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
-        
-        header("location:Adminis.php"); 
-    }else{
-        $error = "No se ha podido actualizar los datos";
-    }
-   }else{
-        if(General::updateConceptRev($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
-        
-        header("location:Adminis.php"); 
-    }else{
-        $error = "No se ha podido actualizar los datos";
-    }
-   }
+        $cargo = $_POST['cargo'];
+        $imagen = $_POST['imagen'];
+        $link = $_POST['link'];
+       if (!rev){
+         
+            if(General::updateAutor($user_session, $idAutor,$nombre,$cargo,$imagen,$link)){
+
+                header("location:Adminis.php"); 
+            }else{
+               
+                $error = "No se ha podido actualizar los datos";
+            }
+        }else{
+          
+                if(General::updateAutorRev($user_session, $idAutor,$nombre,$cargo,$imagen,$link)){
+
+                header("location:Adminis.php"); 
+            }else{
+                   
+                $error = "No se ha podido actualizar los datos";
+            }
+        }
+    } else if (isset($_POST['submitImg'])){
+   
+        $target_dir = "img/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        // Check if image file is a actual image or fake image
+
+        if(isset($_POST["submit"])) {
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if($check !== false) {
+                echo "File is an image - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                $error = "File is not an image.";
+                $uploadOk = 0;
+            }
+        }
+
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            $error = "Sorry, file already exists.";
+            $uploadOk = 0;
+        }
+        // Check file size
+        if ($_FILES["fileToUpload"]["size"] > 500000) {
+            $error = "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+        // Allow certain file formats
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif" ) {
+            $error  ="Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            $error .= "Sorry, your file was not uploaded.";
+        // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                echo '<script language="Javascript" type="text/javascript">';
+            echo 'alert("The file '. basename( $_FILES["fileToUpload"]["name"]). ' has been uploaded"){';
+            echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
+                //echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                $autor['imagenAutores'] = "img/".basename( $_FILES["fileToUpload"]["name"]);
+            } else {
+                $error = "Sorry, there was an error uploading your file.";
+            }
+        }
+    }   
+       
 }
 
 ?>
@@ -93,18 +146,18 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 <body>
     
-    <form method='post' name='form' id='form'>
+    <form method='post' name='form' id='form' enctype='multipart/form-data'>
 <?php
-    echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value=".$concepto['nombreConcepto']."></h1>";
-    echo "<h1>MATERIA <input type='text' name='materia' value=".$concepto['idMateria']."></h1>";
-     echo "<h1>DEFINICION <input type='text' name='definicion' value=".$concepto['definicionConcepto']."></h1>";
-     echo "<h1>VEASE <input type='text' name='vease' value=".$concepto['idVeaseConcepto']."></h1>";
-     echo "<h1>FUENTE <input type='text' name='fuente' value=".$concepto['fuenteConcepto']."></h1>";
-     echo "<h1>INFORMACION COMPLEMENTARIA <input type='text' name='compl' value=".$concepto['informacionComplementariaConcepto']."></h1>";
-    echo "<h1>DOCUMENTACION ADICIONAL <input type='text' name='doc' value=".$concepto['documentacionAdicionalConcepto']."></h1>";
-    echo "<h1>MATERIAL AUDIOVISUAL <input type='text' name='audiovi' value=".$concepto['materialAudiovisualConcepto']."></h1>";
+    echo "<h1>NOMBRE AUTOR <input type='text' name='nombre' value='".$autor['nombreAutores']."'></h1>";
+    echo "<h1>CARGO <input type='text' name='cargo' value='".$autor['cargoAutores']."'></h1>";
+     echo "<h1>IMAGEN <input type='text' name='imagen' value='".$autor['imagenAutores']."'></h1>
+    Select image to upload:
+    <input type='file' name='fileToUpload' id='fileToUpload'>
+    <input type='submit' value='Upload Image' name='submitImg'>";
+     echo "<h1>LINK <input type='text' name='link' value='".$autor['linkAutores']."'></h1>";
+    
     ?>
-        <input type='submit' name='mod' value='Modificar'/>
+        <input type='submit' name='submitMod' value='Modificar'/>
 </form>
      <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
 </body>

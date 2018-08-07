@@ -91,9 +91,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     <form method='post' name='form' id='form'>
 <?php
-    echo "<h1>NOMBRE <input type='text' name='nombre' value=".$user['nombreUsuario']."></h1>";
-    echo "<h1>PASSWORD <input type='text' name='pass' value=".$user['password']."></h1>";
-     echo "<h1>ROL <input type='text' name='rol' value=".$user['rol']."></h1>";
+    echo "<h1>NOMBRE <input type='text' name='nombre' value='".$user['nombreUsuario']."'></h1>";
+    echo "<h1>PASSWORD <input type='text' name='pass' value='".$user['password']."'></h1>";
+     echo "<h1>ROL <input type='text' name='rol' value='".$user['rol']."'></h1>";
     ?>
         <input type='submit' name='mod' value='Modificar'/>
 </form>

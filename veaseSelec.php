@@ -2,6 +2,25 @@
 <?php
 
 require 'General.php';
+ 
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+   
+      $aConce = $_POST['concepto'];
+    
+      if(!empty($aDoor))
+      {
+        echo("No has seleccionado nada");
+      }
+      else
+      {
+        $N = count($aConce);
+        echo("Has seleccionado $N conceptos(s): ");
+        for($i=0; $i < $N; $i++)
+        {
+          echo($aConce[$i] . " ");
+        }
+      }
+}
 
 ?>
 <html lang="es">
@@ -48,7 +67,7 @@ require 'General.php';
 <body>
  <header id="header">
     <div class="container">
-      <div><h1><center>Buscador</center></h1></div>
+      <div><h1><center>Vease</center></h1></div>
       
     </div>
   </header>

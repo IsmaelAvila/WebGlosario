@@ -16,16 +16,18 @@ if (isset($_GET['rev'])) {
 }
 
 if ($rev == "false"){
-    
     $concepto = General::getConcepto($idconcepto);
 }else{
    
     $concepto = General::getConceptoSuperviGene($idconcepto); 
 }
 
+$rowVease = General::getVease($concepto['idVeaseConcepto']);
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
- 
+    
+     if (isset($_POST['mod'])){
+        
         $nombre = $_POST['nombre'];
         $materia = $_POST['materia'];
         $def = $_POST['definicion'];
@@ -35,21 +37,29 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $doc = $_POST['doc'];
         $audiovi = $_POST['audiovi'];
  
-   if (!rev){
-    if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
+        if (!rev){
+            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
         
-        header("location:Adminis.php"); 
-    }else{
-        $error = "No se ha podido actualizar los datos";
-    }
-   }else{
-        if(General::updateConceptRev($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
+                header("location:Adminis.php"); 
+            }else{
+                $error = "No se ha podido actualizar los datos";
+            }
+        }else{
+            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi)){
         
-        header("location:Adminis.php"); 
-    }else{
-        $error = "No se ha podido actualizar los datos";
-    }
-   }
+                header("location:Adminis.php"); 
+            }else{
+                $error = "No se ha podido actualizar los datos";
+            }
+        }
+     }else if (isset($_POST['addVease'])){
+           
+            echo "<script>";
+            echo "window.open('veaseSelec.php?idVease=".$concepto['idVeaseConcepto']."','_blank', 'width=700,height=700')";
+            echo "</script>";
+     }
+ 
+       
 }
 
 ?>
@@ -100,9 +110,22 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <?php
     echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
     echo "<h1>MATERIA <input type='text' name='materia' value='".$concepto['idMateria']."'></h1>";
-     echo "<h1>DEFINICION <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h1>";
-     echo "<h1>VEASE <input type='text' name='vease' value='".$concepto['idVeaseConcepto']."'></h1>";
-     echo "<h1>FUENTE <input type='text' name='fuente' value='".$concepto['fuenteConcepto']."'></h1>";
+    echo "<h1>DEFINICION <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h1>";
+    echo "<h1>VEASE</h1>";
+    
+                       
+    foreach ($rowVease as $rowVer)
+   {
+       $idConceptoRow = $rowVer['idConcepto'];
+
+       $concepto = General::getConcepto($idConceptoRow);
+
+        echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".$concepto['nombreConcepto']." </a></li>";
+
+    }
+  
+     echo " <input type='submit' name='addVease' value='Añadir Conceptos'/>";
+	 echo "<h1>FUENTE <input type='text' name='fuente' value='".$concepto['fuenteConcepto']."'></h1>";
      echo "<h1>INFORMACION COMPLEMENTARIA <input type='text' name='compl' value='".$concepto['informacionComplementariaConcepto']."'></h1>";
     echo "<h1>DOCUMENTACION ADICIONAL <input type='text' name='doc' value='".$concepto['documentacionAdicionalConcepto']."'></h1>";
     echo "<h1>MATERIAL AUDIOVISUAL <input type='text' name='audiovi' value='".$concepto['materialAudiovisualConcepto']."'></h1>";

@@ -6,10 +6,9 @@ session_start();
 
 $user_session = General::getUserSession();
 
-$arrayTitulo = array();
-
 $page = 1;
 $method = 0;
+
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
 }
@@ -53,23 +52,23 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
        
     
         if(isset($_POST['mod'])){
-            header("location:AdminisDetail.php?idConcep=".$idConcep."&rev=".$rev);
+            header("location:AdminisAutoresDetail.php?idAuto=".$idAuto."&rev=".$rev);
         }else if(isset($_POST['del'])){
 
             echo '<script language="Javascript" type="text/javascript">';
             echo 'if (confirm("Estas seguro que quieres borrarlo")){';
-            echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
+            echo 'location.href = "DeleteAutor.php?id='.$idAuto.'"; } </script>';
         }
      }else  if ($method == 3){
          $idUser = $_POST['idUser'];
         
         if(isset($_POST['mod'])){
-            header("location:AdminisDetail.php?idConcep=".$idConcep."&rev=".$rev);
+            header("location:AdminisUserDetail.php?idUser=".$idUser."&rev=".$rev);
         }else if(isset($_POST['del'])){
 
             echo '<script language="Javascript" type="text/javascript">';
             echo 'if (confirm("Estas seguro que quieres borrarlo")){';
-            echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
+            echo 'location.href = "DeleteUser.php?id='.$idUser.'"; } </script>';
 
 
         }
@@ -138,8 +137,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
        <br>
        <br>
        <br>
-
-<br>
+    <br>
  <table frame="void" rules="rows" align='center' id="tableAdmiRev">
 	 <tr class="header">
             <?php
@@ -223,8 +221,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             ?>
 		
 		<br>
-        </td>
-	</tr>
+       
 
 	<tr>
 		<td><br>
@@ -261,6 +258,10 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 En el caso de la materia, sería mostrar listado de todas las materias y al pulsar en una de ellas mandarte al detalle para modificarlo.-->
 <input type="text" id="searchInput" onkeyup="search()" placeholder="Buscar....">
+            <form method='post' name='formAdd' id='formAdd'>
+                        <input type='submit' name='add' value='Añadir'/>
+            </form>
+    
     <table frame="void" rules="rows" align='center' id="tableAdmi">
     
                    <tr class="header">
@@ -376,7 +377,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
   <script src="js/custom.js"></script>
 
   <script src="contactform/contactform.js"></script>
-    <script>
+<script>
 function search() {
   // Declare variables
   var input, filter, table, tr, td, i;
