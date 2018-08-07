@@ -117,7 +117,7 @@ function getAutores(){
           <li><a href="#services"><?php echo getTextGeneral(8); ?></a></li>
           <li><a href="#team"><?php echo getTextGeneral(9); ?></a></li>
           <li><a href="#contact"><?php echo getTextGeneral(10); ?></a></li>
-          <li><a href=""><?php echo getTextGeneral(11); ?></a></li>
+          <li><a href="buscador.php"><?php echo getTextGeneral(11); ?></a></li>
           <li><a href="<?php echo 'index.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
           <li><a href="<?php echo 'index.php?lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
           <li><a href="<?php echo 'index.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
@@ -291,13 +291,9 @@ function getAutores(){
           <div class="form">
             <div id="sendmessage"><?php echo getTextGeneral(31); ?></div>
             <div id="errormessage"></div>
-            <form action="enviarCorreo.php" method="POST" >
+            <form action="" method="POST" >
               <div class="form-group">
                 <input type="text" name="name" class="form-control" id="name" placeholder="<?php echo getTextGeneral(22); ?>" data-rule="minlen:4" data-msg="<?php echo getTextGeneral(27); ?>" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <input type="email" class="form-control" name="email" id="email" placeholder="<?php echo getTextGeneral(23); ?>" data-rule="email" data-msg="<?php echo getTextGeneral(28); ?>" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
@@ -308,8 +304,10 @@ function getAutores(){
                 <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="<?php echo getTextGeneral(30); ?>" placeholder="<?php echo getTextGeneral(25); ?>"></textarea>
                 <div class="validation"></div>
               </div>
-              <div class="text-center"><a href="mailto:no-one@snai1mai1.com?subject=look at this website&body=Hi,I found this website
-and thought you might like it http://www.geocities.com/wowhtml/">tell a friend</a></div>
+              
+              <div class="text-center"><button type="submit"><a href="mailto:ismaelavilaojeda@gmail.com?subject=.$subject.&body=Hi,I found this website
+and thought you might like it http://www.geocities.com/wowhtml/"><?php echo getTextGeneral(26); ?></a></button></div>
+
             </form>
           </div>
         </div>

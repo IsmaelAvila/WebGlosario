@@ -121,9 +121,9 @@ if (isset($_GET['lang'])) {
     <div class="container wow fadeInUp">
       <div class="row">
         <div class="col-md-12">
-          <h3 class="section-title">Glosario por Materia</h3>
+          <h3 class="section-title">nombre materia</h3>
           <div class="section-title-divider"></div>
-          <p class="section-description">Glosario de materias relacionadas:</p>
+          <p class="section-description">- Concepto -</p>
         </div>
       </div>
 
@@ -134,7 +134,7 @@ if (isset($_GET['lang'])) {
          foreach ($conceptos as $concepto)
           {
          echo '<div class="col-md-4 service-item2">';
-         echo '<div class="service-icon"><i class="fa fa-buysellads"></i></div>';
+         echo '<div class="service-icon"><i class="fa fa-file"></i></div>';
          echo '<h4 class="service-title"><a href="Concepto.php?id='.$concepto["idConcepto"].'">'. $concepto["nombreConcepto"].'</a></h4>';
          echo '<p class="service-description">Pulsa en '. $concepto["nombreConcepto"] .' y podrás acceder al contenido del concepto.</p></div>';
         }

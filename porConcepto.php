@@ -128,8 +128,8 @@ function getAutores(){
          foreach ($conceptos as $concepto)
           {
          echo '<div class="col-md-4 service-item2">';
-         echo '<div class="service-icon"><i class="fa fa-buysellads"></i></div>';
-         echo '<h4 class="service-title"><a href="Concepto.php?id='.$concepto["idConcepto"].'">'. $concepto["nombreConcepto"].'</a></h4>';
+         echo '<div class="service-icon"><i class="fa fa-file"></i></div>';
+         echo '<h4 class="service-title"><a href="concepto.php?id='.$concepto["idConcepto"].'">'. $concepto["nombreConcepto"].'</a></h4>';
          echo '<p class="service-description">Pulsa en '. $concepto["nombreConcepto"] .' y podrás acceder al contenido de la materia.</p></div>';
         }
           ?>
@@ -146,7 +146,7 @@ function getAutores(){
       <div class="row">
         <div class="col-md-12">
           <div class="copyright">
-            &copy; Copyright <strong>Universidad de Córdoba</strong>. Realizado por Ismael Ávila Ojeda
+            &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2019</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
           </div>
           <div class="credits">
             <img src="img/logoUco.png" alt="" title="" width="50" height="30" />
