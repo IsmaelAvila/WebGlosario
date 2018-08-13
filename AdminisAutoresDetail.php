@@ -146,15 +146,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 <body>
     
-    <form method='post' name='form' id='form' enctype='multipart/form-data'>
+    <form method='post' name='form' id='form' enctype='multipart/form-data' align='center'>
 <?php
-    echo "<h1>NOMBRE AUTOR <input type='text' name='nombre' value='".$autor['nombreAutores']."'></h1>";
-    echo "<h1>CARGO <input type='text' name='cargo' value='".$autor['cargoAutores']."'></h1>";
-     echo "<h1>IMAGEN <input type='text' name='imagen' value='".$autor['imagenAutores']."'></h1>
+echo "<center><h2><b><u>Detalle Autores</u></b></h2></center>";
+    echo "<h3>Nombre autor: <input type='text' name='nombre' value='".$autor['nombreAutores']."'></h3>";
+    echo "<h3>Cargo: <input type='text' name='cargo' value='".$autor['cargoAutores']."'></h3>";
+     echo "<h3>Imagen: <input type='text' name='imagen' value='".$autor['imagenAutores']."'></h3>
     Select image to upload:
     <input type='file' name='fileToUpload' id='fileToUpload'>
     <input type='submit' value='Upload Image' name='submitImg'>";
-     echo "<h1>LINK <input type='text' name='link' value='".$autor['linkAutores']."'></h1>";
+     echo "<h3>Link:  <input type='text' name='link' value='".$autor['linkAutores']."'></h3>";
     
     ?>
         <input type='submit' name='submitMod' value='Modificar'/>

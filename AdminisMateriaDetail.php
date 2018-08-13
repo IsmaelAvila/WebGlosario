@@ -86,10 +86,10 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 <body>
     
-    <form method='post' name='form' id='form'>
+    <form method='post' name='form' id='form' align='center'>
 <?php
-   
-    echo "<h1>MATERIA <input type='text' name='materia' value='".$materia['nombreMateria']."'></h1>";
+   echo "<center><h2><b><u>Detalle Materia</u></b></h2></center>";
+    echo "<h3>Materia:  <input type='text' name='materia' value='".$materia['nombreMateria']."'></h3>";
      
     ?>
         <input type='submit' name='mod' value='Modificar'/>
