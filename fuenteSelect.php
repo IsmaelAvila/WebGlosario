@@ -2,27 +2,23 @@
 <?php
 
 require 'General.php';
-$idVease = 1;
-if (isset($_GET['idVease'])) {
-    $idVease = $_GET['idVease'];
+$idFuente = 1;
+if (isset($_GET['idFuente'])) {
+    $idVease = $_GET['idFuente'];
 }
- 
+ $fuente = General::getFuente($idFuente);
 if($_SERVER["REQUEST_METHOD"]=="POST"){
    
-      $aConce = $_POST['concepto'];
-    
-      if(!empty($aDoor))
-      {
-        echo("No has seleccionado nada");
-      }
-      else
-      {
+    if (isset($_POST['addFuente'])){  
+       
         echo "<script>";
-        echo "var arrayCon = " .json_encode($aConce).";";
-        echo "window.opener.selection(arrayCon);";
+        echo "var nombreFuent = " . json_encode($_POST['nombre']). ";";
+        echo "var linkFuent = ". json_encode($_POST['link']). ";";
+        echo "window.opener.changeFuente(nombreFuent, linkFuent);";
         echo "window.close();";
         echo "</script>";
-      }
+    }
+      
 }
 
 ?>
@@ -82,8 +78,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <!--Concepto he pensado en estructurarlo primero accediendo alfabeticamente. El siguiente nivel es un listado de todos los conceptos de esa letra. Por último nivel mostrar el detalle de la letra.
 
 En el caso de la materia, sería mostrar listado de todas las materias y al pulsar en una de ellas mandarte al detalle para modificarlo.-->
-<input type="text" id="searchInput" name='search' placeholder="Buscar....">
-    <div id="result"></div>
+<form method='post' name='form' id='form'>
+<?php
+    
+        echo "<h1>NOMBRE FUENTE <input type='text' name='nombre' value='".$fuente['nombreFuente']."'></h1>";
+        echo "<h1>LINK FUENTE <input type='text' name='link' value='".$fuente['linkFuente']."'></h1>";
+        echo " <input type='submit' name='addFuente' value='Añadir Fuente'/>";
+     
+?>
+    
+    </form>
     
     
     <!-- Required JavaScript Libraries -->
@@ -101,28 +105,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
 
   <script src="contactform/contactform.js"></script>
     <script>
-        $(document).ready(function(){
-            load_data();
-            function load_data(query){
-                var idVe = <?php echo $idVease; ?>;
-                $.ajax({
-                    url:"backendSearchVease.php",
-                    method:"POST",
-                    data:{query:query, idVease:idVe},
-                    success:function(data){
-                        $('#result').html(data);
-                    }
-                });
-            }
-            $('#searchInput').keyup(function(){
-                var search = $(this).val();
-                if(search != ''){
-                    load_data(search);
-                }else{
-                    load_data();
-                }
-            });
-        });
+       
   
 </script>
 </body>

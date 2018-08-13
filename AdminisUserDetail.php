@@ -16,9 +16,9 @@ if (isset($_GET['rev'])) {
 }
 
 if ($rev == "false"){
-    $user = General::getConcepto($iduser);
+    $user = General::getUser($iduser);
 }else{
-    $user = General::getConceptoSuperviGene($iduser); 
+    $user = General::getUserSupervi($iduser); 
 }
 
 

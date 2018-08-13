@@ -2,6 +2,9 @@
 
 require 'General.php';
 session_start();
+
+
+
 echo "<form method='post' name='form' id='form'>";
 echo "<table frame='void' rules='rows' align='center' id='tableAdmi'>
                    <tr class='header'>
@@ -9,6 +12,11 @@ echo "<table frame='void' rules='rows' align='center' id='tableAdmi'>
 		              <th style='width:30%;'><a href=''>Nombre Concepto </a></th>
                       <th style='width:20%;'><a href=''>Seleccionar </a></th>
                   </tr>";
+if (isset($_POST['idVease'])) {
+  $idVease = $_POST['idVease'];
+}
+$rowVeases = General::getVease($idVease);
+
 if (isset($_POST['query'])) {
   
     $rows = General::searchText($_POST['query']);
@@ -20,7 +28,15 @@ if (isset($_POST['query'])) {
             echo "<td>".$row['idConcepto']."</td>";
             echo "<td>".$row['nombreConcepto']."</td>";
        
-            echo "<td><input type='checkbox' name='concepto[]' value='".$row['idConcepto']."' /></td>";
+            echo "<td><input type='checkbox' name='concepto[]' value='".$row['idConcepto']."'";
+            foreach ($rowVeases as $rowVease){
+                if($row['idConcepto'] == $rowVease['idConcepto']){
+                    echo " checked ";
+                    break;
+                }  
+            }        
+        
+            echo"/></td>";
 
 
         echo "</tr>";
@@ -30,15 +46,22 @@ if (isset($_POST['query'])) {
      echo "<input type='submit' name='Confirmar' value='Confirmar'/></form>";
    
 }else{
-    
+   
     $rowGeneral = General::getConceptoGene();
     foreach ($rowGeneral as $row)
       {
         echo "<tr>";
 
-            echo "<td>".$row['idConcepto']."</td>";
-            echo "<td>".$row['nombreConcepto']."</td>";
-            echo "<td><input type='checkbox' name='concepto[]' value='".$row['idConcepto']."' /></td>";
+        echo "<td>".$row['idConcepto']."</td>";
+        echo "<td>".$row['nombreConcepto']."</td>";
+        echo "<td><input type='checkbox' name='concepto[]' value='".$row['idConcepto']."'";
+        foreach ($rowVeases as $rowVease){
+                if($row['idConcepto'] == $rowVease['idConcepto']){
+                    echo " checked ";
+                    break;
+                }  
+            } 
+        echo "/></td>";
 
 
         echo "</tr>";

@@ -14,7 +14,24 @@ class General
 
    /********** General ***********/
     
-      public static function getUserSession(){
+    public static function getText($idText, $idLang)
+    {
+        $consulta = "SELECT `textLanguage` FROM `Language` WHERE idTextLanguage ='$idText' AND idLanguage='$idLang'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
+    public static function getUserSession(){
        
         if (!isset($_SESSION['login_user'])){
            header("location:login.php"); 
@@ -39,24 +56,7 @@ class General
             }  
             }
         
-    }
-    
-    public static function getText($idText, $idLang)
-    {
-        $consulta = "SELECT `textLanguage` FROM `Language` WHERE idTextLanguage ='$idText' AND idLanguage='$idLang'";
-        
-        try {
-            // Preparar sentencia
-             $comando = Database::getInstance()->getDb()->prepare($consulta);
-            // Ejecutar sentencia preparada
-             $comando->execute();
-            return $comando->fetch(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-        	echo $e;
-            return false;
-        }
-    }
+    }   
        
     public static function getCountGeneral($method){
          if ($method == 0){
@@ -105,22 +105,7 @@ class General
         
     }
     
-    public static function getVease($idVease){
-       $consulta = "SELECT * FROM veaseConcepto WHERE idVeaseConcepto='$idVease'";
-        
-        try {
-            // Preparar sentencia
-             $comando = Database::getInstance()->getDb()->prepare($consulta);
-            // Ejecutar sentencia preparada
-             $comando->execute();
-            return $comando->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-        	echo $e;
-            return false;
-        }
-        
-    }   
+    
     
     public static function login($userName, $password){
         $consulta = "SELECT * FROM usuarios WHERE nombreUsuario='$userName' AND password='$password'";
@@ -136,11 +121,7 @@ class General
         	echo $e;
             return false;
         }
-    }
-    
-  
-    
-   
+    } 
     
     public static function getMateriaExtendida($idMateria){
        $consulta = "SELECT * FROM concepto WHERE idMateria='$idMateria'";
@@ -160,7 +141,7 @@ class General
     }
     
      /***** Concepto ********/
-     public static function getConceptoSupervi($page, $method){
+    public static function getConceptoSupervi($page, $method){
         
         $start = 10 * ($page - 1);
         $rows = 10;
@@ -189,7 +170,8 @@ class General
         }
         
     }
-     public static function getConceptoMateria($page, $method){
+    
+    public static function getConceptoMateria($page, $method){
         $start = 10 * ($page - 1);
         $rows = 10;
         if ($method == 0){
@@ -230,9 +212,7 @@ class General
         	echo $e;
             return false;
         }
-    }
-    
-   
+    }  
     
     public static function getConcepto($idConcepto){
        $consulta = "SELECT * FROM concepto WHERE idConcepto='$idConcepto'";
@@ -302,28 +282,36 @@ class General
     
     public static function updateConcept($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi){
        
-        if ($user_session['rol']== "ADMIN"){
-            $consulta = "INSERT INTO conceptoSupervi (`idConcepto`,`nombreConcepto`, `idMateria`, `definicionConcepto`,`idVeaseConcepto`,`fuenteConcepto`,`informacionComplementariaConcepto`,`documentacionAdicionalConcepto`,`materialAudiovisualConcepto`) VALUES ('$idconcepto','$nombre','$materia','$def','$vease','$fuente','$compl','$doc','$audiovi')
-            ON DUPLICATE KEY UPDATE 
-            nombreConcepto='{$nombre}', 
-            idMateria='{$materia}', 
-            definicionConcepto='{$def}',
-            idVeaseConcepto='{$vease}',
-            fuenteConcepto='{$fuente}',
-            informacionComplementariaConcepto='{$compl}',
-            documentacionAdicionalConcepto='{$doc}',
-            materialAudiovisualConcepto='{$audiovi}'";
+        if($idconcepto == 0){
+             if ($user_session['rol']== "ADMIN"){
+                 $table = "conceptoSupervi";
         }else{
-            $consulta = "UPDATE concepto SET nombreConcepto='{$nombre}', 
-            idMateria='{$materia}', 
-            definicionConcepto='{$def}',
-            idVeaseConcepto='{$vease}',
-            fuenteConcepto='{$fuente}',
-            informacionComplementariaConcepto='{$compl}',
-            documentacionAdicionalConcepto='{$doc}',
-            materialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
+                $table = "concepto";
         }
-        
+            $consulta = "INSERT INTO ".$table." (`nombreConcepto`, `idMateria`, `definicionConcepto`,`idVeaseConcepto`,`idFuenteConcepto`,`informacionComplementariaConcepto`,`documentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$nombre','$materia','$def','$vease','$fuente','$compl','$doc','$audiovi')";
+        }else{
+            if ($user_session['rol']== "ADMIN"){
+                $consulta = "INSERT INTO conceptoSupervi (`idConcepto`,`nombreConcepto`, `idMateria`, `definicionConcepto`,`idVeaseConcepto`,`idFuenteConcepto`,`informacionComplementariaConcepto`,`documentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$nombre','$materia','$def','$vease','$fuente','$compl','$doc','$audiovi')
+                ON DUPLICATE KEY UPDATE 
+                nombreConcepto='{$nombre}', 
+                idMateria='{$materia}', 
+                definicionConcepto='{$def}',
+                idVeaseConcepto='{$vease}',
+                idFuenteConcepto='{$fuente}',
+                informacionComplementariaConcepto='{$compl}',
+                documentacionAdicionalConcepto='{$doc}',
+                idMaterialAudiovisualConcepto='{$audiovi}'";
+            }else{
+                $consulta = "UPDATE concepto SET nombreConcepto='{$nombre}', 
+                idMateria='{$materia}', 
+                definicionConcepto='{$def}',
+                idVeaseConcepto='{$vease}',
+                idFuenteConcepto='{$fuente}',
+                informacionComplementariaConcepto='{$compl}',
+                documentacionAdicionalConcepto='{$doc}',
+                idMaterialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
+            }
+        }
         
         try {
             
@@ -343,16 +331,36 @@ class General
     
     public static function updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi){
        
+        if ($idconcepto != 0){
             $consulta = "UPDATE concepto SET nombreConcepto='{$nombre}', 
             idMateria='{$materia}', 
             definicionConcepto='{$def}',
             idVeaseConcepto='{$vease}',
-            fuenteConcepto='{$fuente}',
+            idFuenteConcepto='{$fuente}',
             informacionComplementariaConcepto='{$compl}',
             documentacionAdicionalConcepto='{$doc}',
-            materialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
-        
-        
+            idMaterialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
+        }else{
+            if ($user_session['rol']== "ADMIN"){
+                 $table = "conceptoSupervi";
+            }else{
+                $table = "concepto";
+            }
+            $consulta = "INSERT INTO ".$table." (`nombreConcepto`, `idMateria`, `definicionConcepto`,`idVeaseConcepto`,`idFuenteConcepto`,`informacionComplementariaConcepto`,`documentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$nombre','$materia','$def','$vease','$fuente','$compl','$doc','$audiovi')";
+        }
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
         try {
             
             // Preparar sentencia
@@ -377,14 +385,29 @@ class General
        
        $concepto = General::getConcepto($idconcepto);
        
-       $consulta = "UPDATE concepto SET nombreConcepto='{$concepto['nombreConcepto']}', 
-            idMateria='{$concepto['nombreConcepto']}', 
-            definicionConcepto='{$def}',
-            idVeaseConcepto='{$vease}',
-            fuenteConcepto='{$fuente}',
-            informacionComplementariaConcepto='{$compl}',
-            documentacionAdicionalConcepto='{$doc}',
-            materialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
+       $consulta = "INSERT INTO conceptoSupervi 
+       (`idConcepto`,
+       `nombreConcepto`, 
+       `idMateria`, 
+       `definicionConcepto`,
+       `idVeaseConcepto`,
+       `idFuenteConcepto`,
+       `informacionComplementariaConcepto`,
+       `documentacionAdicionalConcepto`,
+       `idMaterialAudiovisualConcepto`,
+       `borrar`) 
+       VALUES 
+       ('{$concepto['idConcepto']}',
+       '{$concepto['nombreConcepto']}',
+       '{$concepto['idMateria']}',
+       '{$concepto['definicionConcepto']}',
+       '{$concepto['idVeaseConcepto']}',
+       '{$concepto['fuenteConcepto']}',
+       '{$concepto['informacionComplementariaConcepto']}',
+       '{$concepto['documentacionAdicionalConcepto']}',
+       '{$concepto['materialAudiovisualConcepto']}',
+       '1')
+        ON DUPLICATE KEY UPDATE borrar='1'";
        
         
         
@@ -404,7 +427,7 @@ class General
         
     }
      
-    
+  
     /***** Usuarios ********/
    public static function updateUser($user_session, $idUser, $nombre, $pass, $rol){
        
@@ -484,8 +507,24 @@ class General
         
     }
     
-    public static function getUser(){
+    public static function getUserGener(){
         $consulta = "SELECT * FROM usuarios";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
+    public static function getUser($idUser){
+        $consulta = "SELECT * FROM usuarios WHERE idUsuario ='$idUser'";
         
         try {
             // Preparar sentencia
@@ -516,13 +555,24 @@ class General
         
     }
      
-    public static function updateUserToDelete($idMateria){
+    public static function updateUserToDelete($iduser){
        
-       $materia = General::getMateria($idMateria);
+       $user = General::getUser($iduser);
        
-       $consulta = "UPDATE materia SET nombreMateria='{$materia['nombreMateria']}', 
-             WHERE idMateria='{$idMateria}'";
-       
+       $consulta = "INSERT INTO usuariosSupervi 
+       (`idUsuario`,
+       `nombreUsuario`, 
+       `password`, 
+       `rol`,
+       `borrar`) 
+       VALUES 
+       ('{$user['idUsuario']}',
+       '{$user['nombreUsuario']}',
+       '{$user['password']}',
+       '{$user['rol']}',
+       '1')
+        ON DUPLICATE KEY UPDATE borrar='1'";
+         
         try {
             
             // Preparar sentencia
@@ -592,7 +642,6 @@ class General
             // Ejecutar sentencia preparada
              
             if($comando->execute()){
-                
                 return General::deleteAutorRev($idconcepto);
             }else{
                 return false; 
@@ -622,7 +671,7 @@ class General
         
     }
     
-    public static function getAutores(){
+    public static function getAutorGeneral(){
         $consulta = "SELECT * FROM Autores";
         
         try {
@@ -654,21 +703,33 @@ class General
         
     }
     
-    public static function updateAutoToDelete($idAutor){
+    public static function updateAutorToDelete($idAutor){
        
-       $materia = General::getAutor($idAutor);
+        $autor = General::getAutor($idAutor);
        
-       $consulta = "UPDATE materia SET nombreMateria='{$materia['nombreMateria']}', 
-             WHERE idMateria='{$idMateria}'";
-       
+       $consulta = "INSERT INTO autoresSupervi 
+       (`idAutores`,
+       `nombreAutores`, 
+       `cargoAutores`, 
+       `imagenAutores`,
+       `linkAutores`,
+       `borrar`) 
+       VALUES 
+       ('{$autor['idAutores']}',
+       '{$autor['nombreAutores']}',
+       '{$autor['cargoAutores']}',
+       '{$autor['imagenAutores']}',
+       '{$autor['linkAutores']}',
+       '1')
+        ON DUPLICATE KEY UPDATE borrar='1'";
+         
         try {
             
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
             
-            $comando->execute();
-            return $comando->fetch(PDO::FETCH_ASSOC);
+            return  $comando->execute();
 
         } catch (PDOException $e) {
             
@@ -694,6 +755,7 @@ class General
         }
         
     }
+    
     public static function getAutorSupervi($idAutor){
        $consulta = "SELECT * FROM autoresSupervi WHERE idAutores='$idAutor'";
         
@@ -709,9 +771,7 @@ class General
             return false;
         }
         
-    }
-                                          
-                                          
+    }                                         
     
      /***** Materia ********/
     public static function updateMateria($user_session, $idMateria, $nombre){
@@ -804,11 +864,19 @@ class General
     
     public static function updateMateriaToDelete($idMateria){
        
-       $materia = General::getMateria($idMateria);
        
-       $consulta = "UPDATE materia SET nombreMateria='{$materia['nombreMateria']}', 
-             WHERE idMateria='{$idMateria}'";
+        $materia = General::getMateria($idMateria);
        
+       $consulta = "INSERT INTO materiaSupervi 
+       (`idMateria`,
+       `nombreMateria`, 
+       `borrar`) 
+       VALUES 
+       ('{$materia['idMateria']}',
+       '{$materia['nombreMateria']}',
+       '1')
+        ON DUPLICATE KEY UPDATE borrar='1'";
+         
         try {
             
             // Preparar sentencia
@@ -824,7 +892,6 @@ class General
         }
         
     }
-    
     
     public static function getMateriaGeneral(){
         $consulta = "SELECT * FROM materia";
@@ -875,6 +942,176 @@ class General
         }
         
     }
+    
+    
+     /***** Fuente ********/
+    
+     public static function getFuente($idFuente){
+       $consulta = "SELECT * FROM fuenteconcepto WHERE idFuenteConcepto='$idFuente'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            $comando->execute();
+            return $comando->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    public static function setFuente($idFuente, $nombreFuente, $linkFuente){
+       
+       if ($idFuente == 0){
+            $consulta = "INSERT INTO fuenteConcepto 
+       (`nombreFuente`,
+       `linkFuente`) 
+       VALUES 
+       ('{$nombreFuente}',
+       '{$linkFuente}')";
+       }else {
+             
+           $consulta = "UPDATE fuenteConcepto SET nombreFuente='{$nombreFuente}', linkFuente='{$linkFuente}' WHERE idFuenteConcepto='{$idFuente}' ";
+       }
+      
+       
+         
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            $comando->execute();
+            $id = Database::getInstance()->getDb()->lastInsertId();
+            return  $id;
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
+        
+    }
+    public static function updateFuenteConcepto($idFuente, $idConcepto){
+       $consulta = "UPDATE concepto SET idfuenteConcepto='{$idFuente}' WHERE idConcepto='{$idConcepto}'";
+      
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+    
+    /***** Material Audiovisual ********/
+    
+     public static function getAudioVisual($idAudioVi){
+       $consulta = "SELECT * FROM conexionMatAudiViConcep WHERE idConexion='$idAudioVi'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+     public static function getAudioVisualID($idAudioVi){
+       $consulta = "SELECT * FROM matAudiViConcepto WHERE idMatAudioViConcepto='$idAudioVi'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            $comando->execute();
+            return $comando->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+     /***** Vease ********/
+      public static function getVease($idVease){
+       $consulta = "SELECT * FROM veaseConcepto WHERE idVeaseConcepto='$idVease'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+     public static function setVease($idVease, $idConcepto){
+        $consulta = "INSERT INTO veaseConcepto (`idVeaseConcepto`, `idConcepto`) VALUES ('$idVease','$idConcepto')";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            return $comando->execute();
+           
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+     }
+    
+    public static function deleteVease($idVease){
+       $consulta = "DELETE FROM veaseConcepto WHERE idVeaseConcepto='$idVease'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    public static function updateVeaseConcepto($idConcepto){
+       $consulta = "UPDATE concepto SET idVeaseConcepto='{$idConcepto}' WHERE idConcepto='{$idConcepto}'";
+      
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            return  $comando->execute();
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
 }
 
 ?>

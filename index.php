@@ -19,7 +19,7 @@ function getTextGeneral($idText){
 }*/
 
 function getAutores(){
-    $row = General::getAutores();
+    $row = General::getAutorGeneral();
     return $row;
 }
 

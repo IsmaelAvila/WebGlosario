@@ -10,11 +10,11 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 }
 if ($user_session['rol']=='ADMIN'){
-    if (General::updateConceptToDelete($id)){
+    if (General::updateAutorToDelete($id)){
         header("location:Adminis.php");
    }
 }else{
-   if (General::deleteConcept($id)){
+   if (General::deleteAutor$id) && General::deleteAutorRev($id)){
         header("location:Adminis.php");
    }
 }

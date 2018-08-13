@@ -6,6 +6,7 @@ session_start();
 
 $user_session = General::getUserSession();
 
+echo "Hola " . $user_session['nombreUsuario'];
 $page = 1;
 $method = 0;
 
@@ -21,9 +22,25 @@ $rowGeneral = General::getConceptoMateria($page,$method);
 
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
+    if ($_POST['add']){
+         if ($user_session['rol']!="ADMIN"){
+             $revAdd = "false";
+         }else{
+              $revAdd = "true";
+         }
+       if ($method == 0){
+            header("location:AdminisDetail.php?idConcep=0&rev=".$revAdd);
+       }else  if ($method == 1){
+             header("location:AdminisMateriaDetail.php?idConcep=0&rev=".$revAdd);
+       }else  if ($method == 2){
+            header("location:AdminisAutoresDetail.php?idConcep=0&rev=".$revAdd);
+       }else  if ($method == 3){
+            header("location:AdminisUserDetail.php?idConcep=0&rev=".$revAdd);
+       }
+    }else{
     $rev = $_POST['rev'];
      if ($method == 0){
-       
+      
         $idConcep = $_POST['idConce'];
        
         if(isset($_POST['mod'])){
@@ -34,6 +51,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
         }
      }else  if ($method == 1){
+        
         $idMat = $_POST['idMat'];
        
        if(isset($_POST['mod'])){
@@ -47,11 +65,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
         }
      }else  if ($method == 2){
+        
         $idAuto = $_POST['idAutores'];
-       
-       
-    
-        if(isset($_POST['mod'])){
+       if(isset($_POST['mod'])){
             header("location:AdminisAutoresDetail.php?idAuto=".$idAuto."&rev=".$rev);
         }else if(isset($_POST['del'])){
 
@@ -60,6 +76,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             echo 'location.href = "DeleteAutor.php?id='.$idAuto.'"; } </script>';
         }
      }else  if ($method == 3){
+        
          $idUser = $_POST['idUser'];
         
         if(isset($_POST['mod'])){
@@ -73,6 +90,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
         }
      }
+    }
 }
 
 ?>
@@ -169,13 +187,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                   {
                     echo "<tr>";
                      if ($method == 0){
-                        echo "<td>".$rowSuper['idMateria']."</td>";
+                        echo "<td>".$rowSuper['idConcepto']."</td>";
                         echo "<td>".$rowSuper['nombreMateria']."</td>";
                         echo "<td>".$rowSuper['nombreConcepto']."</td>";
-                        echo "<td><form method='post' name='form' id='form'>
-                        <input type='submit' name='mod' value='Modificar'/>
-                        <input type='submit' name='del' value='Eliminar'/>
-                        <input type='hidden' name='rev' value='true'/>
+                        echo "<td><form method='post' name='form' id='form'>";
+                        if ($rowSuper['borrar'] == 0){
+                            echo  "<input type='submit' name='mod' value='Modificar'/>";
+                            echo "<input type='submit' name='del' value='Descartar'/>";
+                        }else{
+                             echo "<input type='submit' name='del' value='Eliminar'/>";
+                        }
+                        echo "<input type='hidden' name='rev' value='true'/>
                         <input type='hidden' name='idConce' value='".$rowSuper['idConcepto']."'/>
                         </form></td>";
                     }else  if ($method == 1){
@@ -298,7 +320,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                   {
                     echo "<tr>";
                      if ($method == 0){
-                        echo "<td>".$rowGene['idMateria']."</td>";
+                        echo "<td>".$rowGene['idConcepto']."</td>";
                         echo "<td>".$rowGene['nombreMateria']."</td>";
                         echo "<td>".$rowGene['nombreConcepto']."</td>";
                         echo "<td><form method='post' name='form' id='form'>

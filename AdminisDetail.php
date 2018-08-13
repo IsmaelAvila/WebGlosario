@@ -24,12 +24,14 @@ if ($rev == "false"){
 
 $rowVease = General::getVease($concepto['idVeaseConcepto']);
 
+$idFuente = $concepto['idfuenteConcepto'];
+
 if($_SERVER["REQUEST_METHOD"]=="POST"){
-    
+  
      if (isset($_POST['mod'])){
-        
+     
         $nombre = $_POST['nombre'];
-        $materia = $_POST['materia'];
+        $materia = $_POST['materiaSelec'];
         $def = $_POST['definicion'];
         $vease = $_POST['vease'];
         $fuente = $_POST['fuente'];
@@ -39,24 +41,54 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
  
         if (!rev){
             if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
-        
                 header("location:Adminis.php"); 
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
         }else{
             if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi)){
-        
                 header("location:Adminis.php"); 
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
         }
      }else if (isset($_POST['addVease'])){
-           
+         
             echo "<script>";
-            echo "window.open('veaseSelec.php?idVease=".$concepto['idVeaseConcepto']."','_blank', 'width=700,height=700')";
+            echo "var winOpen = window.open('veaseSelec.php?idVease=".$concepto['idVeaseConcepto']."','_blank', 'width=700,height=700');";
+            echo "winOpen.window.focus();";
             echo "</script>";
+     }else if (isset($_POST['checkVease'])){
+        
+         $idVease = $concepto['idVeaseConcepto'];
+         General::deleteVease($idVease);
+         if ($idVease == 0 && General::updateVeaseConcepto($idconcepto)){
+            $idVease = $idconcepto;
+         }
+        
+         $checkValues = explode(',', $_POST['checkVease']);
+         foreach ($checkValues as $check){
+            General::setVease($idVease, $check);
+         }
+         $rowVease = General::getVease($idVease);
+     }else if (isset($_POST['addFuente'])){
+          echo "<script>";
+            echo "var winOpen2 = window.open('fuenteSelect.php?idFuente=".$concepto['idfuenteConcepto']."','_blank', 'width=700,height=700');";
+            echo "winOpen2.window.focus();";
+            echo "</script>";
+         
+     }else if (isset($_POST['changeFuente'])){
+         
+         $fuenteValues = explode(',', $_POST['changeFuente']);
+         
+         $name = $fuenteValues[0];
+          
+         $link = $fuenteValues[1];
+         
+         $idFuente = General::setFuente($idFuente, $name, $link);
+         
+         General::updateFuenteConcepto($idFuente, $idconcepto);
+         
      }
  
        
@@ -108,31 +140,88 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     <form method='post' name='form' id='form'>
 <?php
-    echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
-    echo "<h1>MATERIA <input type='text' name='materia' value='".$concepto['idMateria']."'></h1>";
-    echo "<h1>DEFINICION <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h1>";
-    echo "<h1>VEASE</h1>";
     
-                       
-    foreach ($rowVease as $rowVer)
-   {
-       $idConceptoRow = $rowVer['idConcepto'];
-
-       $concepto = General::getConcepto($idConceptoRow);
-
-        echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".$concepto['nombreConcepto']." </a></li>";
-
-    }
-  
-     echo " <input type='submit' name='addVease' value='Añadir Conceptos'/>";
-	 echo "<h1>FUENTE <input type='text' name='fuente' value='".$concepto['fuenteConcepto']."'></h1>";
-     echo "<h1>INFORMACION COMPLEMENTARIA <input type='text' name='compl' value='".$concepto['informacionComplementariaConcepto']."'></h1>";
-    echo "<h1>DOCUMENTACION ADICIONAL <input type='text' name='doc' value='".$concepto['documentacionAdicionalConcepto']."'></h1>";
-    echo "<h1>MATERIAL AUDIOVISUAL <input type='text' name='audiovi' value='".$concepto['materialAudiovisualConcepto']."'></h1>";
+        echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
+        
+        echo "<h1>MATERIA</h1>";
+        $rowMaterias = General::getMateriaGeneral();
+        echo "<select id='materiaSelec' name='materiaSelec'><h1>MATERIA</h1>";
+        
+        foreach ($rowMaterias as $rowMateria)
+        {
+            echo "<option value='".$rowMateria['idMateria']."' ";
+           
+            if ($rowMateria['idMateria'] == $concepto['idMateria']){
+               echo "selected ";
+           }
+           
+            echo " >".$rowMateria['nombreMateria']."</option>";
+        }
+        echo "</select>";
+        echo "<h1>DEFINICION <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h1>";
+        echo "<h1>VEASE</h1>";
+        foreach ($rowVease as $rowVer)
+        {
+            $idConceptoRow = $rowVer['idConcepto'];
+            $concepto = General::getConcepto($idConceptoRow);
+            echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".$concepto['nombreConcepto']." </a></li>";
+        }
+        echo " <input type='submit' name='addVease' value='Añadir Conceptos'/>";
+    
+        echo "<h1>FUENTE</h1>";
+        $fuente = General::getFuente($idFuente);
+        if ($fuente != null){
+            echo "<li><a class='textoMagenta' href='".$fuente['linkFuente']."'> ".$fuente['nombreFuente']." </a></li>";
+        }
+        echo " <input type='submit' name='addFuente' value='Añadir Fuente'/>";
+        
+        echo "<h1>INFORMACION COMPLEMENTARIA <input type='text' name='compl' value='".$concepto['informacionComplementariaConcepto']."'></h1>";
+    
+        echo "<h1>DOCUMENTACION ADICIONAL <input type='text' name='doc' value='".$concepto['documentacionAdicionalConcepto']."'></h1>";
+        echo "<h1>MATERIAL AUDIOVISUAL</h1>";
+        $audioVisual = General::getAudioVisual($concepto['idMaterialAudiovisualConcepto']);
+        foreach ($audioVisual as $audiVi)
+        {
+            $matAudi = General::getAudioVisualID($audiVi['idMatAudiViConcep']);
+            echo "<li><a class='textoMagenta'  href=' " .$matAudi['linkMateAudioViConcep']. " '> " .$matAudi['nombreMateAudioViCon']. " </a></li>";
+         }
+        echo " <input type='submit' name='addMaterial' value='Añadir Material'/>";
+   
     ?>
+        <br>
         <input type='submit' name='mod' value='Modificar'/>
 </form>
      <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
+    <script>
+      function selection(array){
+         
+        var form = document.getElementById('form');
+        var hiddenField = document.createElement("input");
+        
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "checkVease");
+        hiddenField.setAttribute("value", array);
+        form.appendChild(hiddenField);
+        
+        form.submit();
+          
+       
+    }
+    function changeFuente(nombrefuente, linkFuente){
+       
+        var form = document.getElementById('form');
+        var hiddenField = document.createElement("input");
+        
+        var array = [nombrefuente, linkFuente];
+         console.log(array);
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "changeFuente");
+        hiddenField.setAttribute("value", array);
+        form.appendChild(hiddenField);
+
+        form.submit();
+    }
+</script>
 </body>
 
 </html>
