@@ -106,12 +106,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 <body>
     
-    <form method='post' name='form' id='form'>
+    <form method='post' name='form' id='form' align="center">
 <?php
-    echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
-    echo "<h1>MATERIA <input type='text' name='materia' value='".$concepto['idMateria']."'></h1>";
-    echo "<h1>DEFINICION <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h1>";
-    echo "<h1>VEASE</h1>";
+    echo "<h2><b><u>Detalles de Concepto</u></b></h2>";
+    echo "<h3>Nombre de Concepto <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
+    echo "<h3>Materia <input type='text' name='materia' value='".$concepto['idMateria']."'></h1>";
+    echo "<h3>Definicion <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h1>";
+    echo "<h3>Vease</h1>";
     
                        
     foreach ($rowVease as $rowVer)
@@ -125,10 +126,10 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     }
   
      echo " <input type='submit' name='addVease' value='Añadir Conceptos'/>";
-	 echo "<h1>FUENTE <input type='text' name='fuente' value='".$concepto['fuenteConcepto']."'></h1>";
-     echo "<h1>INFORMACION COMPLEMENTARIA <input type='text' name='compl' value='".$concepto['informacionComplementariaConcepto']."'></h1>";
-    echo "<h1>DOCUMENTACION ADICIONAL <input type='text' name='doc' value='".$concepto['documentacionAdicionalConcepto']."'></h1>";
-    echo "<h1>MATERIAL AUDIOVISUAL <input type='text' name='audiovi' value='".$concepto['materialAudiovisualConcepto']."'></h1>";
+	 echo "<h3>Fuente <input type='text' name='fuente' value='".$concepto['fuenteConcepto']."'></h1>";
+     echo "<h3>Información complementaria <input type='text' name='compl' value='".$concepto['informacionComplementariaConcepto']."'></h1>";
+    echo "<h3>Documentación adicional <input type='text' name='doc' value='".$concepto['documentacionAdicionalConcepto']."'></h1>";
+    echo "<h3>Material audiovisual <input type='text' name='audiovi' value='".$concepto['materialAudiovisualConcepto']."'></h1>";
     ?>
         <input type='submit' name='mod' value='Modificar'/>
 </form>

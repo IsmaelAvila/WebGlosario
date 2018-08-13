@@ -120,7 +120,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <body>
  <header id="header">
     <div class="container">
-        <a href="Logout.php" class="btn-services2">Cerrar Sesión</a>
+        <a href="Logout.php" class="btn-services">Cerrar Sesión</a>
       <div><h1><center>Zona Administración</center></h1></div>
       <nav id="nav-menu-container">
         <div id="myBtnContainer">
@@ -138,11 +138,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
        <br>
        <br>
     <br>
- <table frame="void" rules="rows" align='center' id="tableAdmiRev">
-	 <tr class="header">
-            <?php
+    <?php
             if ($user_session['rol']!="ADMIN"){
-                
+ echo "<table frame='void' rules='rows' align='center' id='tableAdmiRev'>
+	 <tr class='header'>";
+            echo"<h2>Zona Propietario</h2>";
                     if ($method == 0){
                         echo "<th style='width:10%;'><a href=''>ID </a></td>
 		                  <th style='width:40%;'><a href=''>Nombre Materia </a></td>
@@ -259,11 +259,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 En el caso de la materia, sería mostrar listado de todas las materias y al pulsar en una de ellas mandarte al detalle para modificarlo.-->
 <input type="text" id="searchInput" onkeyup="search()" placeholder="Buscar....">
             <form method='post' name='formAdd' id='formAdd'>
-                        <input type='submit' name='add' value='Añadir'/>
+                        <input type='submit'  name='add' value='Añadir'/>
             </form>
-    
+    <br>
+    <br>
     <table frame="void" rules="rows" align='center' id="tableAdmi">
-    
+    <h2>Zona Administrador</h2>
                    <tr class="header">
                        <?php
                     if ($method == 0){
