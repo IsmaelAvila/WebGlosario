@@ -8,7 +8,6 @@ if (isset($_GET['id'])) {
 }
 
 $row = General::getConcepto($idconcepto);
-$rowVease = General::getVease($row['idVeaseConcepto']);
 
 $languaje = 1;
 if (isset($_GET['lang'])) {
@@ -211,7 +210,7 @@ if (isset($_GET['lang'])) {
   <!--==========================
   Footer
 ============================-->
-<main>
+  <main>
     <footer>
       <aside>
         <footer class="col-lg-12" id="footer">
@@ -222,7 +221,7 @@ if (isset($_GET['lang'])) {
                   &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2019</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
                 </div>
                 <div class="credits">
-                  <img src="img/logoUco.png" alt="" title="" width="50" height="30"/>
+                  <img src="img/logoUco.png" alt="" title="" width="20" height="20"/>
                 </div>
               </div>
             </div>

@@ -138,7 +138,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 <body>
     
-    <form method='post' name='form' id='form'>
+    <form method='post' name='form' id='form' align="center">
 <?php
     
         echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
