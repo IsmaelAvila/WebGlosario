@@ -6,7 +6,7 @@ session_start();
 
 $user_session = General::getUserSession();
 
-echo "Hola " . $user_session['nombreUsuario'];
+
 $page = 1;
 $method = 0;
 
@@ -136,10 +136,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 </head>
 
 <body>
- <header id="header">
+ <header id="header2">
+  <?php
+      echo "<h5 style='color: white;'>Bienvenido, <i style='color: red;'>" . $user_session['nombreUsuario']."</i></h5>";
+      ?>
+  <a href="Logout.php" class="btn">Cerrar Sesión</a>
     <div class="container">
-        <a href="Logout.php" class="btn-services">Cerrar Sesión</a>
       <div style="color: white;"><h1><center>Zona Privada</center></h1></div>
+
+
       <nav id="nav-menu-container">
         <div id="myBtnContainer">
             <button class="btn" onclick="filterSelection('0')"> Concepto</button>
@@ -162,26 +167,26 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 	 <tr class='header'>";
             echo"<h2 style='color: black;'><center>Zona Propietario</center></h2>";
                     if ($method == 0){
-                        echo "<th style='width:10%;'><a href=''>ID </a></td>
-		                  <th style='width:40%;'><a href=''>Nombre Materia </a></td>
-		                  <th style='width:30%;'><a href=''>Nombre Concepto </a></td>";
+                        echo "<th style='width:10%;'><a>ID </a></td>
+		                  <th style='width:40%;'><a>Nombre Materia </a></td>
+		                  <th style='width:30%;'><a>Nombre Concepto </a></td>";
                     }else  if ($method == 1){
-                         echo "<th style='width:10%;'><a href=''>ID </a></td>
-		                  <th style='width:70%;'><a href=''>Nombre Materia </a></td>";
+                         echo "<th style='width:10%;'><a>ID </a></td>
+		                  <th style='width:70%;'><a>Nombre Materia </a></td>";
 		              
                     }else  if ($method == 2){
                          echo "<th style='width:10%;'><a href=''>ID </a></td>
-		                  <th style='width:10%;'><a href=''>Nombre  </a></td>
-                        <th style='width:30%;'><a href=''>Cargo  </a></td>
-                        <th style='width:20%;'><a href=''>Image  </a></td>
-                        <th style='width:20%;'><a href=''>Link  </a></td>";
+		                  <th style='width:10%;'><a>Nombre  </a></td>
+                        <th style='width:30%;'><a>Cargo  </a></td>
+                        <th style='width:20%;'><a>Image  </a></td>
+                        <th style='width:20%;'><a>Link  </a></td>";
                     }else  if ($method == 3){
-                        echo "<th style='width:10%;'><a href=''>ID </a></td>
-		                  <th style='width:50%;'><a href=''>Nombre  </a></td>
-                          <th style='width:20%;'><a href=''>Rol  </a></td>";
+                        echo "<th style='width:10%;'><a>ID </a></td>
+		                  <th style='width:50%;'><a>Nombre  </a></td>
+                          <th style='width:20%;'><a>Rol  </a></td>";
                     }
 		              
-                       echo " <th style='width:20%;'><a href=''>Validar </a></th>";
+                       echo " <th style='width:20%;'><a>Validar </a></th>";
                 
                 foreach ($rowSupervi as $rowSuper)
                   {
@@ -291,25 +296,25 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                        <?php
                     if ($method == 0){
                         echo "<th style='width:10%;'><a href=''>ID </a></td>
-		                  <th style='width:40%;'><a href=''>Nombre Materia </a></td>
-		                  <th style='width:30%;'><a href=''>Nombre Concepto </a></td>";
+		                  <th style='width:40%;'><a>Nombre Materia </a></td>
+		                  <th style='width:30%;'><a>Nombre Concepto </a></td>";
                     }else  if ($method == 1){
-                         echo "<th style='width:10%;'><a href=''>ID </a></td>
-		                  <th style='width:70%;'><a href=''>Nombre Materia </a></td>";
+                         echo "<th style='width:10%;'><a>ID </a></td>
+		                  <th style='width:70%;'><a>Nombre Materia </a></td>";
 		              
                     }else  if ($method == 2){
-                         echo "<th style='width:10%;'><a href=''>ID </a></td>
-		                  <th style='width:10%;'><a href=''>Nombre  </a></td>
-                        <th style='width:30%;'><a href=''>Cargo  </a></td>
-                        <th style='width:20%;'><a href=''>Image  </a></td>
-                        <th style='width:20%;'><a href=''>Link  </a></td>";
+                         echo "<th style='width:10%;'><a>ID </a></td>
+		                  <th style='width:10%;'><a>Nombre  </a></td>
+                        <th style='width:30%;'><a>Cargo  </a></td>
+                        <th style='width:20%;'><a>Image  </a></td>
+                        <th style='width:20%;'><a>Link  </a></td>";
                     }else  if ($method == 3){
-                        echo "<th style='width:10%;'><a href=''>ID </a></td>
-		                  <th style='width:50%;'><a href=''>Nombre  </a></td>
-                          <th style='width:20%;'><a href=''>Rol  </a></td>";
+                        echo "<th style='width:10%;'><a>ID </a></td>
+		                  <th style='width:50%;'><a>Nombre  </a></td>
+                          <th style='width:20%;'><a>Rol  </a></td>";
                     }
 		              
-                       echo " <th style='width:20%;'><a href=''>Validar </a></th>";
+                       echo " <th style='width:20%;'><a>Validar </a></th>";
                     ?>
 		          
 		             

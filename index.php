@@ -305,8 +305,8 @@ function getAutores(){
                 <div class="validation"></div>
               </div>
               
-              <div class="text-center"><button type="submit"><a href="mailto:ismaelavilaojeda@gmail.com?subject=.$subject.&body=Hi,I found this website
-and thought you might like it http://www.geocities.com/wowhtml/"><?php echo getTextGeneral(26); ?></a></button></div>
+              <div class="btn btn-info"><a href="mailto:ismaelavilaojeda@gmail.com?subject=&body=Hi,I found this website
+and thought you might like it http://www.geocities.com/wowhtml/"><?php echo getTextGeneral(26); ?></a></div>
 
             </form>
           </div>
