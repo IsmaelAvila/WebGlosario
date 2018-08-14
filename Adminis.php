@@ -9,12 +9,16 @@ $user_session = General::getUserSession();
 
 $page = 1;
 $method = 0;
+$lang = 1;
 
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
 }
 if (isset($_GET['method'])) {
     $method = $_GET['method'];
+}
+if (isset($_GET['lang'])) {
+    $lang = $_GET['lang'];
 }
 
 $rowSupervi = General::getConceptoSupervi($page,$method);
@@ -23,7 +27,8 @@ $rowGeneral = General::getConceptoMateria($page,$method);
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     if ($_POST['add']){
-         if ($user_session['rol']!="ADMIN"){
+         
+        if ($user_session['rol'] == "ADMIN"){
              $revAdd = "false";
          }else{
               $revAdd = "true";
@@ -31,11 +36,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
        if ($method == 0){
             header("location:AdminisDetail.php?idConcep=0&rev=".$revAdd);
        }else  if ($method == 1){
-             header("location:AdminisMateriaDetail.php?idConcep=0&rev=".$revAdd);
+             header("location:AdminisMateriaDetail.php?idMat=0&rev=".$revAdd);
        }else  if ($method == 2){
-            header("location:AdminisAutoresDetail.php?idConcep=0&rev=".$revAdd);
+            header("location:AdminisAutoresDetail.php?idAuto=0&rev=".$revAdd);
        }else  if ($method == 3){
-            header("location:AdminisUserDetail.php?idConcep=0&rev=".$revAdd);
+            header("location:AdminisUserDetail.php?idUser=0&rev=".$revAdd);
        }
     }else{
     $rev = $_POST['rev'];
@@ -66,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
      }else  if ($method == 2){
         
-        $idAuto = $_POST['idAutores'];
+        $idAuto = $_POST['idAuto'];
        if(isset($_POST['mod'])){
             header("location:AdminisAutoresDetail.php?idAuto=".$idAuto."&rev=".$rev);
         }else if(isset($_POST['del'])){
@@ -153,6 +158,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             <button class="btn" onclick="filterSelection('3')"> Usuarios</button>
         </div>
       </nav>
+        <br>
+     <nav id="nav-menu-container">
+        <div id="myBtnContainerLang">
+            <button class="btn" onclick="filterLanguage('1')"> Español</button>
+            <button class="btn" onclick="filterLanguage('2')"> Ingles</button>
+            <button class="btn" onclick="filterLanguage('3')"> Frances</button>
+        </div>
+      </nav>
       <!-- #nav-menu-container -->
     </div>
   </header>
@@ -163,7 +176,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     <br>
     <?php
             if ($user_session['rol']!="ADMIN"){
- echo "<table frame='void' rules='rows' align='center' id='tableAdmiRev'>
+    echo "<table frame='void' rules='rows' align='center' id='tableAdmiRev'>
 	 <tr class='header'>";
             echo"<h2 style='color: black;'><center>Zona Propietario</center></h2>";
                     if ($method == 0){
@@ -193,7 +206,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                     echo "<tr>";
                      if ($method == 0){
                         echo "<td>".$rowSuper['idConcepto']."</td>";
-                        echo "<td>".$rowSuper['nombreMateria']."</td>";
+                        echo "<td>". General::getConceptoTextLang($rowSuper['idMateria'],$lang) ."</td>";
                         echo "<td>".$rowSuper['nombreConcepto']."</td>";
                         echo "<td><form method='post' name='form' id='form'>";
                         if ($rowSuper['borrar'] == 0){
@@ -207,11 +220,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         </form></td>";
                     }else  if ($method == 1){
                         echo "<td>".$rowSuper['idMateria']."</td>";
-                        echo "<td>".$rowSuper['nombreMateria']."</td>";
-                        echo "<td><form method='post' name='form' id='form'>
-                         <input type='submit' name='mod' value='Modificar'/>
-                        <input type='submit' name='del' value='Eliminar'/>
-                         <input type='hidden' name='rev' value='true'/>
+                        echo "<td>".$rowSuper['idNombreMateria']."</td>";
+                        echo "<td><form method='post' name='form' id='form'>";
+                        if ($rowSuper['borrar'] == 0){
+                            echo  "<input type='submit' name='mod' value='Modificar'/>";
+                            echo "<input type='submit' name='del' value='Descartar'/>";
+                        }else{
+                             echo "<input type='submit' name='del' value='Eliminar'/>";
+                        }
+                         echo "<input type='hidden' name='rev' value='true'/>
                         <input type='hidden' name='idMat' value='".$rowSuper['idMateria']."'/>
                         </form></td>";
 		              
@@ -221,20 +238,28 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         echo "<td>".$rowSuper['cargoAutores']."</td>";
                         echo "<td>".$rowSuper['imagenAutores']."</td>";
                         echo "<td>".$rowSuper['linkAutores']."</td>";
-                        echo "<td><form method='post' name='form' id='form'>
-                         <input type='submit' name='mod' value='Modificar'/>
-                        <input type='submit' name='del' value='Eliminar'/>
-                         <input type='hidden' name='rev' value='true'/>
+                        echo "<td><form method='post' name='form' id='form'>";
+                        if ($rowSuper['borrar'] == 0){
+                            echo  "<input type='submit' name='mod' value='Modificar'/>";
+                            echo "<input type='submit' name='del' value='Descartar'/>";
+                        }else{
+                             echo "<input type='submit' name='del' value='Eliminar'/>";
+                        }
+                         echo "<input type='hidden' name='rev' value='true'/>
                         <input type='hidden' name='idAuto' value='".$rowSuper['idAutores']."'/>
                         </form></td>";
                     }else  if ($method == 3){
                         echo "<td>".$rowSuper['idUsuario']."</td>";
                         echo "<td>".$rowSuper['nombreUsuario']."</td>";
                         echo "<td>".$rowSuper['rol']."</td>";
-                        echo "<td><form method='post' name='form' id='form'>
-                        <input type='submit' name='mod' value='Modificar'/>
-                        <input type='submit' name='del' value='Eliminar'/>
-                        <input type='hidden' name='rev' value='true'/>
+                        echo "<td><form method='post' name='form' id='form'>";
+                        if ($rowSuper['borrar'] == 0){
+                            echo  "<input type='submit' name='mod' value='Modificar'/>";
+                            echo "<input type='submit' name='del' value='Descartar'/>";
+                        }else{
+                             echo "<input type='submit' name='del' value='Eliminar'/>";
+                        }
+                         echo "<input type='hidden' name='rev' value='true'/>
                         <input type='hidden' name='idUser' value='".$rowSuper['idUsuario']."'/>
                         </form></td>";
                     
@@ -248,33 +273,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             ?>
 		
 		<br>
-       
-
-	<tr>
-		<td><br>
-			<!--table align="center">
-				<tr>
-					<td><input type="radio" name="language"
-                               <?php if(isset($language) && $language=="ES") echo "checked";?> value="ES">ES</td>
-					<td><input type="radio" name="language"
-                               <?php if(isset($language) && $language=="EN") echo "checked";?> value="EN">EN</td>
-                    <td><input type="radio" name="language"
-                               <?php if(isset($language) && $language=="FR") echo "checked";?> value="FR">FR</td>
-				</tr>
-		</table-->
-		<br>
-		<!--table align="center">
-				<tr>
-                    <td><input type="radio" name="tipo"
-                               <?php if(isset($tipo) && $tipo=="Concepto") echo "checked";?> value="Concepto">Concepto</td>
-					<td><input type="radio" name="tipo"
-                               <?php if(isset($tipo) && $tipo=="Materia") echo "checked";?> value="Materia">Materia</td>
-				
-				</tr>
-		</table>
-		<br></td-->
-	</tr>
-</table>
    <br>
        <br>
        <br>
@@ -327,7 +325,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                     echo "<tr>";
                      if ($method == 0){
                         echo "<td>".$rowGene['idConcepto']."</td>";
-                        echo "<td>".$rowGene['nombreMateria']."</td>";
+                        echo "<td>". General::getMateriaTextLang($rowGene['idMateria'], $lang) ."</td>";
                         echo "<td>".$rowGene['nombreConcepto']."</td>";
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
@@ -337,7 +335,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         </form></td>";
                     }else  if ($method == 1){
                         echo "<td>".$rowGene['idMateria']."</td>";
-                        echo "<td>".$rowGene['nombreMateria']."</td>";
+                        echo "<td>". General::getMateriaTextLang($rowGene['idMateria'], $lang) ."</td>";
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
@@ -382,7 +380,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                           
                           $pageLink = "<div class='pagination'>";
                           for($i; $i<=$total_pages;$i++){
-                              $pageLink .= "<a href='Adminis.php?page=".$i."&method=".$method."'>".$i."</a>";
+                              $pageLink .= "<a href='Adminis.php?page=".$i."&method=".$method."&lang=".$lang."'>".$i."</a>";
                           }
                           echo $pageLink . "</div>";
                           ?>
@@ -428,15 +426,27 @@ function search() {
 }
 
 function filterSelection(selection) {
-    
+    var lang = <?php Print($lang); ?>;
     if (selection == '0'){
-      location.href = "Adminis.php?page=1&method=0";
+        location.href = "Adminis.php?page=1&method=0&lang="+lang;
     }else  if (selection == '1'){
-                location.href = "Adminis.php?page=1&method=1";
+                location.href = "Adminis.php?page=1&method=1&lang="+lang;
     }else  if (selection == '2'){
-            location.href = "Adminis.php?page=1&method=2";
+            location.href = "Adminis.php?page=1&method=2&lang="+lang;
     }else  if (selection == '3'){
-           location.href = "Adminis.php?page=1&method=3";   
+           location.href = "Adminis.php?page=1&method=3&lang="+lang;   
+    }
+            
+}
+    
+function filterLanguage(selection) {
+     var method = <?php Print($method); ?>;
+    if (selection == '1'){
+            location.href = "Adminis.php?page=1&method="+method+"&lang=1";
+    }else  if (selection == '2'){
+            location.href = "Adminis.php?page=1&method="+method+"&lang=2";
+    }else  if (selection == '3'){
+           location.href = "Adminis.php?page=1&method="+method+"&lang=3";   
     }
             
 }
@@ -447,6 +457,12 @@ var btns = btnContainer.getElementsByClassName("btn");
 
 var selec = <?php Print($method); ?>;
 btns[selec].className += " active";
+    
+var btnContainerLang = document.getElementById("myBtnContainerLang");
+var btnsLang = btnContainerLang.getElementsByClassName("btn");
+
+var selecLang = <?php Print($lang); ?>;
+btnsLang[selecLang - 1].className += " active";
   
 
 </script>
