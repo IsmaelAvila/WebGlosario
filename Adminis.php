@@ -158,7 +158,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             <button class="btn" onclick="filterSelection('3')"> Usuarios</button>
         </div>
       </nav>
-        <br>
+        <br><br><br>
      <nav id="nav-menu-container">
         <div id="myBtnContainerLang">
             <button class="btn" onclick="filterLanguage('1')"> Español</button>
