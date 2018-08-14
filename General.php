@@ -857,19 +857,17 @@ class General
     }                                         
     
      /***** Materia ********/
-    public static function updateMateria($user_session, $idMateria, $nombre){
+    public static function updateMateria($user_session, $idMateria, $idMateriaLan, $nombre1, $nombre2, $nombre3){
        
        if($idMateria == 0){
             if ($user_session['rol']== "ADMIN"){
                  $table = "materiaSupervi";
-                 
              }else{
                 $table = "materia";
-                 
              }
-            $consulta = "INSERT INTO ".$table." (`idMateria`,`idNombreMateria`) VALUES ('$idMateria','$nombre')
+            $consulta = "INSERT INTO ".$table." (`idMateria`,`idNombreMateria`) VALUES ('$idMateria','$idMateriaLan')
             ON DUPLICATE KEY UPDATE 
-            idNombreMateria='{$nombre}'";
+            idNombreMateria='{$idMateriaLan}'";
         }else{
            
             if ($user_session['rol']== "ADMIN"){

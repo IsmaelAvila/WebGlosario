@@ -144,7 +144,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
  <header id="header">
     <div class="container">
         <a href="Logout.php" class="btn-services">Cerrar Sesión</a>
-      <div><h1><center>Zona Administración</center></h1></div>
+      <div style="color: white;"><h1><center>Zona Privada</center></h1></div>
       <nav id="nav-menu-container">
         <div id="myBtnContainer">
             <button class="btn" onclick="filterSelection('0')"> Concepto</button>
@@ -173,7 +173,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             if ($user_session['rol']!="ADMIN"){
     echo "<table frame='void' rules='rows' align='center' id='tableAdmiRev'>
 	 <tr class='header'>";
-            echo"<h2>Zona Propietario</h2>";
+            echo"<h2 style='color: black;'><center>Zona Propietario</center></h2>";
                     if ($method == 0){
                         echo "<th style='width:10%;'><a href=''>ID </a></td>
 		                  <th style='width:40%;'><a href=''>Nombre Materia </a></td>
@@ -284,7 +284,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
     <br>
     <br>
     <table frame="void" rules="rows" align='center' id="tableAdmi">
-    <h2>Zona Administrador</h2>
+    <h2 style='color: black;'><center>Zona Administrador</center></h2>
                    <tr class="header">
                        <?php
                     if ($method == 0){

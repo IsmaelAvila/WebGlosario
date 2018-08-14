@@ -157,12 +157,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     <form method='post' name='form' id='form' align="center">
 <?php
-    
-        echo "<h1>NOMBRE CONCEPTO <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
+      echo "<center><h2><b><u>Detalle Concepto</u></b></h2></center>";
+
+        echo "<h3>Nombre Concepto: <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
         
-        echo "<h1>MATERIA</h1>";
+        echo "<h3>Materia: </h3>";
         $rowMaterias = General::getMateriaGeneral();
-        echo "<select id='materiaSelec' name='materiaSelec'><h1>MATERIA</h1>";
+        echo "<select id='materiaSelec' name='materiaSelec'><h3>Materia</h3>";
         
         foreach ($rowMaterias as $rowMateria)
         {
@@ -175,8 +176,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             echo " >".$rowMateria['nombreMateria']."</option>";
         }
         echo "</select>";
-        echo "<h1>DEFINICION <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h1>";
-        echo "<h1>VEASE</h1>";
+        echo "<h3>Definición:  <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h3>";
+        echo "<h3>Vease: </h3>";
         foreach ($rowVease as $rowVer)
         {
             $idConceptoRow = $rowVer['idConcepto'];
@@ -185,17 +186,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
         echo " <input type='submit' name='addVease' value='Añadir Conceptos'/>";
     
-        echo "<h1>FUENTE</h1>";
+        echo "<h3>Fuente: </h3>";
         $fuente = General::getFuente($idFuente);
         if ($fuente != null){
             echo "<li><a class='textoMagenta' href='".$fuente['linkFuente']."'> ".$fuente['nombreFuente']." </a></li>";
         }
         echo " <input type='submit' name='addFuente' value='Añadir Fuente'/>";
         
-        echo "<h1>INFORMACION COMPLEMENTARIA <input type='text' name='compl' value='".$concepto['informacionComplementariaConcepto']."'></h1>";
+        echo "<h3>Información complementaria: <input type='text' name='compl' value='".$concepto['informacionComplementariaConcepto']."'></h3>";
     
-        echo "<h1>DOCUMENTACION ADICIONAL <input type='text' name='doc' value='".$concepto['documentacionAdicionalConcepto']."'></h1>";
-        echo "<h1>MATERIAL AUDIOVISUAL</h1>";
+        echo "<h3>Documentación adicional: <input type='text' name='doc' value='".$concepto['documentacionAdicionalConcepto']."'></h3>";
+        echo "<h3>Material audiovisual: </h3>";
         $audioVisual = General::getAudioVisual($concepto['idMaterialAudiovisualConcepto']);
         foreach ($audioVisual as $audiVi)
         {

@@ -89,11 +89,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 <body>
     
-    <form method='post' name='form' id='form'>
+    <form method='post' name='form' id='form' align='center'>
 <?php
-    echo "<h1>NOMBRE <input type='text' name='nombre' value='".$user['nombreUsuario']."'></h1>";
-    echo "<h1>PASSWORD <input type='text' name='pass' value='".$user['password']."'></h1>";
-     echo "<h1>ROL <input type='text' name='rol' value='".$user['rol']."'></h1>";
+echo "<center><h2><b><u>Detalle Usuarios: </u></b></h2></center>";
+    echo "<h3>Nombre: <input type='text' name='nombre' value='".$user['nombreUsuario']."'></h3>";
+    echo "<h3>Password: <input type='text' name='pass' value='".$user['password']."'></h3>";
+     echo "<h3>Rol: <input type='text' name='rol' value='".$user['rol']."'></h3>";
     ?>
         <input type='submit' name='mod' value='Modificar'/>
 </form>
