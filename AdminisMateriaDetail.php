@@ -24,10 +24,12 @@ if ($rev == "false"){
 if($_SERVER["REQUEST_METHOD"]=="POST"){
  
        
-    $materiaName = $_POST['materia'];
+     $materiaName1 = $_POST['materia1'];
+     $materiaName2 = $_POST['materia2'];
+     $materiaName3 = $_POST['materia3'];
    
     if ($rev == "false"){
-        if(General::updateMateria($user_session, $idMat, $materiaName)){
+        if(General::updateMateria($user_session, $idMat, $materia['idNombreMateria'],$materiaName1, $materiaName2, $materiaName3)){
             header("location:Adminis.php"); 
         }else{
             $error = "No se ha podido actualizar los datos";

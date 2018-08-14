@@ -34,7 +34,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
               $revAdd = "true";
          }
        if ($method == 0){
-            header("location:AdminisDetail.php?idConcep=0&rev=".$revAdd);
+            header("location:AdminisDetail.php?idConcep=0&rev=".$revAdd."&lang=".$lang);
        }else  if ($method == 1){
              header("location:AdminisMateriaDetail.php?idMat=0&rev=".$revAdd);
        }else  if ($method == 2){
@@ -49,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $idConcep = $_POST['idConce'];
        
         if(isset($_POST['mod'])){
-            header("location:AdminisDetail.php?idConcep=".$idConcep."&rev=".$rev);
+            header("location:AdminisDetail.php?idConcep=".$idConcep."&rev=".$rev."&lang=".$lang);
         }else if(isset($_POST['del'])){
             echo '<script language="Javascript" type="text/javascript">';
             echo 'if (confirm("Estas seguro que quieres borrarlo")){';
@@ -201,7 +201,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                     echo "<tr>";
                      if ($method == 0){
                         echo "<td>".$rowSuper['idConcepto']."</td>";
-                        echo "<td>". General::getConceptoTextLang($rowSuper['idMateria'],$lang) ."</td>";
+                        echo "<td>". General::getMateriaTextLang($rowSuper['idMateria'],$lang) ."</td>";
                         echo "<td>".$rowSuper['nombreConcepto']."</td>";
                         echo "<td><form method='post' name='form' id='form'>";
                         if ($rowSuper['borrar'] == 0){
