@@ -29,7 +29,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $cargo = $_POST['cargo'];
         $imagen = $_POST['imagen'];
         $link = $_POST['link'];
-       if (!rev){
+      
+        if ($rev == "false"){
          
             if(General::updateAutor($user_session, $idAutor,$nombre,$cargo,$imagen,$link)){
 
@@ -40,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             }
         }else{
           
-                if(General::updateAutorRev($user_session, $idAutor,$nombre,$cargo,$imagen,$link)){
+            if(General::updateAutorRev($user_session, $idAutor,$nombre,$cargo,$imagen,$link)){
 
                 header("location:Adminis.php"); 
             }else{

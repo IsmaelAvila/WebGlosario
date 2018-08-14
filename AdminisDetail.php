@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $doc = $_POST['doc'];
         $audiovi = $_POST['audiovi'];
  
-        if (!rev){
+       if ($rev == "false"){
             if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
                 header("location:Adminis.php"); 
             }else{
@@ -89,6 +89,23 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
          
          General::updateFuenteConcepto($idFuente, $idconcepto);
          
+     }else if (isset($_POST['addMaterial'])){
+         
+           echo "<script>";
+            echo "var winOpen2 = window.open('MateAudioViSelect.php?idMate=".$concepto['idMaterialAudiovisualConcepto']."&idMat=0','_blank', 'width=700,height=700');";
+            echo "winOpen2.window.focus();";
+            echo "</script>";
+     }else if (isset($_POST['changeMatAV'])){
+          
+         $MatAVValues = explode(',', $_POST['changeMatAV']);
+         
+         $name = $fuenteValues[0];
+          
+         $link = $fuenteValues[1];
+         
+         $idMat = $fuenteValues[2];
+         
+         $idMateAV = General::setFuente($idFuente, $name, $link);
      }
  
        
@@ -221,6 +238,23 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
         form.submit();
     }
+        
+         function  changeMateAD(nombreMatAV, linkMatAV, idMatAV){
+       
+        var form = document.getElementById('form');
+        var hiddenField = document.createElement("input");
+        
+        var array = [nombrefuente, linkFuente, idMatAV];
+         console.log(array);
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "changeMatAV");
+        hiddenField.setAttribute("value", array);
+        form.appendChild(hiddenField);
+
+        form.submit();
+    }
+        
+       
 </script>
 </body>
 

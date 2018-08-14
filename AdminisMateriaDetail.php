@@ -25,10 +25,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
  
        
     $materiaName = $_POST['materia'];
-        
- 
-   if (!rev){
-        if(General::updateMateria($user_session, $idMat,$materiaName)){
+   
+    if ($rev == "false"){
+        if(General::updateMateria($user_session, $idMat, $materiaName)){
             header("location:Adminis.php"); 
         }else{
             $error = "No se ha podido actualizar los datos";
@@ -89,7 +88,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     <form method='post' name='form' id='form'>
 <?php
    
-    echo "<h1>MATERIA <input type='text' name='materia' value='".$materia['nombreMateria']."'></h1>";
+    echo "<h1>MATERIA <input type='text' name='materia1' value='".General::getMateriaTextLang($materia['idMateria'], 1)."'>(Español)</h1>";
+        echo "<h1>MATERIA <input type='text' name='materia2' value='".General::getMateriaTextLang($materia['idMateria'], 2)."'>(Ingles)</h1>";
+        echo "<h1>MATERIA <input type='text' name='materia3' value='".General::getMateriaTextLang($materia['idMateria'], 3)."'>(Frances)</h1>";
      
     ?>
         <input type='submit' name='mod' value='Modificar'/>

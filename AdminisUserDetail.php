@@ -28,7 +28,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $pass = $_POST['password'];
         $rol = $_POST['rol'];
  
-   if (!rev){
+  if ($rev == "false"){
     if(General::updateUser($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
         
         header("location:Adminis.php"); 
