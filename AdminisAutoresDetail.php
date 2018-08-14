@@ -154,9 +154,9 @@ echo "<center><h2><b><u>Detalle Autores</u></b></h2></center>";
     echo "<h3>Cargo: <input type='text' name='cargo' value='".$autor['cargoAutores']."'></h3>";
      echo "<h3>Imagen: <input type='text' name='imagen' value='".$autor['imagenAutores']."'></h3>
     Select image to upload:
-    <input type='file' name='fileToUpload' id='fileToUpload'>
-    <input type='submit' value='Upload Image' name='submitImg'>";
-     echo "<h3>Link:  <input type='text' name='link' value='".$autor['linkAutores']."'></h3>";
+    <center><input type='file' name='fileToUpload' id='fileToUpload'>
+    <input type='submit' value='Upload Image' name='submitImg'></center>";
+     echo "<br><h3>Link:  <input type='text' name='link' value='".$autor['linkAutores']."'></h3>";
     
     ?>
         <input type='submit' name='submitMod' value='Modificar'/>
