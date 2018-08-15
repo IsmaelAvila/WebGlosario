@@ -14,6 +14,11 @@ if (isset($_GET['rev'])) {
     $rev = $_GET['rev'];
      
 }
+$lang = 1;
+if (isset($_GET['lang'])) {
+    $lang = $_GET['lang'];
+     
+}
 
 if ($rev == "false"){
     $concepto = General::getConcepto($idconcepto);
@@ -28,8 +33,8 @@ $idFuente = $concepto['idfuenteConcepto'];
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
   
-     if (isset($_POST['mod'])){
-     
+     if (isset($_POST['next'])){
+    
         $nombre = $_POST['nombre'];
         $materia = $_POST['materiaSelec'];
         $def = $_POST['definicion'];
@@ -40,18 +45,71 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $audiovi = $_POST['audiovi'];
  
        if ($rev == "false"){
+            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){ 
+                
+                 header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=". ($lang + 1));
+            }else{
+               
+                $error = "No se ha podido actualizar los datos";
+            }
+        }else{
+            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi)){
+                
+                header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang + 1));
+            }else{
+                
+                $error = "No se ha podido actualizar los datos";
+            }
+        }
+     }else if (isset($_POST['back'])){
+         
+        $nombre = $_POST['nombre'];
+        $materia = $_POST['materiaSelec'];
+        $def = $_POST['definicion'];
+        $vease = $_POST['vease'];
+        $fuente = $_POST['fuente'];
+        $compl = $_POST['compl'];
+        $doc = $_POST['doc'];
+        $audiovi = $_POST['audiovi'];
+         if ($rev == "false"){
             if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
-                header("location:Adminis.php"); 
+                 header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang - 1));
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
         }else{
             if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi)){
-                header("location:Adminis.php"); 
+                header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang - 1));
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
         }
+         
+    }else if (isset($_POST['end'])){
+           echo "3";
+        $nombre = $_POST['nombre'];
+        $materia = $_POST['materiaSelec'];
+        $def = $_POST['definicion'];
+        $vease = $_POST['vease'];
+        $fuente = $_POST['fuente'];
+        $compl = $_POST['compl'];
+        $doc = $_POST['doc'];
+        $audiovi = $_POST['audiovi'];
+         
+         if ($rev == "false"){
+            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
+                 header("location:Adminis.php");
+            }else{
+                $error = "No se ha podido actualizar los datos";
+            }
+        }else{
+            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi)){
+                header("location:Adminis.php");
+            }else{
+                $error = "No se ha podido actualizar los datos";
+            }
+        }
+         
      }else if (isset($_POST['addVease'])){
          
             echo "<script>";
@@ -173,7 +231,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                echo "selected ";
            }
            
-            echo " >".$rowMateria['nombreMateria']."</option>";
+            echo " >".General::getMateriaTextLang($rowMateria['idMateria'],1)."</option>";
         }
         echo "</select>";
         echo "<h3>Definición:  <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h3>";
@@ -203,11 +261,21 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             $matAudi = General::getAudioVisualID($audiVi['idMatAudiViConcep']);
             echo "<li><a class='textoMagenta'  href=' " .$matAudi['linkMateAudioViConcep']. " '> " .$matAudi['nombreMateAudioViCon']. " </a></li>";
          }
+        
         echo " <input type='submit' name='addMaterial' value='Añadir Material'/>";
-   
+        echo "<br>";
+       
+        if ($lang == 1){
+            echo "<input type='submit' name='next' value='Siguiente'/>";
+       }else  if ($lang == 2){
+           echo "<input type='submit' name='back' value='Atras'/>";
+           echo "<input type='submit' name='next' value='Siguiente'/>";
+       }else  if ($lang == 3){
+           echo "<input type='submit' name='back' value='Atras'/>";
+           echo "<input type='submit' name='end' value='Finalizar'/>";
+       }
     ?>
-        <br>
-        <input type='submit' name='mod' value='Modificar'/>
+
 </form>
      <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
     <script>

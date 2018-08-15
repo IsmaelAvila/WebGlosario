@@ -859,22 +859,24 @@ class General
      /***** Materia ********/
     public static function updateMateria($user_session, $idMateria, $idMateriaLan, $nombre1, $nombre2, $nombre3){
        
-       if($idMateria == 0){
-            if ($user_session['rol']== "ADMIN"){
+        $id = General::setMateriaTextLang($idMateriaLan, $nombre1,$nombre2,$nombre3);
+       
+        if($idMateria == 0){
+           if ($user_session['rol']== "ADMIN"){
                  $table = "materiaSupervi";
              }else{
                 $table = "materia";
              }
-            $consulta = "INSERT INTO ".$table." (`idMateria`,`idNombreMateria`) VALUES ('$idMateria','$idMateriaLan')
+            $consulta = "INSERT INTO ".$table." (`idMateria`,`idNombreMateria`) VALUES ('$idMateria','$id')
             ON DUPLICATE KEY UPDATE 
-            idNombreMateria='{$idMateriaLan}'";
+            idNombreMateria='".$id."'";
         }else{
            
             if ($user_session['rol']== "ADMIN"){
-                $consulta = "INSERT INTO materiaSupervi (`idMateria`,`idNombreMateria`) VALUES ('$idMateria','$nombre')
-                                ON DUPLICATE KEY UPDATE idNombreMateria='{$nombre}'";
+                $consulta = "INSERT INTO materiaSupervi (`idMateria`,`idNombreMateria`) VALUES ('$idMateria','$id')
+                                ON DUPLICATE KEY UPDATE idNombreMateria='".$id."'";
              }else{
-                $consulta = "UPDATE materia SET idNombreMateria='{$nombre}' WHERE idMateria='{$idMateria}'";
+                $consulta = "UPDATE materia SET idNombreMateria='".$id."' WHERE idMateria='{$idMateria}'";
              }
            
            
@@ -885,7 +887,7 @@ class General
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
-            
+            echo $id;
             return  $comando->execute();
 
         } catch (PDOException $e) {
@@ -1071,6 +1073,41 @@ class General
             return false;
         }
     } 
+    public static function setMateriaTextLang ($idMateriaLan, $nombre1, $nombre2, $nombre3){
+         $consulta = "INSERT INTO materiaLanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
+         VALUES ('$idMateriaLan', 1,'$nombre1')
+         ON DUPLICATE KEY UPDATE 
+         idLanguaje = 1,
+         textMateria = '{$nombre1}'
+         ";
+        
+       try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             if ($comando->execute()){
+                  $id = Database::getInstance()->getDb()->lastInsertId();
+                  $consulta2 = "INSERT INTO materiaLanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
+                  VALUES ($id, 2,'$nombre2'), ($id, 3,'$nombre3') 
+                  ON DUPLICATE KEY UPDATE 
+                    idLanguaje = VALUES(idLanguaje),
+                    textMateria = VALUES(textMateria)";
+                  $comando2 = Database::getInstance()->getDb()->prepare($consulta2);
+                  if ($comando2->execute()){
+                       return  $id;
+                  }else{
+                       return false; 
+                  }
+             }else{
+               echo $e;
+               return false;  
+             }
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+        
+    }
     
      /***** Fuente ********/
     
