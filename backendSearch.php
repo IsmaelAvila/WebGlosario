@@ -25,28 +25,28 @@ if (isset($_POST['query'])) {
         echo "</tr>";
       }
    
-   echo "<tr class='footer'> <th colspan= '6' style=' text-align: right;'>";
+  /* echo "<tr class='footer'> <th colspan= '6' style=' text-align: right;'>";
 
     $totalRecods = count($rows);
     $total_pages = ceil($totalRecods/10);
     $pageLink = "<div class='pagination'>";
-    for($i; $i<=$total_pages;$i++){
-        $pageLink .= "<a href='Adminis.php?page=".$i."'>".$i."</a>";
-        echo $pageLink . "</div>";
-    }
-   
-    echo "</tr> </table>";
+     for($i; $i<=$total_pages;$i++){
+        $pageLink .= "<a href='Buscador.php?page=".$i."'>".$i."</a>";
+     }
+     echo $pageLink . "</div>";*/
+   echo "</tr>";
+    echo "</table>";
     
 }else{
-    
-    $rowGeneral = General::getConceptoMateria(1,0);
+    $page = $_POST['page'];
+    $rowGeneral = General::getConceptoMateria($page,0);
    
     foreach ($rowGeneral as $row)
       {
         echo "<tr>";
 
             echo "<td>".$row['idConcepto']."</td>";
-           echo "<td>". General::getMateriaTextLang($row['idMateria'], 1) ."</td>";
+            echo "<td>". General::getMateriaTextLang($row['idMateria'], 1) ."</td>";
             echo "<td>". General::getConceptoTextLang($row['idNombreConcepto'],1) ."</td>";
 
         echo "</tr>";
@@ -54,13 +54,13 @@ if (isset($_POST['query'])) {
    
     echo "<tr class='footer'> <th colspan= '6' style=' text-align: right;'>";
 
-    $totalRecods = General::getCountGeneral(0);
+    $totalRecods = General::getCountGeneral($method);
     $total_pages = ceil($totalRecods/10);
     $pageLink = "<div class='pagination'>";
-    for($i; $i<=$total_pages;$i++){
-        $pageLink .= "<a href='Adminis.php?page=".$i."'>".$i."</a>";
-        echo $pageLink . "</div>";
-    }
+     for($i; $i<=$total_pages;$i++){
+        $pageLink .= "<a href='Buscador.php?page=".$i."'>".$i."</a>";
+     }
+     echo $pageLink . "</div>";
    
     echo "</tr>
      </table>";

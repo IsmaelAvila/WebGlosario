@@ -19,6 +19,10 @@ if (isset($_GET['lang'])) {
     $languaje = $_GET['lang'];
 }
 
+$page = 1;
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
  
  function getTextGeneral($idText){
     global $languaje;
@@ -165,11 +169,11 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
         $(document).ready(function(){
             load_data();
             function load_data(query){
-                
+                var page = <?php Print($page); ?>;
                 $.ajax({
                     url:"backendSearch.php",
                     method:"POST",
-                    data:{query:query},
+                    data:{query:query,page:page},
                     success:function(data){
                         $('#result').html(data);
                     }

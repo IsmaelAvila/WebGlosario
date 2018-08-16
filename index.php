@@ -117,7 +117,7 @@ function getAutores(){
           <li><a href="#services"><?php echo getTextGeneral(8); ?></a></li>
           <li><a href="#team"><?php echo getTextGeneral(9); ?></a></li>
           <li><a href="#contact"><?php echo getTextGeneral(10); ?></a></li>
-          <li><a href="buscador.php"><?php echo getTextGeneral(11); ?></a></li>
+          <li><a href="Buscador.php?page=1"><?php echo getTextGeneral(11); ?></a></li>
           <li><a href="<?php echo 'index.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
           <li><a href="<?php echo 'index.php?lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
           <li><a href="<?php echo 'index.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
@@ -205,7 +205,7 @@ function getAutores(){
         </div>
         <div class="col-md-3">
           <div class="service-icon"><i class="fa fa-search"></i></div>
-          <h4 class="service-title"><a href="Buscador.php"><?php echo getTextGeneral(11); ?></a></h4>
+          <h4 class="service-title"><a href="Buscador.php?page=1"><?php echo getTextGeneral(11); ?></a></h4>
           <!--h4 class="service-title"><a href="">Buscador</a></h4-->
         </div>
       </div>      
