@@ -85,7 +85,10 @@ class General
     public static function searchText($text){
        
       
-       $consulta = "SELECT a.*, b.idNombreMateria AS FROM concepto a LEFT JOIN materia b ON (b.idMateria = a.idMateria) WHERE nombreConcepto LIKE '%$text%' OR definicionConcepto LIKE '%$text%' OR nombreConcepto LIKE '%$text%'";
+       $consulta = "SELECT * FROM concepto a 
+       LEFT JOIN conceptoLanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) 
+       LEFT JOIN materiaLanguage ml ON (ml.idMateriaLanguage = a.idMateria)
+       WHERE cl.textConcepto LIKE '%$text%' OR ml.textMateria LIKE '%$text%'";
        
         
         
@@ -104,9 +107,7 @@ class General
         }
         
     }
-    
-    
-    
+        
     public static function login($userName, $password){
         $consulta = "SELECT * FROM usuarios WHERE nombreUsuario='$userName' AND password='$password'";
         
@@ -372,7 +373,7 @@ class General
         
     } 
     
-   public static function updateConceptToDelete($idconcepto){
+    public static function updateConceptToDelete($idconcepto){
        
        $concepto = General::getConcepto($idconcepto);
        
@@ -435,9 +436,62 @@ class General
             return false;
         }
     }
+    
+    public static function getDefinicionTextLang ($idDefinicionLan, $idLang){
+       
+        $consulta = "SELECT * FROM definicionLanguage WHERE idDefinicion='$idDefinicionLan' AND idLanguaje='$idLang'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            $row = $comando->fetch(PDO::FETCH_ASSOC);
+            return $row['textDefinicion'];
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+   
+    public static function getInfoCompleTextLang ($idInfoLang, $idLang){
+        $consulta = "SELECT * FROM infoComplLanguage WHERE idInfoCompl='$idInfoLang' AND idLanguaje='$idLang'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            $row = $comando->fetch(PDO::FETCH_ASSOC);
+            return $row['textInfoCompl'];
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
+    public static function getDocumAdiciTextLang ($idDocuAdiciLang, $idLang){
+        $consulta = "SELECT * FROM documAdiciLanguage WHERE idDocumAdici='$idDocuAdiciLang' AND idLanguaje='$idLang'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            $row = $comando->fetch(PDO::FETCH_ASSOC);
+            return $row['textDocumAdici'];
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
   
     /***** Usuarios ********/
-   public static function updateUser($user_session, $idUser, $nombre, $pass, $rol){
+    public static function updateUser($user_session, $idUser, $nombre, $pass, $rol){
        
        if($idMateria == 0){
           
@@ -1073,6 +1127,7 @@ class General
             return false;
         }
     } 
+    
     public static function setMateriaTextLang ($idMateriaLan, $nombre1, $nombre2, $nombre3){
          $consulta = "INSERT INTO materiaLanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
          VALUES ('$idMateriaLan', 1,'$nombre1')
@@ -1111,7 +1166,7 @@ class General
     
      /***** Fuente ********/
     
-     public static function getFuente($idFuente){
+    public static function getFuente($idFuente){
        $consulta = "SELECT * FROM fuenteconcepto WHERE idFuenteConcepto='$idFuente'";
         
         try {
@@ -1180,7 +1235,7 @@ class General
         
     /***** Material Audiovisual ********/
     
-     public static function getAudioVisual($idAudioVi){
+    public static function getAudioVisual($idAudioVi){
        $consulta = "SELECT * FROM conexionMatAudiViConcep WHERE idConexion='$idAudioVi'";
         
         try {
@@ -1197,7 +1252,7 @@ class General
         
     }
     
-     public static function getAudioVisualID($idAudioVi){
+    public static function getAudioVisualID($idAudioVi){
        $consulta = "SELECT * FROM matAudioViConcepto WHERE idMatAudioViConcepto='$idAudioVi'";
         
         try {
@@ -1214,7 +1269,7 @@ class General
         
     }
     
-     public static function setAudioVisualID($idMatAV, $nombre, $link){
+    public static function setAudioVisualID($idMatAV, $nombre, $link){
          $consulta = "INSERT INTO matAudioViConcepto (`idMatAudioViConcepto`,`nombreMateAudioViConcepto`, `linkMateAudioViConcepto`) VALUES ('$idMatAV','$nombre','$link')
                 ON DUPLICATE KEY UPDATE 
                 nombreMateAudioViConcepto='{$nombre}', 
@@ -1235,7 +1290,7 @@ class General
      }
     
      /***** Vease ********/
-      public static function getVease($idVease){
+    public static function getVease($idVease){
        $consulta = "SELECT * FROM veaseConcepto WHERE idVeaseConcepto='$idVease'";
         
         try {
@@ -1252,7 +1307,7 @@ class General
         
     }
     
-     public static function setVease($idVease, $idConcepto){
+    public static function setVease($idVease, $idConcepto){
         $consulta = "INSERT INTO veaseConcepto (`idVeaseConcepto`, `idConcepto`) VALUES ('$idVease','$idConcepto')";
         
         try {

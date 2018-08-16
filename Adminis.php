@@ -207,7 +207,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                      if ($method == 0){
                         echo "<td>".$rowSuper['idConcepto']."</td>";
                         echo "<td>". General::getMateriaTextLang($rowSuper['idMateria'],$lang) ."</td>";
-                        echo "<td>".$rowSuper['nombreConcepto']."</td>";
+                        echo "<td>". General::getConceptoTextLang($rowSuper['idNombreConcepto'],$lang)."</td>";
                         echo "<td><form method='post' name='form' id='form'>";
                         if ($rowSuper['borrar'] == 0){
                             echo  "<input type='submit' name='mod' value='Modificar'/>";
@@ -326,7 +326,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                      if ($method == 0){
                         echo "<td>".$rowGene['idConcepto']."</td>";
                         echo "<td>". General::getMateriaTextLang($rowGene['idMateria'], $lang) ."</td>";
-                        echo "<td>".$rowGene['nombreConcepto']."</td>";
+                        echo "<td>".General::getConceptoTextLang($rowGene['idNombreConcepto'],$lang)."</td>";
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>

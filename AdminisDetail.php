@@ -86,7 +86,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
          
     }else if (isset($_POST['end'])){
-           echo "3";
+         
         $nombre = $_POST['nombre'];
         $materia = $_POST['materiaSelec'];
         $def = $_POST['definicion'];
@@ -215,9 +215,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     <form method='post' name='form' id='form' align="center">
 <?php
-      echo "<center><h2><b><u>Detalle Concepto</u></b></h2></center>";
-
-        echo "<h3>Nombre Concepto: <input type='text' name='nombre' value='".$concepto['nombreConcepto']."'></h1>";
+        echo "<center><h2><b><u>Detalle Concepto</u></b></h2></center>";
+       
+        echo "<h3>Nombre Concepto: <input type='text' name='nombre' value='".General::getConceptoTextLang($concepto['idNombreConcepto'],$lang)."'></h1>";
         
         echo "<h3>Materia: </h3>";
         $rowMaterias = General::getMateriaGeneral();
@@ -231,16 +231,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                echo "selected ";
            }
            
-            echo " >".General::getMateriaTextLang($rowMateria['idMateria'],1)."</option>";
+            echo " >".General::getMateriaTextLang($rowMateria['idMateria'],$lang)."</option>";
         }
+        
         echo "</select>";
-        echo "<h3>Definición:  <input type='text' name='definicion' value='".$concepto['definicionConcepto']."'></h3>";
+        echo "<h3>Definición:  <input type='text' name='definicion' value='".General::getDefinicionTextLang($concepto['idNombreConcepto'],$lang)."'></h3>";
         echo "<h3>Vease: </h3>";
         foreach ($rowVease as $rowVer)
         {
             $idConceptoRow = $rowVer['idConcepto'];
-            $concepto = General::getConcepto($idConceptoRow);
-            echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".$concepto['nombreConcepto']." </a></li>";
+            $conceptoRow = General::getConcepto($idConceptoRow);
+            echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".$conceptoRow['nombreConcepto']." </a></li>";
         }
         echo " <input type='submit' name='addVease' value='Añadir Conceptos'/>";
     
@@ -251,9 +252,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
         echo " <input type='submit' name='addFuente' value='Añadir Fuente'/>";
         
-        echo "<h3>Información complementaria: <input type='text' name='compl' value='".$concepto['informacionComplementariaConcepto']."'></h3>";
-    
-        echo "<h3>Documentación adicional: <input type='text' name='doc' value='".$concepto['documentacionAdicionalConcepto']."'></h3>";
+        echo "<h3>Información complementaria: <input type='text' name='compl' value='". General::getInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang) ."'></h3>";
+        echo $concepto['idInfoCompleConcepto'];
+        echo "<h3>Documentación adicional: <input type='text' name='doc' value='".General::getDocumAdiciTextLang($concepto['idInfoCompleConcepto'], $lang)."'></h3>";
         echo "<h3>Material audiovisual: </h3>";
         $audioVisual = General::getAudioVisual($concepto['idMaterialAudiovisualConcepto']);
         foreach ($audioVisual as $audiVi)
