@@ -5,10 +5,10 @@ session_start();
 echo "<table frame='void' rules='rows' align='center' id='tableAdmi'>
     
                    <tr class='header'>
-                      <th style='width:10%;'><a href=''>ID </a></th>
-		              <th style='width:40%;'><a href=''>Nombre Materia </a></th>
-		              <th style='width:30%;'><a href=''>Nombre Concepto </a></th>
-                    <th style='width:20%;'><a href=''>Validar </a></th>
+                      <th style='width:10%;'><a>ID </a></th>
+		              <th style='width:40%;'><a>Nombre Materia </a></th>
+		              <th style='width:30%;'><a>Nombre Concepto </a></th>
+                    <th style='width:20%;'><a>Validar </a></th>
                   </tr>";
 if (isset($_POST['query'])) {
   

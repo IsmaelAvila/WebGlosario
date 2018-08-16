@@ -188,7 +188,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		                  <th style='width:70%;'><a>Nombre Materia </a></td>";
 		              
                     }else  if ($method == 2){
-                         echo "<th style='width:10%;'><a href=''>ID </a></td>
+                         echo "<th style='width:10%;'><a>ID </a></td>
 		                  <th style='width:10%;'><a>Nombre  </a></td>
                         <th style='width:30%;'><a>Cargo  </a></td>
                         <th style='width:20%;'><a>Image  </a></td>
