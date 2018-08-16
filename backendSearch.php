@@ -13,7 +13,6 @@ echo "<table frame='void' rules='rows' align='center' id='tableAdmi'>
 if (isset($_POST['query'])) {
   
     $rows = General::searchText($_POST['query']);
-    
     foreach ($rows as $row)
       {
         echo "<tr>";
