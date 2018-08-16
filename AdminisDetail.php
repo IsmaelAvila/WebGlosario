@@ -267,13 +267,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         echo "<br>";
        
         if ($lang == 1){
-            echo "<input type='submit' name='next' value='Siguiente'/>";
+            echo "<br><input type='submit' name='next' value='Siguiente'/>";
        }else  if ($lang == 2){
            echo "<input type='submit' name='back' value='Atras'/>";
-           echo "<input type='submit' name='next' value='Siguiente'/>";
+           echo "<br><input type='submit' name='next' value='Siguiente'/>";
        }else  if ($lang == 3){
            echo "<input type='submit' name='back' value='Atras'/>";
-           echo "<input type='submit' name='end' value='Finalizar'/>";
+           echo "<br><input type='submit' name='end' value='Finalizar'/>";
        }
     ?>
 

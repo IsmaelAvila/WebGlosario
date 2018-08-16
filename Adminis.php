@@ -372,17 +372,17 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                   }
             ?>
         <tr class="footer">
-		              <th colspan= "6" style=" text-align: right;">
+		              <th colspan= "6" style=" text-align: center;">
                           <?php
                           
                           $totalRecods = General::getCountGeneral($method);
                           $total_pages = ceil($totalRecods/10);
                           
-                          $pageLink = "<div class='pagination'>";
-                          for($i; $i<=$total_pages;$i++){
-                              $pageLink .= "<a href='Adminis.php?page=".$i."&method=".$method."&lang=".$lang."'>".$i."</a>";
+                          $pageLink = "<div class='pagination'>[ ";
+                          for($i=1; $i<=$total_pages;$i++){
+                              $pageLink .= "<a href='Adminis.php?page=".$i."&method=".$method."&lang=".$lang."'>".$i."&nbsp;</a>";
                           }
-                          echo $pageLink . "</div>";
+                          echo $pageLink . "</div>]";
                           ?>
                          
 		             
