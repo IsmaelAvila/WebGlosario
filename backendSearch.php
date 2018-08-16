@@ -8,7 +8,7 @@ echo "<table frame='void' rules='rows' align='center' id='tableAdmi'>
                       <th style='width:10%;'><a>ID </a></th>
 		              <th style='width:40%;'><a>Nombre Materia </a></th>
 		              <th style='width:30%;'><a>Nombre Concepto </a></th>
-                    <th style='width:20%;'><a>Validar </a></th>
+                    
                   </tr>";
 if (isset($_POST['query'])) {
   
@@ -19,15 +19,9 @@ if (isset($_POST['query'])) {
         echo "<tr>";
 
             echo "<td>".$row['idConcepto']."</td>";
-            echo "<td>".$row['nombreMateria']."</td>";
-            echo "<td>".$row['nombreConcepto']."</td>";
-            echo "<td><form method='post' name='form' id='form'>
-            <input type='submit' name='mod' value='Modificar'/>
-            <input type='submit' name='del' value='Eliminar'/>
-            <input type='hidden' name='idConce' value='".$row['idConcepto']."'/>
-            </form></td>";
-
-
+            echo "<td>". General::getMateriaTextLang($row['idMateria'], 1) ."</td>";
+            echo "<td>". General::getConceptoTextLang($row['idNombreConcepto'],1) ."</td>";
+            
         echo "</tr>";
       }
    
@@ -52,14 +46,8 @@ if (isset($_POST['query'])) {
         echo "<tr>";
 
             echo "<td>".$row['idConcepto']."</td>";
-            echo "<td>".$row['nombreMateria']."</td>";
-            echo "<td>".$row['nombreConcepto']."</td>";
-            echo "<td><form method='post' name='form' id='form'>
-            <input type='submit' name='mod' value='Modificar'/>
-            <input type='submit' name='del' value='Eliminar'/>
-            <input type='hidden' name='idConce' value='".$row['idConcepto']."'/>
-            </form></td>";
-
+           echo "<td>". General::getMateriaTextLang($row['idMateria'], 1) ."</td>";
+            echo "<td>". General::getConceptoTextLang($row['idNombreConcepto'],1) ."</td>";
 
         echo "</tr>";
       }

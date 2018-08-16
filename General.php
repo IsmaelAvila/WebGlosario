@@ -85,7 +85,10 @@ class General
     public static function searchText($text){
        
       
-       $consulta = "SELECT a.*, b.idNombreMateria AS FROM concepto a LEFT JOIN materia b ON (b.idMateria = a.idMateria) WHERE nombreConcepto LIKE '%$text%' OR definicionConcepto LIKE '%$text%' OR nombreConcepto LIKE '%$text%'";
+       $consulta = "SELECT * FROM concepto a 
+       LEFT JOIN conceptoLanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) 
+       LEFT JOIN materiaLanguage ml ON (ml.idMateriaLanguage = a.idMateria)
+       WHERE cl.textConcepto LIKE '%$text%' OR ml.textMateria LIKE '%$text%'";
        
         
         
