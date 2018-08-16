@@ -293,20 +293,21 @@ function getAutores(){
             <div id="errormessage"></div>
             <form action="" method="POST" >
               <div class="form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="<?php echo getTextGeneral(22); ?>" data-rule="minlen:4" data-msg="<?php echo getTextGeneral(27); ?>" />
+                <input id="contact_name" type="text" name="name" class="form-control" placeholder="<?php echo getTextGeneral(22); ?>" data-rule="minlen:4" data-msg="<?php echo getTextGeneral(27); ?>" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="<?php echo getTextGeneral(24); ?>" data-rule="minlen:4" data-msg="<?php echo getTextGeneral(29); ?>" />
+                <input id="contact_subject" type="text" class="form-control" name="subject"  placeholder="<?php echo getTextGeneral(24); ?>" data-rule="minlen:4" data-msg="<?php echo getTextGeneral(29); ?>" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="<?php echo getTextGeneral(30); ?>" placeholder="<?php echo getTextGeneral(25); ?>"></textarea>
+                <textarea  id="contact_message" class="form-control" name="message" rows="5" data-rule="required" data-msg="<?php echo getTextGeneral(30); ?>" placeholder="<?php echo getTextGeneral(25); ?>"></textarea>
                 <div class="validation"></div>
               </div>
               
-              <div class="btn btn-info"><a href="mailto:ismaelavilaojeda@gmail.com?subject=&body=Hi,I found this website
-and thought you might like it http://www.geocities.com/wowhtml/"><?php echo getTextGeneral(26); ?></a></div>
+              <div class="btn btn-info"><a class="submit" onclick="sendMail()"> <?php echo getTextGeneral(26); ?></a></div>
+                <!--href="mailto:ismaelavilaojeda@gmail.com?subject=&body=Hi,I found this website
+and thought you might like it http://www.geocities.com/wowhtml/"-->
 
             </form>
           </div>
@@ -351,8 +352,14 @@ and thought you might like it http://www.geocities.com/wowhtml/"><?php echo getT
   <script src="js/custom.js"></script>
 
   <script src="contactform/contactform.js"></script>
-
-
+    <script>
+            function sendMail()
+            {
+                var body = document.getElementById("contact_message").value;
+                var subject = document.getElementById("contact_subject").value;
+                window.location.href = "mailto:ismaelavilaojeda@gmail.com?subject="+subject+"&body="+body;
+            }
+</script>
 </body>
 
 </html>
