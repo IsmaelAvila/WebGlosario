@@ -199,8 +199,9 @@ class General
         }
     }
     
-    public static function getConceptoGene(){
-        $consulta = "SELECT * FROM concepto ORDER BY nombreConcepto ASC";
+    public static function getConceptoGene($idLang){
+        $consulta = "SELECT * FROM concepto a 
+        LEFT JOIN conceptoLanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) WHERE cl.idLanguaje = '$idLang' ORDER BY textConcepto DESC";
         
         try {
             // Preparar sentencia

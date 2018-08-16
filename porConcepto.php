@@ -1,14 +1,15 @@
 <?php
 require 'General.php';
 
-function getConceptoGen(){
-    $row = General::getConceptoGene();
-    return $row;
-}
-
 $languaje = 1;
 if (isset($_GET['lang'])) {
     $languaje = $_GET['lang'];
+}
+
+function getConceptoGen(){
+    global $languaje;
+    $row = General::getConceptoGene($languaje);
+    return $row;
 }
 
 function getTextGeneral($idText){
@@ -23,6 +24,7 @@ function getTextGeneral($idText){
 }*/
 
 function getAutores(){
+    
     $row = General::getAutores();
     return $row;
 }
@@ -129,8 +131,8 @@ function getAutores(){
           {
          echo '<div class="col-md-4 service-item2">';
          echo '<div class="service-icon"><i class="fa fa-file"></i></div>';
-         echo '<h4 class="service-title"><a href="concepto.php?id='.$concepto["idConcepto"].'">'. $concepto["nombreConcepto"].'</a></h4>';
-         echo '<p class="service-description">Pulsa en '. $concepto["nombreConcepto"] .' y podrás acceder al contenido de la materia.</p></div>';
+         echo '<h4 class="service-title"><a href="concepto.php?id='.$concepto["idConcepto"].'">'. General::getConceptoTextLang($concepto['idNombreConcepto'],$languaje).'</a></h4>';
+         echo '<p class="service-description">Pulsa en '. General::getConceptoTextLang($concepto['idNombreConcepto'],$languaje) .' y podrás acceder al contenido de la materia.</p></div>';
         }
           ?>
         

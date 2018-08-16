@@ -195,7 +195,7 @@ function getAutores(){
         
         <div class="col-md-3 col-md-offset-2">
           <div class="service-icon"><i class="fa fa-buysellads"></i></div>
-          <h4 class="service-title"><a href="porConcepto.php?$lang=$languaje"><?php echo getTextGeneral(18); ?></a></h4>
+          <h4 class="service-title"><a href="porConcepto.php?languaje="+<?php echo $languaje; ?>+""><?php echo getTextGeneral(18); ?></a></h4>
           <!--h4 class="service-title"><a href="porConcepto.php?$lang=$languaje">Por orden alfabético</a></h4-->        
         </div>
         <div class="col-md-3">
