@@ -51,15 +51,15 @@ if (isset($_POST['query'])) {
         echo "</tr>";
       }
    
-    echo "<tr class='footer'> <th colspan= '6' style=' text-align: right;'>";
+    echo "<tr class='footer'> <th colspan= '6' style=' text-align: center;'>";
 
     $totalRecods = General::getCountGeneral($method);
     $total_pages = ceil($totalRecods/10);
-    $pageLink = "<div class='pagination'>";
-     for($i; $i<=$total_pages;$i++){
-        $pageLink .= "<a href='Buscador.php?page=".$i."'>".$i."</a>";
+    $pageLink = "<div class='pagination'>[ ";
+     for($i=1; $i<=$total_pages;$i++){
+        $pageLink .= "<a href='Buscador.php?page=".$i."'>".$i."&nbsp;</a>";
      }
-     echo $pageLink . "</div>";
+     echo $pageLink . "</div>]";
    
     echo "</tr>
      </table>";

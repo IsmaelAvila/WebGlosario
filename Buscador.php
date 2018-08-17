@@ -94,12 +94,6 @@ if (isset($_GET['page'])) {
           <li><a href="<?php echo 'porConcepto.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
           <li><a href="<?php echo 'porConcepto.php?lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
           <li><a href="<?php echo 'porConcepto.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
-          <!--li class="menu-active"><a href="#hero">Home</a></li-->
-          <!--li><a href="#about">Presentación</a></li-->
-          <!--li><a href="#services">Glosario</a></li-->
-          <!--li><a href="#team">Autores</a></li-->
-          <!--li><a href="#contact">Contacto</a></li-->
-          <!--li><a href="#contact">Buscador</a></li-->
         </ul>
       </nav>
       <!-- #nav-menu-container -->

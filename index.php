@@ -357,7 +357,7 @@ and thought you might like it http://www.geocities.com/wowhtml/"-->
             {
                 var body = document.getElementById("contact_message").value;
                 var subject = document.getElementById("contact_subject").value;
-                window.location.href = "mailto:ismaelavilaojeda@gmail.com?subject="+subject+"&body="+body;
+                window.location.href = "mailto:prevencion@uco.es?subject="+subject+"&body="+body;
             }
 </script>
 </body>

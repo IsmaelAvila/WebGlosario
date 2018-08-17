@@ -146,7 +146,7 @@ function getAutores(){
       <div class="row">
         <div class="col-md-12">
           <div class="copyright">
-            &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2019</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
+            &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2018</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
           </div>
           <div class="credits">
             <img src="img/logoUco.png" alt="" title="" width="50" height="30" />
