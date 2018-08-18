@@ -3,8 +3,6 @@
 require 'General.php';
 session_start();
 
-
-
 echo "<form method='post' name='form' id='form'>";
 echo "<table frame='void' rules='rows' align='center' id='tableAdmi'>
                    <tr class='header'>
@@ -26,7 +24,7 @@ if (isset($_POST['query'])) {
         echo "<tr><form method='post' name='form' id='form'> ";
 
             echo "<td>".$row['idConcepto']."</td>";
-            echo "<td>".$row['nombreConcepto']."</td>";
+            echo "<td>".General::getConceptoTextLang($rowSuper['idNombreConcepto'],1)."</td>";
        
             echo "<td><input type='checkbox' name='concepto[]' value='".$row['idConcepto']."'";
             foreach ($rowVeases as $rowVease){
@@ -46,14 +44,13 @@ if (isset($_POST['query'])) {
      echo "<input type='submit' name='Confirmar' value='Confirmar'/></form>";
    
 }else{
-   
-    $rowGeneral = General::getConceptoGene();
+    $rowGeneral = General::getConceptoGene(1);
     foreach ($rowGeneral as $row)
       {
         echo "<tr>";
 
         echo "<td>".$row['idConcepto']."</td>";
-        echo "<td>".$row['nombreConcepto']."</td>";
+        echo "<td>".General::getConceptoTextLang($row['idNombreConcepto'],1)."</td>";
         echo "<td><input type='checkbox' name='concepto[]' value='".$row['idConcepto']."'";
         foreach ($rowVeases as $rowVease){
                 if($row['idConcepto'] == $rowVease['idConcepto']){

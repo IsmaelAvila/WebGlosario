@@ -14,7 +14,7 @@ if ($user_session['rol']=='ADMIN'){
         header("location:Adminis.php");
    }
 }else{
-   if (General::deleteConcept($id)){
+   if (General::deleteConcept($id) && General::deleteConceptRev($id)){
         header("location:Adminis.php");
    }
 }

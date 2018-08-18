@@ -45,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $audiovi = $_POST['audiovi'];
  
        if ($rev == "false"){
-            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){ 
+            if(General::updateConcept($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){ 
                 
                  header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=". ($lang + 1));
             }else{
@@ -53,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                 $error = "No se ha podido actualizar los datos";
             }
         }else{
-            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi)){
+            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){
                 
                 header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang + 1));
             }else{
@@ -72,13 +72,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $doc = $_POST['doc'];
         $audiovi = $_POST['audiovi'];
          if ($rev == "false"){
-            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
+            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi, $lang)){
                  header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang - 1));
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
         }else{
-            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi)){
+            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){
                 header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang - 1));
             }else{
                 $error = "No se ha podido actualizar los datos";
@@ -97,13 +97,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $audiovi = $_POST['audiovi'];
          
          if ($rev == "false"){
-            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
+            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi, $lang)){
                  header("location:Adminis.php");
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
         }else{
-            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi)){
+            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){
                 header("location:Adminis.php");
             }else{
                 $error = "No se ha podido actualizar los datos";
@@ -241,7 +241,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         {
             $idConceptoRow = $rowVer['idConcepto'];
             $conceptoRow = General::getConcepto($idConceptoRow);
-            echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".$conceptoRow['nombreConcepto']." </a></li>";
+            echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".General::getConceptoTextLang($conceptoRow['idNombreConcepto'],$lang)." </a></li>";
         }
         echo " <input type='submit' name='addVease' value='Añadir Conceptos'/>";
     
@@ -253,7 +253,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         echo " <input type='submit' name='addFuente' value='Añadir Fuente'/>";
         
         echo "<h3>Información complementaria: <input type='text' name='compl' value='". General::getInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang) ."'></h3>";
-        echo $concepto['idInfoCompleConcepto'];
         echo "<h3>Documentación adicional: <input type='text' name='doc' value='".General::getDocumAdiciTextLang($concepto['idInfoCompleConcepto'], $lang)."'></h3>";
         echo "<h3>Material audiovisual: </h3>";
         $audioVisual = General::getAudioVisual($concepto['idMaterialAudiovisualConcepto']);

@@ -52,8 +52,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             header("location:AdminisDetail.php?idConcep=".$idConcep."&rev=".$rev."&lang=".$lang);
         }else if(isset($_POST['del'])){
             echo '<script language="Javascript" type="text/javascript">';
-            echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+            echo 'if (confirm("Estas seguro que quieres borrarlo?")){';
             echo 'location.href = "DeleteConcep.php?id='.$idConcep.'"; } </script>';
+        }else if(isset($_POST['des'])){
+                echo '<script language="Javascript" type="text/javascript">';
+                echo 'if (confirm("Estas seguro que quieres descartalo?")){';
+                echo 'location.href = "DescartarConcep.php?id='.$idAuto.'"; } </script>';
         }
      }else  if ($method == 1){
         
@@ -64,22 +68,28 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }else if(isset($_POST['del'])){
 
             echo '<script language="Javascript" type="text/javascript">';
-            echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+            echo 'if (confirm("Estas seguro que quieres borrarlo?")){';
             echo 'location.href = "DeleteMater.php?id='.$idMat.'"; } </script>';
-
-
-        }
+       }else if(isset($_POST['des'])){
+         echo '<script language="Javascript" type="text/javascript">';
+            echo 'if (confirm("Estas seguro que quieres descartalo?")){';
+            echo 'location.href = "DescartarMater.php?id='.$idMat.'"; } </script>';
+       }
      }else  if ($method == 2){
         
         $idAuto = $_POST['idAuto'];
        if(isset($_POST['mod'])){
             header("location:AdminisAutoresDetail.php?idAuto=".$idAuto."&rev=".$rev);
         }else if(isset($_POST['del'])){
-
             echo '<script language="Javascript" type="text/javascript">';
-            echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+            echo 'if (confirm("Estas seguro que quieres borrarlo?")){';
             echo 'location.href = "DeleteAutor.php?id='.$idAuto.'"; } </script>';
-        }
+           
+        }else if(isset($_POST['des'])){
+            echo '<script language="Javascript" type="text/javascript">';
+            echo 'if (confirm("Estas seguro que quieres descartalo?")){';
+            echo 'location.href = "DescartarAutor.php?id='.$idAuto.'"; } </script>';
+       }
      }else  if ($method == 3){
         
          $idUser = $_POST['idUser'];
@@ -89,11 +99,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }else if(isset($_POST['del'])){
 
             echo '<script language="Javascript" type="text/javascript">';
-            echo 'if (confirm("Estas seguro que quieres borrarlo")){';
+            echo 'if (confirm("Estas seguro que quieres borrarlo?")){';
             echo 'location.href = "DeleteUser.php?id='.$idUser.'"; } </script>';
 
 
-        }
+        }else if(isset($_POST['des'])){
+         echo '<script language="Javascript" type="text/javascript">';
+            echo 'if (confirm("Estas seguro que quieres descartalo?")){';
+            echo 'location.href = "DescartarUser.php?id='.$idUser.'"; } </script>';
+       }
      }
     }
 }
@@ -211,7 +225,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         echo "<td><form method='post' name='form' id='form'>";
                         if ($rowSuper['borrar'] == 0){
                             echo  "<input type='submit' name='mod' value='Modificar'/>";
-                            echo "<input type='submit' name='del' value='Descartar'/>";
+                            echo "<input type='submit' name='des' value='Descartar'/>";
                         }else{
                              echo "<input type='submit' name='del' value='Eliminar'/>";
                         }
@@ -224,7 +238,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         echo "<td><form method='post' name='form' id='form'>";
                         if ($rowSuper['borrar'] == 0){
                             echo  "<input type='submit' name='mod' value='Modificar'/>";
-                            echo "<input type='submit' name='del' value='Descartar'/>";
+                            echo "<input type='submit' name='des' value='Descartar'/>";
                         }else{
                              echo "<input type='submit' name='del' value='Eliminar'/>";
                         }
@@ -241,7 +255,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         echo "<td><form method='post' name='form' id='form'>";
                         if ($rowSuper['borrar'] == 0){
                             echo  "<input type='submit' name='mod' value='Modificar'/>";
-                            echo "<input type='submit' name='del' value='Descartar'/>";
+                            echo "<input type='submit' name='des' value='Descartar'/>";
                         }else{
                              echo "<input type='submit' name='del' value='Eliminar'/>";
                         }
@@ -255,7 +269,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         echo "<td><form method='post' name='form' id='form'>";
                         if ($rowSuper['borrar'] == 0){
                             echo  "<input type='submit' name='mod' value='Modificar'/>";
-                            echo "<input type='submit' name='del' value='Descartar'/>";
+                            echo "<input type='submit' name='des' value='Descartar'/>";
                         }else{
                              echo "<input type='submit' name='del' value='Eliminar'/>";
                         }

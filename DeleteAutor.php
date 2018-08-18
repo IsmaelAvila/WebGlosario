@@ -14,7 +14,7 @@ if ($user_session['rol']=='ADMIN'){
         header("location:Adminis.php");
    }
 }else{
-   if (General::deleteAutor$id) && General::deleteAutorRev($id)){
+   if (General::deleteAutor($id) && General::deleteAutorRev($id)){
         header("location:Adminis.php");
    }
 }
