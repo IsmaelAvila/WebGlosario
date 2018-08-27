@@ -91,9 +91,9 @@ if (isset($_GET['page'])) {
           <li><a href="index.php#team"><?php echo getTextGeneral(9); ?></a></li>
           <li><a href="index.php#contact"><?php echo getTextGeneral(10); ?></a></li>
           <li><a href=""><?php echo getTextGeneral(11); ?></a></li>
-          <li><a href="<?php echo 'porConcepto.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
-          <li><a href="<?php echo 'porConcepto.php?lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
-          <li><a href="<?php echo 'porConcepto.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
+          <li><a href="<?php echo 'Buscador.php?page='.$page.'&lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
+          <li><a href="<?php echo 'Buscador.php?page='.$page.'&lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
+          <li><a href="<?php echo 'Buscador.php?page='.$page.'&lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
         </ul>
       </nav>
       <!-- #nav-menu-container -->
@@ -164,10 +164,11 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
             load_data();
             function load_data(query){
                 var page = <?php Print($page); ?>;
+                var lang = <?php Print($languaje); ?>;
                 $.ajax({
                     url:"backendSearch.php",
                     method:"POST",
-                    data:{query:query,page:page},
+                    data:{query:query,page:page,lang:lang},
                     success:function(data){
                         $('#result').html(data);
                     }

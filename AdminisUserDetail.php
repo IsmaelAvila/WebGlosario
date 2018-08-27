@@ -16,27 +16,26 @@ if (isset($_GET['rev'])) {
 }
 
 if ($rev == "false"){
-    $user = General::getUser($iduser);
-}else{
+   $user = General::getUser($iduser);
+}else{ 
     $user = General::getUserSupervi($iduser); 
 }
-
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
  
         $nombre = $_POST['nombre'];
-        $pass = $_POST['password'];
+        $pass = $_POST['pass'];
         $rol = $_POST['rol'];
  
   if ($rev == "false"){
-    if(General::updateUser($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
+    if(General::updateUser($user_session, $iduser,$nombre,$pass,$rol)){
         
         header("location:Adminis.php"); 
     }else{
         $error = "No se ha podido actualizar los datos";
     }
    }else{
-        if(General::updateUserRev($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi)){
+        if(General::updateUserRev($user_session, $iduser,$nombre,$pass,$rol)){
         
         header("location:Adminis.php"); 
     }else{
@@ -90,12 +89,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <body>
     
     <form method='post' name='form' id='form' align='center'>
-<?php
-echo "<center><h2><b><u>Detalle Usuarios: </u></b></h2></center>";
-    echo "<h3>Nombre: <input type='text' name='nombre' value='".$user['nombreUsuario']."'></h3>";
-    echo "<h3>Password: <input type='text' name='pass' value='".$user['password']."'></h3>";
-     echo "<h3>Rol: <input type='text' name='rol' value='".$user['rol']."'></h3>";
-    ?>
+        <?php
+        echo "<center><h2><b><u>Detalle Usuarios: </u></b></h2></center>";
+        echo "<h3>Nombre: <input type='text' name='nombre' value='".$user['nombreUsuario']."'></h3>";
+        echo "<h3>Password: <input type='text' name='pass' value='".$user['password']."'></h3>";
+        echo "<h3>Rol: <input type='text' name='rol' value='".$user['rol']."'></h3>";
+        ?>
         <input type='submit' name='mod' value='Modificar'/>
 </form>
      <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>

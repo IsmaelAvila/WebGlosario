@@ -57,7 +57,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }else if(isset($_POST['des'])){
                 echo '<script language="Javascript" type="text/javascript">';
                 echo 'if (confirm("Estas seguro que quieres descartalo?")){';
-                echo 'location.href = "DescartarConcep.php?id='.$idAuto.'"; } </script>';
+                echo 'location.href = "DescartarConcep.php?id='.$idConcep.'"; } </script>';
         }
      }else  if ($method == 1){
         
@@ -234,7 +234,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         </form></td>";
                     }else  if ($method == 1){
                         echo "<td>".$rowSuper['idMateria']."</td>";
-                        echo "<td>".$rowSuper['idNombreMateria']."</td>";
+                         echo $rowSuper['idNombreMateria'];
+                        echo "<td>".General::getMateriaTextLang($rowSuper['idNombreMateria'], $lang)."</td>";
                         echo "<td><form method='post' name='form' id='form'>";
                         if ($rowSuper['borrar'] == 0){
                             echo  "<input type='submit' name='mod' value='Modificar'/>";
@@ -349,11 +350,11 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         </form></td>";
                     }else  if ($method == 1){
                         echo "<td>".$rowGene['idMateria']."</td>";
-                        echo "<td>". General::getMateriaTextLang($rowGene['idMateria'], $lang) ."</td>";
+                        echo "<td>".General::getMateriaTextLang($rowGene['idNombreMateria'], $lang)."</td>";
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
-                         <input type='hidden' name='rev' value='false'/>
+                        <input type='hidden' name='rev' value='false'/>
                         <input type='hidden' name='idMat' value='".$rowGene['idMateria']."'/>
                         </form></td>";
 		              
@@ -367,7 +368,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
                          <input type='hidden' name='rev' value='false'/>
-                        <input type='hidden' name='idAutores' value='".$rowGene['idAutores']."'/>
+                        <input type='hidden' name='idAuto' value='".$rowGene['idAutores']."'/>
                         </form></td>";
                     }else  if ($method == 3){
                         echo "<td>".$rowGene['idUsuario']."</td>";

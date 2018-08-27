@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             $error = "No se ha podido actualizar los datos";
         }
    }else{
-        if(General::updateMateriaRev($user_session, $idMat,$materiaName)){
+        if(General::updateMateriaRev($user_session, $idMat, $materia['idNombreMateria'])){
             header("location:Adminis.php"); 
         }else{
             $error = "No se ha podido actualizar los datos";
@@ -91,9 +91,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <?php
 
    
-    echo "<h1>MATERIA <input type='text' name='materia1' value='".General::getMateriaTextLang($materia['idMateria'], 1)."'>(Español)</h1>";
-        echo "<h1>MATERIA <input type='text' name='materia2' value='".General::getMateriaTextLang($materia['idMateria'], 2)."'>(Ingles)</h1>";
-        echo "<h1>MATERIA <input type='text' name='materia3' value='".General::getMateriaTextLang($materia['idMateria'], 3)."'>(Frances)</h1>";
+    echo "<h1>MATERIA <input type='text' name='materia1' value='".General::getMateriaTextLang($materia['idNombreMateria'], 1)."'>(Español)</h1>";
+        echo "<h1>MATERIA <input type='text' name='materia2' value='".General::getMateriaTextLang($materia['idNombreMateria'], 2)."'>(Ingles)</h1>";
+        echo "<h1>MATERIA <input type='text' name='materia3' value='".General::getMateriaTextLang($materia['idNombreMateria'], 3)."'>(Frances)</h1>";
 
      
     ?>

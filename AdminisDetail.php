@@ -29,11 +29,18 @@ if ($rev == "false"){
 
 $rowVease = General::getVease($concepto['idVeaseConcepto']);
 
+
 $idFuente = $concepto['idfuenteConcepto'];
+$nombre = General::getConceptoTextLang($concepto['idNombreConcepto'],$lang);
+$def = General::getDefinicionTextLang($concepto['idNombreConcepto'],$lang);
+$compl = General::getInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang);
+$doc = General::getDocumAdiciTextLang($concepto['idInfoCompleConcepto'], $lang);
+$idVease = $concepto['idVeaseConcepto'];
+$idFuenteCon = $concepto['idfuenteConcepto'];
+$idMateAudi = $concepto['idMaterialAudiovisualConcepto'];
+
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
-  
-     if (isset($_POST['next'])){
     
         $nombre = $_POST['nombre'];
         $materia = $_POST['materiaSelec'];
@@ -43,6 +50,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $compl = $_POST['compl'];
         $doc = $_POST['doc'];
         $audiovi = $_POST['audiovi'];
+  
+     if (isset($_POST['next'])){
  
        if ($rev == "false"){
             if(General::updateConcept($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){ 
@@ -63,14 +72,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
      }else if (isset($_POST['back'])){
          
-        $nombre = $_POST['nombre'];
-        $materia = $_POST['materiaSelec'];
-        $def = $_POST['definicion'];
-        $vease = $_POST['vease'];
-        $fuente = $_POST['fuente'];
-        $compl = $_POST['compl'];
-        $doc = $_POST['doc'];
-        $audiovi = $_POST['audiovi'];
          if ($rev == "false"){
             if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi, $lang)){
                  header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang - 1));
@@ -85,16 +86,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             }
         }
          
-    }else if (isset($_POST['end'])){
-         
-        $nombre = $_POST['nombre'];
-        $materia = $_POST['materiaSelec'];
-        $def = $_POST['definicion'];
-        $vease = $_POST['vease'];
-        $fuente = $_POST['fuente'];
-        $compl = $_POST['compl'];
-        $doc = $_POST['doc'];
-        $audiovi = $_POST['audiovi'];
+    }else if (isset($_POST['end'])){       
          
          if ($rev == "false"){
             if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi, $lang)){
@@ -113,12 +105,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
      }else if (isset($_POST['addVease'])){
          
             echo "<script>";
-            echo "var winOpen = window.open('veaseSelec.php?idVease=".$concepto['idVeaseConcepto']."','_blank', 'width=700,height=700');";
+         
+         if ($idVease == ""){
+             $idVease = 0;
+         }
+            echo "var winOpen = window.open('veaseSelec.php?idVease=".$idVease."','_blank', 'width=700,height=700');";
             echo "winOpen.window.focus();";
             echo "</script>";
+         
      }else if (isset($_POST['checkVease'])){
         
-         $idVease = $concepto['idVeaseConcepto'];
          General::deleteVease($idVease);
          if ($idVease == 0 && General::updateVeaseConcepto($idconcepto)){
             $idVease = $idconcepto;
@@ -130,8 +126,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
          }
          $rowVease = General::getVease($idVease);
      }else if (isset($_POST['addFuente'])){
+         if ($idFuenteCon == ""){
+             $idFuenteCon = 0;
+         }
+         
           echo "<script>";
-            echo "var winOpen2 = window.open('fuenteSelect.php?idFuente=".$concepto['idfuenteConcepto']."','_blank', 'width=700,height=700');";
+            echo "var winOpen2 = window.open('fuenteSelect.php?idFuente=".$idFuenteCon."','_blank', 'width=700,height=700');";
             echo "winOpen2.window.focus();";
             echo "</script>";
          
@@ -149,8 +149,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
          
      }else if (isset($_POST['addMaterial'])){
          
+         if ($idMateAudi == ""){
+             $idMateAudi = 0;
+         }
+        
            echo "<script>";
-            echo "var winOpen2 = window.open('MateAudioViSelect.php?idMate=".$concepto['idMaterialAudiovisualConcepto']."','_blank', 'width=700,height=700');";
+            echo "var winOpen2 = window.open('MateAudioViSelect.php?idMate=".$idMateAudi."','_blank', 'width=700,height=700');";
             echo "winOpen2.window.focus();";
             echo "</script>";
     
@@ -166,7 +170,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         
          $idMateAV = General::setMaterialAudivo($idMat, $name, $link);
           
-         General::updateMaterialAudivoConcepto($idMateAV, $concepto['idMaterialAudiovisualConcepto'], $idconcepto);
+         General::updateMaterialAudivoConcepto($idMateAV, $idMateAudi, $idconcepto);
          
      }
  
@@ -221,7 +225,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <?php
         echo "<center><h2><b><u>Detalle Concepto</u></b></h2></center>";
        
-        echo "<h3>Nombre Concepto: <input type='text' name='nombre' value='".General::getConceptoTextLang($concepto['idNombreConcepto'],$lang)."'></h1>";
+        echo "<h3>Nombre Concepto: <input type='text' name='nombre' value='".$nombre."'></h1>";
         
         echo "<h3>Materia: </h3>";
         $rowMaterias = General::getMateriaGeneral();
@@ -239,7 +243,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
         
         echo "</select>";
-        echo "<h3>Definición:  <input type='text' name='definicion' value='".General::getDefinicionTextLang($concepto['idNombreConcepto'],$lang)."'></h3>";
+        echo "<h3>Definición:  <input type='text' name='definicion' value='".$def."'></h3>";
         echo "<h3>Vease: </h3>";
         foreach ($rowVease as $rowVer)
         {
@@ -256,8 +260,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
         echo " <input type='submit' name='addFuente' value='Añadir Fuente'/>";
         
-        echo "<h3>Información complementaria: <input type='text' name='compl' value='". General::getInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang) ."'></h3>";
-        echo "<h3>Documentación adicional: <input type='text' name='doc' value='".General::getDocumAdiciTextLang($concepto['idInfoCompleConcepto'], $lang)."'></h3>";
+        echo "<h3>Información complementaria: <input type='text' name='compl' value='". $compl ."'></h3>";
+        echo "<h3>Documentación adicional: <input type='text' name='doc' value='".$doc."'></h3>";
         echo "<h3>Material audiovisual: </h3>";
         $audioVisual = General::getAudioVisual($concepto['idMaterialAudiovisualConcepto']);
         foreach ($audioVisual as $audiVi)

@@ -201,7 +201,7 @@ class General
     
     public static function getConceptoGene($idLang){
         $consulta = "SELECT * FROM concepto a 
-        LEFT JOIN conceptoLanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) WHERE cl.idLanguaje = '$idLang' ORDER BY textConcepto DESC";
+        LEFT JOIN conceptoLanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) WHERE cl.idLanguaje = '$idLang' ORDER BY textConcepto ASC";
         
         try {
             // Preparar sentencia
@@ -297,26 +297,27 @@ class General
              }else{
                 $table = "concepto";
              }
-            $consulta = "INSERT INTO ".$table." (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idInformacionComplementariaConcepto`,`idDocumentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$vease','$fuente','$idInfoComple','$idDocumAdici','$audiovi')";
+            $consulta = "INSERT INTO ".$table." (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$vease','$fuente','$idInfoComple','$idDocumAdici','$audiovi')";
         }else{
             if ($user_session['rol']== "ADMIN"){
-                $consulta = "INSERT INTO conceptoSupervi (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idInformacionComplementariaConcepto`,`idDocumentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$vease','$fuente','$idInfoComple','$idDocumAdici','$audiovi')
+                $consulta = "INSERT INTO conceptoSupervi (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$vease','$fuente','$idInfoComple','$idDocumAdici','$audiovi')
                 ON DUPLICATE KEY UPDATE 
                 idNombreConcepto='{$idNombreConcepto}', 
                 idMateria='{$materia}', 
                 idDefinicionConcepto='{$idDefinicion}',
                 idVeaseConcepto='{$vease}',
                 idFuenteConcepto='{$fuente}',
-                idInformacionComplementariaConcepto='{$idInfoComple}',
+                idInfoCompleConcepto='{$idInfoComple}',
                 idDocumentacionAdicionalConcepto='{$idDocumAdici}',
                 idMaterialAudiovisualConcepto='{$audiovi}'";
             }else{
-                $consulta = "UPDATE concepto SET nombreConcepto='{$idNombreConcepto}', 
+                $consulta = "UPDATE concepto SET 
+                idNombreConcepto='{$idNombreConcepto}', 
                 idMateria='{$materia}', 
                 idDefinicionConcepto='{$idDefinicion}',
                 idVeaseConcepto='{$vease}',
                 idFuenteConcepto='{$fuente}',
-                idInformacionComplementariaConcepto='{$idInfoComple}',
+                idInfoCompleConcepto='{$idInfoComple}',
                 idDocumentacionAdicionalConcepto='{$idDocumAdici}',
                 idMaterialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
             }
@@ -613,37 +614,20 @@ class General
   
     /***** Usuarios ********/
     public static function updateUser($user_session, $idUser, $nombre, $pass, $rol){
-       
-       if($idMateria == 0){
-          
-             if ($user_session['rol']== "ADMIN"){
+       if ($user_session['rol']== "ADMIN"){
                  $table = "usuariosSupervi";
                  
              }else{
                 $table = "usuarios";
                  
              }
-            $consulta = "INSERT INTO ".$table." (`idUsuario`,`nombreUsuario`,`password`, `rol`) VALUES ('$idUser','$nombre','$pass','$rol')
+        $consulta = "INSERT INTO ".$table." (`idUsuario`,`nombreUsuario`,`password`, `rol`) VALUES ('$idUser','$nombre','$pass','$rol')
                 ON DUPLICATE KEY UPDATE 
                 nombreUsuario='{$nombre}', 
                 password='{$pass}', 
                 rol='{$rol}'";
-        }else{
-           
-            if ($user_session['rol']== "ADMIN"){
-                $consulta = "INSERT INTO usuariosSupervi (`idUsuario`,`nombreUsuario`,`password`, `rol`) VALUES ('$idUser','$nombre','$pass','$rol')
-                ON DUPLICATE KEY UPDATE 
-                nombreUsuario='{$nombre}', 
-                password='{$pass}', 
-                rol='{$rol}'";
-            }else{
-                $consulta = "UPDATE usuarios SET 
-                nombreUsuario='{$nombre}', 
-                password='{$pass}',
-                rol='{$rol}'
-                WHERE idUsuario='{$idUser}'";
-            }
-       }
+       
+       
         
         
         try {
@@ -663,26 +647,21 @@ class General
     }
     
     public static function updateUserRev($user_session, $idUser, $nombre, $pass, $rol){
-       
-        if ($idUser != 0){
-           $consulta = "UPDATE usuarios SET 
-            nombreUsuario='{$nombre}', 
-            password='{$pass}',
-            rol='{$rol}'
-            WHERE idUsuario='{$idUser}'";
-         }else{
-            if ($user_session['rol']== "ADMIN"){
+       if ($user_session['rol']== "ADMIN"){
                  $table = "usuariosSupervi";
              }else{
                 $table = "usuarios";
              }
+        
+        
+            
              $consulta = "INSERT INTO ".$table." (`idUsuario`,`nombreUsuario`, `password`, `rol`) VALUES ('$idUser','$nombre','$pass','$rol')
             ON DUPLICATE KEY UPDATE 
             nombreUsuario='{$nombre}',
             password = '{$pass}',
             rol = '{$rol}'
             ";
-        }
+        
         
         
         try {
@@ -750,7 +729,24 @@ class General
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
              $comando->execute();
-            return $comando->fetchAll(PDO::FETCH_ASSOC);
+            return $comando->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+        	echo $e;
+            return false;
+        }
+    }
+    
+     public static function getUserSupervi($idUser){
+        
+         $consulta = "SELECT * FROM usuariosSupervi WHERE idUsuario ='$idUser'";
+        
+        try {
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+             $comando->execute();
+            return $comando->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
         	echo $e;
@@ -759,7 +755,7 @@ class General
     }
     
     public static function deleteUserRev($idUser){
-       $consulta = "DELETE FROM usuariosRev WHERE idUsuario='$idUser'";
+       $consulta = "DELETE FROM usuariosSupervi WHERE idUsuario='$idUser'";
         
         try {
             // Preparar sentencia
@@ -1074,23 +1070,16 @@ class General
     }
     
     public static function updateMateriaRev($user_session, $idMateria, $nombre){
-       
-         if ($idMateria != 0){
-           $consulta = "UPDATE materia SET 
-            idNombreMateria='{$nombre}'
-            WHERE idMateria='{$idMateria}'";
-         }else{
-            if ($user_session['rol']== "ADMIN"){
+        
+        if ($user_session['rol']== "ADMIN"){
                  $table = "materiaSupervi";
              }else{
                 $table = "materia";
              }
-             
-              $consulta = "INSERT INTO ".$table." (`idMateria`,`idNombreMateria`) VALUES ('$idMateria','$nombre')
-            ON DUPLICATE KEY UPDATE 
-            idNombreMateria='{$nombre}'";
-         }
         
+        $consulta = "INSERT INTO ".$table." (`idMateria`,`idNombreMateria`) VALUES ('$idMateria','$nombre')
+                ON DUPLICATE KEY UPDATE 
+                idNombreMateria='{$nombre}'";
         
         try {
             
@@ -1231,9 +1220,10 @@ class General
     }
     
     public static function getMateriaTextLang ($idMateriaLan, $idLang){
-        $materia = General::getMateria($idMateriaLan);
-        $materiaLangu = $materia['idNombreMateria'];
-        $consulta = "SELECT * FROM materiaLanguage WHERE idMateriaLanguage='$materiaLangu' AND idLanguaje='$idLang'";
+       // $materia = General::getMateria($idMateriaLan);
+       // $materiaLangu = $materia['idNombreMateria'];
+        
+        $consulta = "SELECT * FROM materiaLanguage WHERE idMateriaLanguage='$idMateriaLan' AND idLanguaje='$idLang'";
         
        try {
             // Preparar sentencia

@@ -2,7 +2,7 @@
 <?php
 
 require 'General.php';
-$idVease = 1;
+$idVease = 0;
 if (isset($_GET['idVease'])) {
     $idVease = $_GET['idVease'];
 }
