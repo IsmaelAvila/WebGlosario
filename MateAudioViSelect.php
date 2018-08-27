@@ -12,14 +12,13 @@ $MateAV = General::getAudioVisualID($idMateAV);
 if($_SERVER["REQUEST_METHOD"]=="POST"){
    
     if (isset($_POST['addMater'])){  
-       
         echo "<script>";
         echo "var nombreFuent = " . json_encode($_POST['nombre']). ";";
         echo "var linkFuent = ". json_encode($_POST['link']). ";";
-        echo "var idMatAV = ". $MateAV. ";";
+        echo "var idMatAV = ". $idMateAV. ";";
         echo "window.opener.changeMateAD(nombreFuent, linkFuent, idMatAV);";
         echo "window.close();";
-        echo "</script>";
+        echo "</script>";       
     }
       
 }
@@ -69,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <body>
  <header id="header">
     <div class="container">
-      <div><h1><center>Vease</center></h1></div>
+      <div><h1><center>Material Audiovisual</center></h1></div>
       
     </div>
   </header>
@@ -86,7 +85,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
     
         echo "<h1>NOMBRE MATERIAL AUDIOVISUAL <input type='text' name='nombre' value='".$fuente['nombreFuente']."'></h1>";
         echo "<h1>LINK MATERIAL AUDIOVISUAL <input type='text' name='link' value='".$fuente['linkFuente']."'></h1>";
-        echo " <input type='submit' name='addMater' value='Añadir Fuente'/>";
+        echo " <input type='submit' name='addMater' value='Añadir Material'/>";
      
 ?>
     

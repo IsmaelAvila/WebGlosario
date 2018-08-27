@@ -121,7 +121,9 @@ if (isset($_GET['lang'])) {
     <div class="container wow fadeInUp">
       <div class="row">
         <div class="col-md-12">
-          <h3 class="section-title">nombre materia</h3>
+             <?php 
+          echo "<h3 class='section-title'>". General::getMateriaTextLang($idMateria,$languaje)."</h3>";
+                ?>
           <div class="section-title-divider"></div>
           <p class="section-description">- Concepto -</p>
         </div>
@@ -135,8 +137,8 @@ if (isset($_GET['lang'])) {
           {
          echo '<div class="col-md-4 service-item2">';
          echo '<div class="service-icon"><i class="fa fa-file"></i></div>';
-         echo '<h4 class="service-title"><a href="Concepto.php?id='.$concepto["idConcepto"].'">'. $concepto["nombreConcepto"].'</a></h4>';
-         echo '<p class="service-description">Pulsa en '. $concepto["nombreConcepto"] .' y podrás acceder al contenido del concepto.</p></div>';
+         echo '<h4 class="service-title"><a href="Concepto.php?id='.$concepto["idConcepto"].'">'. General::getConceptoTextLang($concepto['idNombreConcepto'],$languaje) .'</a></h4>';
+         echo '<p class="service-description">Pulsa en '.General::getConceptoTextLang($concepto['idNombreConcepto'],$languaje) .' y podrás acceder al contenido del concepto.</p></div>';
         }
           ?>
         

@@ -150,20 +150,24 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
      }else if (isset($_POST['addMaterial'])){
          
            echo "<script>";
-            echo "var winOpen2 = window.open('MateAudioViSelect.php?idMate=".$concepto['idMaterialAudiovisualConcepto']."&idMat=0','_blank', 'width=700,height=700');";
+            echo "var winOpen2 = window.open('MateAudioViSelect.php?idMate=".$concepto['idMaterialAudiovisualConcepto']."','_blank', 'width=700,height=700');";
             echo "winOpen2.window.focus();";
             echo "</script>";
+    
      }else if (isset($_POST['changeMatAV'])){
-          
+         
          $MatAVValues = explode(',', $_POST['changeMatAV']);
          
-         $name = $fuenteValues[0];
+         $name = $MatAVValues[0];
           
-         $link = $fuenteValues[1];
+         $link = $MatAVValues[1];
          
-         $idMat = $fuenteValues[2];
+         $idMat = $MatAVValues[2];
+        
+         $idMateAV = General::setMaterialAudivo($idMat, $name, $link);
+          
+         General::updateMaterialAudivoConcepto($idMateAV, $concepto['idMaterialAudiovisualConcepto'], $idconcepto);
          
-         $idMateAV = General::setFuente($idFuente, $name, $link);
      }
  
        
@@ -299,7 +303,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         var hiddenField = document.createElement("input");
         
         var array = [nombrefuente, linkFuente];
-         console.log(array);
+        
         hiddenField.setAttribute("type", "hidden");
         hiddenField.setAttribute("name", "changeFuente");
         hiddenField.setAttribute("value", array);
@@ -308,13 +312,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         form.submit();
     }
         
-         function  changeMateAD(nombreMatAV, linkMatAV, idMatAV){
-       
+    function  changeMateAD(nombreMatAV, linkMatAV, idMatAV){
+        
         var form = document.getElementById('form');
         var hiddenField = document.createElement("input");
         
-        var array = [nombrefuente, linkFuente, idMatAV];
-         console.log(array);
+        var array = [nombreMatAV, linkMatAV, idMatAV];
+       
         hiddenField.setAttribute("type", "hidden");
         hiddenField.setAttribute("name", "changeMatAV");
         hiddenField.setAttribute("value", array);

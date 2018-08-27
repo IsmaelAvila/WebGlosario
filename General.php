@@ -1390,25 +1390,62 @@ class General
         
     }
     
-    public static function setAudioVisualID($idMatAV, $nombre, $link){
-         $consulta = "INSERT INTO matAudioViConcepto (`idMatAudioViConcepto`,`nombreMateAudioViConcepto`, `linkMateAudioViConcepto`) VALUES ('$idMatAV','$nombre','$link')
-                ON DUPLICATE KEY UPDATE 
-                nombreMateAudioViConcepto='{$nombre}', 
-                linkMateAudioViConcepto='{$link}'";
+    public static function setMaterialAudivo($idMatAudi, $nombreMata, $linkMateri){
+       
+       
+            $consulta = "INSERT INTO matAudioViConcepto 
+            (`nombreMateAudioViCon`,
+            `linkMateAudioViConcep`) 
+            VALUES 
+       ('{$nombreMata}',
+       '{$linkMateri}')";
+         
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            // Ejecutar sentencia preparada
+            $comando->execute();
+            $id = Database::getInstance()->getDb()->lastInsertId();
+            return  $id;
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
         
+    }
+    
+    public static function updateMaterialAudivoConcepto($idFuente, $idConexion, $idConcepto){
+        
+        if ($idConexion == 0){
+             $consulta = "INSERT INTO conexionMatAudiViConcep (`idConexion`,
+       `idMatAudiViConcep`) VALUES 
+       ('{$idConcepto}',
+       '{$idFuente}')";
+        }else{
+              $consulta = "INSERT INTO conexionMatAudiViConcep (`idConexion`,
+                            `idMatAudiViConcep`) VALUES 
+                            ('{$idConexion}',
+                            '{$idFuente}')";
+        }
+       
+      
         try {
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
-             $comando->execute();
-            $id = Database::getInstance()->getDb()->lastInsertId();
-            return $id;
-           
+            
+            return  $comando->execute();
+
         } catch (PDOException $e) {
         	echo $e;
             return false;
         }
-     }
+        
+    }
+    
     
      /***** Vease ********/
     public static function getVease($idVease){

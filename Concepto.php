@@ -94,9 +94,9 @@ if (isset($_GET['lang'])) {
           <li><a href="index.php#team"><?php echo getTextGeneral(9); ?></a></li>
           <li><a href="index.php#contact"><?php echo getTextGeneral(10); ?></a></li>
           <li><a href=""><?php echo getTextGeneral(11); ?></a></li>
-          <li><a href="<?php echo 'porConcepto.php?lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
-          <li><a href="<?php echo 'porConcepto.php?lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
-          <li><a href="<?php echo 'porConcepto.php?lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
+          <li><a href="<?php echo 'Concepto.php?id='.$idconcepto.'&lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
+          <li><a href="<?php echo 'Concepto.php?id='.$idconcepto.'&lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
+          <li><a href="<?php echo 'Concepto.php?id='.$idconcepto.'&lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
           <!--li class="menu-active"><a href="#hero">Home</a></li-->
           <!--li><a href="#about">Presentación</a></li-->
           <!--li><a href="#services">Glosario</a></li-->
@@ -120,7 +120,7 @@ if (isset($_GET['lang'])) {
         <div class="col-md-12">
           <h3 class="section-title"> 
               <?php 
-                echo $row['nombreConcepto'];
+                echo General::getConceptoTextLang($row['idNombreConcepto'],$languaje);
               ?>
           </h3>
           <div class="section-title-divider"></div>
@@ -139,23 +139,24 @@ if (isset($_GET['lang'])) {
                     <td class="section-subheading text-muted cabeceraTabla margin" width="212" valign="middle" height="50" bgcolor="#ccc"><strong>Concepto</strong></td>
                     <td class="large text-muted margin mayuscula" width="976" valign="middle" bgcolor="#ccc"><strong>
                       <?php 
-                echo $row['nombreConcepto'];
+                echo General::getConceptoTextLang($row['idNombreConcepto'],$languaje);
                     ?>
                       </strong></td>
                   </tr>
                   <tr>
                     <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Materias</strong></td>
-                    <td class="large text-muted textoAzul margin" valign="middle"><a href="../../ae.html"><?php 
-               
-                echo $row['nombreConcepto'];
-                    ?></a></td>
+                    <td class="large text-muted textoAzul margin" valign="middle">
+                        <?php 
+                        echo "<a href='porMateriaExt.php?id=" .$row['idMateria']. "'>" .General::getMateriaTextLang($row['idMateria'],$languaje). "</a>";
+                        ?>
+                  </td>
                   </tr>
                   <tr>
                   
                     <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Definición</strong></td>
                     <td class="large text-muted margin" valign="middle" height="50" bgcolor="#f7f7f7" align="justify"><?php 
                      
-                      echo $row['definicionConcepto'];
+                      echo General::getDefinicionTextLang($row['idDefinicionConcepto'],$languaje);
                           ?></td>
                   </tr>
                   <tr>
@@ -167,10 +168,10 @@ if (isset($_GET['lang'])) {
                        foreach ($rowVease as $rowVer)
                   {
                            $idConceptoRow = $rowVer['idConcepto'];
-    
+                           
                            $concepto = General::getConcepto($idConceptoRow);
-                          
-                            echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".$concepto['nombreConcepto']." </a></li>";
+                            
+                          echo "<li><a class='textoMagenta' href='Concepto.php?id=".$idConceptoRow."'> ".General::getConceptoTextLang($concepto['idNombreConcepto'],$languaje)." </a></li>";
                    
                   }
                       ?>
@@ -181,22 +182,45 @@ if (isset($_GET['lang'])) {
                   </tr>
                   <tr>
                     <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Fuente</strong></td>
-                    <td class="large text-muted textoRojo margin" valign="middle" height="50" bgcolor="#f7f7f7" align="justify"><a class="textoRojo" href="../pdf/RealDecreto3932007.pdf" target="_new"><?php 
-               
-                echo $row['fuenteConcepto'];
-                    ?></a></td>
+                    <td class="large text-muted textoRojo margin" valign="middle" height="50" bgcolor="#f7f7f7" align="justify">
+                        <?php 
+                        $vease = General::getFuente($row['idfuenteConcepto']);
+                         echo "<a class='textoRojo' href='".$vease['linkFuente']."' target='_new'>".$vease['nombreFuente']."</a>";
+                    ?>
+                        </td>
                   </tr>
                   <tr>
                     <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify" ><strong>Información complementaria</strong></td>
-                    <td class="large text-muted margin" valign="middle" height="50" align="justify"><strong>Alarma de incendios:</strong> aviso o señal por la que se alerta a las personas o instalaciones previstas para actuar ante una situación de emergencia originada por un incendio.</td>
+                    <td class="large text-muted margin" valign="middle" height="50" align="justify">
+                        <?php 
+                            echo General::getInfoCompleTextLang($row['idInfoCompleConcepto'],$languaje);
+                        ?>
+                      </td>
                   </tr>
                   <tr>
                     <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Documentación adicional</strong></td>
-                    <td class="large text-muted textoRojo margin" valign="middle" height="50" bgcolor="#f7f7f7" align="justify"><a class="textoRojo" href="../pdf/NTP41.pdf" targset="_new">NTP 41: Alarma de incendios</a></td>
+                    <td class="large text-muted textoRojo margin" valign="middle" height="50" bgcolor="#f7f7f7" align="justify">
+                        <?php 
+                            echo  "<a class='textoRojo' href='../pdf/NTP41.pdf' targset='_new'>". General::getDocumAdiciTextLang($row['idDocumentacionAdicionalConcepto'],$languaje). "</a>";
+                        ?>
+                       </td>
                   </tr>
                   <tr>
                     <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Material Audiovisual</strong></td>
-                    <td class="large text-muted margin" valign="middle" height="50" align="justify"> Lorem ipsum...</td>
+                    <td class="large text-muted margin" valign="middle" height="50" align="justify">
+                         <ul>
+                        <?php 
+                        $materAudivis = General::getAudioVisual($row['idInfoCompleConcepto']);
+                            
+                         foreach ($materAudivis as $matAu)
+                        {
+                             
+                             $materialAudi = General::getAudioVisualID($matAu['idMatAudiViConcep']);
+                            
+                             echo  "<li><a class='textoRojo' href='".$materialAudi['linkMateAudioViConcep']."' targset='_new'>". $materialAudi['nombreMateAudioViCon']. "</a></li>";
+                             
+                         }
+                             ?> </ul></td>
                   </tr>
                 </tbody>
               </table>
