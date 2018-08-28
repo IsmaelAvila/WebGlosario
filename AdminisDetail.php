@@ -54,6 +54,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
      if (isset($_POST['next'])){
  
        if ($rev == "false"){
+            
             if(General::updateConcept($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){ 
                 
                  header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=". ($lang + 1));

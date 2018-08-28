@@ -283,9 +283,10 @@ class General
     }
     
     public static function updateConcept($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang){
+        
         $concepto = General::getConcepto($idconcepto);
         
-        $idNombreConcepto = General::setConceptoTextLang($idconcepto, $lang, $nombre);
+        $idNombreConcepto = General::setConceptoTextLang($concepto['idNombreConcepto'], $lang, $nombre);
         $idDefinicion = General::setDefinicionTextLang($concepto['idDefinicionConcepto'], $lang, $def);
         $idInfoComple = General::setInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang, $compl);
         $idDocumAdici = General::setDocumAdiciTextLang($concepto['idDocumentacionAdicionalConcepto'], $lang, $doc);
@@ -342,7 +343,7 @@ class General
        
         $concepto = General::getConceptoSuperviGene($idconcepto);
         
-        $idNombreConcepto = General::setConceptoTextLang($idconcepto, $lang, $nombre);
+        $idNombreConcepto = General::setConceptoTextLang($concepto['idNombreConcepto'], $lang, $nombre);
         $idDefinicion = General::setDefinicionTextLang($concepto['idDefinicionConcepto'], $lang, $def);
         $idInfoComple = General::setInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang, $compl);
         $idDocumAdici = General::setDocumAdiciTextLang($concepto['idDocumentacionAdicionalConcepto'], $lang, $doc);
@@ -353,7 +354,7 @@ class General
             idDefinicionConcepto='{$idDefinicion}',
             idVeaseConcepto='{$vease}',
             idFuenteConcepto='{$fuente}',
-            idInformacionComplementariaConcepto='{$idInfoComple}',
+            idInfoCompleConcepto='{$idInfoComple}',
             idDocumentacionAdicionalConcepto='{$idDocumAdici}',
             idMaterialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
         }else{
@@ -363,7 +364,7 @@ class General
             }else{
                 $table = "concepto";
             }
-            $consulta = "INSERT INTO ".$table." (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idInformacionComplementariaConcepto`,`idDocumentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$vease','$fuente','$idInfoComple','$idDocumAdici','$audiovi')";
+            $consulta = "INSERT INTO ".$table." (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$vease','$fuente','$idInfoComple','$idDocumAdici','$audiovi')";
         }
         try {
             
@@ -509,7 +510,7 @@ class General
     public static function setConceptoTextLang ($idconceptoLan, $idLang, $Text){
         
         $consulta = "INSERT INTO conceptoLanguage (`idConceptoLanguage`,`idLanguaje`,`textConcepto`) 
-         VALUES ('$idMateriaLan', '$idLang','$Text')
+         VALUES ('$idconceptoLan', '$idLang','$Text')
          ON DUPLICATE KEY UPDATE 
          idLanguaje = '{$idLang}',
          textConcepto = '{$Text}'";
@@ -536,7 +537,7 @@ class General
     public static function setDefinicionTextLang ($idDefinicionLan, $idLang, $Text){
         
         $consulta = "INSERT INTO definicionLanguage (`idDefinicion`,`idLanguaje`,`textDefinicion`) 
-         VALUES ('$idMateriaLan', '$idLang','$Text')
+         VALUES ('$idDefinicionLan', '$idLang','$Text')
          ON DUPLICATE KEY UPDATE 
          idLanguaje = '{$idLang}',
          textDefinicion = '{$Text}'";
