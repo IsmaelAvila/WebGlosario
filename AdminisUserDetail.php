@@ -10,12 +10,13 @@ if (isset($_GET['idUser'])) {
     $iduser = $_GET['idUser'];
 }
 
-$rev = "false";
-if (isset($_GET['rev'])) {
-    $rev = $_GET['rev'];
+$tabla = 1;
+if (isset($_GET['tabla'])) {
+    $tabla = $_GET['tabla'];
+     
 }
 
-if ($rev == "false"){
+if ($tabla == 2){
    $user = General::getUser($iduser);
 }else{ 
     $user = General::getUserSupervi($iduser); 
@@ -27,7 +28,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $pass = $_POST['pass'];
         $rol = $_POST['rol'];
  
-  if ($rev == "false"){
+ if ($tabla == 2){
     if(General::updateUser($user_session, $iduser,$nombre,$pass,$rol)){
         
         header("location:Adminis.php"); 

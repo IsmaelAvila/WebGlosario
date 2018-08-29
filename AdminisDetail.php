@@ -9,9 +9,9 @@ $idconcepto = 1;
 if (isset($_GET['idConcep'])) {
     $idconcepto = $_GET['idConcep'];
 }
-$rev = "false";
-if (isset($_GET['rev'])) {
-    $rev = $_GET['rev'];
+$tabla = 1;
+if (isset($_GET['tabla'])) {
+    $tabla = $_GET['tabla'];
      
 }
 $lang = 1;
@@ -20,11 +20,10 @@ if (isset($_GET['lang'])) {
      
 }
 
-if ($rev == "false"){
-    $concepto = General::getConcepto($idconcepto);
+if ($tabla == 1){
+     $concepto = General::getConceptoSuperviGene($idconcepto); 
 }else{
-   
-    $concepto = General::getConceptoSuperviGene($idconcepto); 
+     $concepto = General::getConcepto($idconcepto);
 }
 
 $rowVease = General::getVease($concepto['idVeaseConcepto']);
@@ -38,34 +37,38 @@ $doc = General::getDocumAdiciTextLang($concepto['idInfoCompleConcepto'], $lang);
 $idVease = $concepto['idVeaseConcepto'];
 $idFuenteCon = $concepto['idfuenteConcepto'];
 $idMateAudi = $concepto['idMaterialAudiovisualConcepto'];
-
+$error = "";
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     
         $nombre = $_POST['nombre'];
         $materia = $_POST['materiaSelec'];
         $def = $_POST['definicion'];
-        $vease = $_POST['vease'];
-        $fuente = $_POST['fuente'];
         $compl = $_POST['compl'];
         $doc = $_POST['doc'];
-        $audiovi = $_POST['audiovi'];
+       
   
      if (isset($_POST['next'])){
  
-       if ($rev == "false"){
-            
-            if(General::updateConcept($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){ 
+       if ($tabla == 2){
+           if ($user_session['rol']== "ADMIN"){
+               $idconceptotemp = General::updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+           }else{
+                $idconceptotemp = General::updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+           }
+           if($idconceptotemp != 0){ 
                 
-                 header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=". ($lang + 1));
+                 header("location:AdminisDetail.php?idConcep=".$idconceptotemp."&tabla=".$tabla."&lang=". ($lang + 1));
             }else{
                
                 $error = "No se ha podido actualizar los datos";
             }
+            
         }else{
-            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){
+           $idconceptotemp = General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def,  $compl, $doc, $lang);
+            if($idconceptotemp != 0){ 
                 
-                header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang + 1));
+                header("location:AdminisDetail.php?idConcep=".$idconceptotemp."&tabla=".$tabla."&lang=".($lang + 1));
             }else{
                 
                 $error = "No se ha podido actualizar los datos";
@@ -73,15 +76,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
      }else if (isset($_POST['back'])){
          
-         if ($rev == "false"){
-            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi, $lang)){
-                 header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang - 1));
+        if ($tabla == 2){
+            $idconceptotemp = General::updateConcept($user_session, $idconcepto, $nombre, $materia, $def,  $compl, $doc, $lang);
+            if($idconceptotemp != 0){
+                 header("location:AdminisDetail.php?idConcep=".$idconceptotemp."&tabla=".$tabla."&lang=".($lang - 1));
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
         }else{
-            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){
-                header("location:AdminisDetail.php?idConcep=".$idconcepto."&rev=".$rev."&lang=".($lang - 1));
+            $idconceptotemp = General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+            if($idconceptotemp != 0){ 
+                header("location:AdminisDetail.php?idConcep=".$idconceptotemp."&tabla=".$tabla."&lang=".($lang - 1));
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
@@ -89,14 +94,21 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
          
     }else if (isset($_POST['end'])){       
          
-         if ($rev == "false"){
-            if(General::updateConcept($user_session, $idconcepto,$nombre,$materia,$def,$vease,$fuente,$compl,$doc,$audiovi, $lang)){
+        if ($tabla == 2){
+              if ($user_session['rol']== "ADMIN"){
+               $idconceptotemp = General::updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+            
+           }else{
+                $idconceptotemp = General::updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+           } 
+            if($idconceptotemp != 0){
                  header("location:Adminis.php");
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
         }else{
-            if(General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang)){
+            $idconceptotemp = General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+            if($idconceptotemp != 0){ 
                 header("location:Adminis.php");
             }else{
                 $error = "No se ha podido actualizar los datos";

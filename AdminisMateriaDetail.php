@@ -9,12 +9,13 @@ $idMat = 1;
 if (isset($_GET['idMat'])) {
     $idMat = $_GET['idMat'];
 }
-$rev = "false";
-if (isset($_GET['rev'])) {
-    $rev = $_GET['rev'];
+$tabla = 1;
+if (isset($_GET['tabla'])) {
+    $tabla = $_GET['tabla'];
+     
 }
 
-if ($rev == "false"){
+if ($tabla == 2){
     $materia = General::getMateria($idMat);
 }else{
     $materia = General::getMateriaSupervi($idMat); 
@@ -28,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
      $materiaName2 = $_POST['materia2'];
      $materiaName3 = $_POST['materia3'];
    
-    if ($rev == "false"){
+   if ($tabla == 2){
         if(General::updateMateria($user_session, $idMat, $materia['idNombreMateria'],$materiaName1, $materiaName2, $materiaName3)){
             header("location:Adminis.php"); 
         }else{

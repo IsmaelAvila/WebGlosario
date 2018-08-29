@@ -282,54 +282,63 @@ class General
         
     }
     
-    public static function updateConcept($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang){
+    public static function updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang){
         
-        $concepto = General::getConcepto($idconcepto);
         
-        $idNombreConcepto = General::setConceptoTextLang($concepto['idNombreConcepto'], $lang, $nombre);
-        $idDefinicion = General::setDefinicionTextLang($concepto['idDefinicionConcepto'], $lang, $def);
-        $idInfoComple = General::setInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang, $compl);
-        $idDocumAdici = General::setDocumAdiciTextLang($concepto['idDocumentacionAdicionalConcepto'], $lang, $doc);
+        $concepto = General::getConceptoSuperviGene($idconcepto);
         
+        if ($concepto['idConcepto']== ""){
+            $concepto = General::getConcepto($idconcepto);
+            $concepto['idNombreConcepto'] = "";
+            $concepto['idDefinicionConcepto'] = "";
+            $concepto['idInfoCompleConcepto'] = "";
+            $concepto['idDocumentacionAdicionalConcepto'] = "";
+        }
+        
+        $conceptoNombre = $concepto['idNombreConcepto'];
+        $conceptoDefinicion = $concepto['idDefinicionConcepto'];
+        $conceptoInfo = $concepto['idInfoCompleConcepto'];
+        $conceptoDocum = $concepto['idDocumentacionAdicionalConcepto'];
+          
+       
+        $idNombreConcepto = General::setConceptoTextLang($user_session, $conceptoNombre, $lang, $nombre);
+        $idDefinicion = General::setDefinicionTextLang($user_session, $conceptoDefinicion, $lang, $def);
+        $idInfoComple = General::setInfoCompleTextLang($user_session, $conceptoInfo, $lang, $compl);
+        $idDocumAdici = General::setDocumAdiciTextLang($user_session, $conceptoDocum, $lang, $doc);
+       
         
         if($idconcepto == 0){
-             if ($user_session['rol']== "ADMIN"){
-                 $table = "conceptoSupervi";
-             }else{
-                $table = "concepto";
-             }
-            $consulta = "INSERT INTO ".$table." (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$vease','$fuente','$idInfoComple','$idDocumAdici','$audiovi')";
+            
+            $consulta = "INSERT INTO conceptoSupervi (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici')";
+            
         }else{
-            if ($user_session['rol']== "ADMIN"){
-                $consulta = "INSERT INTO conceptoSupervi (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$vease','$fuente','$idInfoComple','$idDocumAdici','$audiovi')
+              
+              $consulta = "INSERT INTO conceptoSupervi (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici')
                 ON DUPLICATE KEY UPDATE 
                 idNombreConcepto='{$idNombreConcepto}', 
                 idMateria='{$materia}', 
                 idDefinicionConcepto='{$idDefinicion}',
-                idVeaseConcepto='{$vease}',
-                idFuenteConcepto='{$fuente}',
                 idInfoCompleConcepto='{$idInfoComple}',
-                idDocumentacionAdicionalConcepto='{$idDocumAdici}',
-                idMaterialAudiovisualConcepto='{$audiovi}'";
-            }else{
-                $consulta = "UPDATE concepto SET 
-                idNombreConcepto='{$idNombreConcepto}', 
-                idMateria='{$materia}', 
-                idDefinicionConcepto='{$idDefinicion}',
-                idVeaseConcepto='{$vease}',
-                idFuenteConcepto='{$fuente}',
-                idInfoCompleConcepto='{$idInfoComple}',
-                idDocumentacionAdicionalConcepto='{$idDocumAdici}',
-                idMaterialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
-            }
+                idDocumentacionAdicionalConcepto='{$idDocumAdici}'";
+            
         }
-        
+       
         try {
             
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
-            // Ejecutar sentencia preparada
-             return  $comando->execute();
+            if ($comando->execute()){
+                 $id = Database::getInstance()->getDb()->lastInsertId();
+                 if ($id == 0){
+                    $id = $idconcepto;
+                 }
+                  return  $id;
+             }else{
+                echo $e;
+                return false;  
+             }
+            
+           
 
         } catch (PDOException $e) {
             
@@ -339,45 +348,93 @@ class General
         
     }
     
-    public static function updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $vease, $fuente, $compl, $doc, $audiovi, $lang){
+    public static function updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang){
+        
+        $concepto = General::getConcepto($idconcepto);
+        
+        
+        $conceptoNombre = $concepto['idNombreConcepto'];
+        $conceptoDefinicion = $concepto['idDefinicionConcepto'];
+        $conceptoInfo = $concepto['idInfoCompleConcepto'];
+        $conceptoDocum = $concepto['idDocumentacionAdicionalConcepto'];
+        
+        $idNombreConcepto = General::setConceptoTextLang($user_session, $conceptoNombre, $lang, $nombre);
+        $idDefinicion = General::setDefinicionTextLang($user_session, $conceptoDefinicion, $lang, $def);
+        $idInfoComple = General::setInfoCompleTextLang($user_session, $conceptoInfo, $lang, $compl);
+        $idDocumAdici = General::setDocumAdiciTextLang($user_session, $conceptoDocum, $lang, $doc);
+        
+        
+        if($idconcepto == 0){
+            
+            $consulta = "INSERT INTO concepto (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici')";
+            
+        }else{
+                $consulta = "UPDATE concepto SET 
+                idNombreConcepto='{$idNombreConcepto}', 
+                idMateria='{$materia}', 
+                idDefinicionConcepto='{$idDefinicion}',
+                idInfoCompleConcepto='{$idInfoComple}',
+                idDocumentacionAdicionalConcepto='{$idDocumAdici}'
+                WHERE idConcepto='{$idconcepto}'";
+         }
+       
+        try {
+            
+            // Preparar sentencia
+             $comando = Database::getInstance()->getDb()->prepare($consulta);
+            if ($comando->execute()){
+                 $id = Database::getInstance()->getDb()->lastInsertId();
+                 if ($id == 0){
+                    $id = $idconcepto;
+                 }
+                  return  $id;
+             }else{
+                echo $e;
+                return false;  
+             }
+            
+           
+
+        } catch (PDOException $e) {
+            
+        	echo $e;
+            return false;
+        }
+        
+    }
+    
+    public static function updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang){
        
         $concepto = General::getConceptoSuperviGene($idconcepto);
         
-        $idNombreConcepto = General::setConceptoTextLang($concepto['idNombreConcepto'], $lang, $nombre);
-        $idDefinicion = General::setDefinicionTextLang($concepto['idDefinicionConcepto'], $lang, $def);
-        $idInfoComple = General::setInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang, $compl);
-        $idDocumAdici = General::setDocumAdiciTextLang($concepto['idDocumentacionAdicionalConcepto'], $lang, $doc);
+        $conceptoNombre = $concepto['idNombreConcepto'];
+        $conceptoDefinicion = $concepto['idDefinicionConcepto'];
+        $conceptoInfo = $concepto['idInfoCompleConcepto'];
+        $conceptoDocum = $concepto['idDocumentacionAdicionalConcepto'];
         
-        if ($idconcepto != 0){
-            $consulta = "UPDATE concepto SET idNombreConcepto='{$idNombreConcepto}', 
+        $idNombreConcepto = General::setConceptoTextLang($user_session, $conceptoNombre, $lang, $nombre);
+        $idDefinicion = General::setDefinicionTextLang($user_session, $conceptoDefinicion, $lang, $def);
+        $idInfoComple = General::setInfoCompleTextLang($user_session, $conceptoInfo, $lang, $compl);
+        $idDocumAdici = General::setDocumAdiciTextLang($user_session, $conceptoDocum, $lang, $doc);
+       
+        $consulta = "UPDATE concepto SET idNombreConcepto='{$idNombreConcepto}', 
             idMateria='{$materia}', 
             idDefinicionConcepto='{$idDefinicion}',
-            idVeaseConcepto='{$vease}',
-            idFuenteConcepto='{$fuente}',
             idInfoCompleConcepto='{$idInfoComple}',
-            idDocumentacionAdicionalConcepto='{$idDocumAdici}',
-            idMaterialAudiovisualConcepto='{$audiovi}' WHERE idConcepto='{$idconcepto}'";
-        }else{
+            idDocumentacionAdicionalConcepto='{$idDocumAdici}'
+            WHERE idConcepto='{$idconcepto}'";
             
-            if ($user_session['rol']== "ADMIN"){
-                 $table = "conceptoSupervi";
-            }else{
-                $table = "concepto";
-            }
-            $consulta = "INSERT INTO ".$table." (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$vease','$fuente','$idInfoComple','$idDocumAdici','$audiovi')";
-        }
+       
         try {
+           
             
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
             
             if($comando->execute()){
-                if ($user_session['rol']== "ADMIN"){
-                    return true;
-                }else{
-                    return General::deleteConceptRev($idconcepto);
-                }
+               General::deleteConceptRev($idconcepto);
+               return $idconcepto;
                 
             }else{
                 return false; 
@@ -436,6 +493,7 @@ class General
         }
         
     }
+    
      
     public static function getConceptoTextLang ($idconceptoLan, $idLang){
        
@@ -507,13 +565,21 @@ class General
         }
     }
     
-    public static function setConceptoTextLang ($idconceptoLan, $idLang, $Text){
+    public static function setConceptoTextLang ($user_session, $idconceptoLan, $idLang, $Text){
         
-        $consulta = "INSERT INTO conceptoLanguage (`idConceptoLanguage`,`idLanguaje`,`textConcepto`) 
-         VALUES ('$idconceptoLan', '$idLang','$Text')
-         ON DUPLICATE KEY UPDATE 
-         idLanguaje = '{$idLang}',
-         textConcepto = '{$Text}'";
+            if ($idconceptoLan == ""){
+                 $consulta = "INSERT INTO conceptoLanguage (`idLanguaje`,`textConcepto`) 
+                VALUES ('$idLang','$Text')";
+            }else{
+                 $consulta = "INSERT INTO conceptoLanguage (`idConceptoLanguage`,`idLanguaje`,`textConcepto`) 
+                    VALUES ('$idconceptoLan', '$idLang','$Text')
+                    ON DUPLICATE KEY UPDATE 
+                    idLanguaje = '{$idLang}',
+                    textConcepto = '{$Text}'";
+            }
+       
+        
+        
         
        try {
             // Preparar sentencia
@@ -521,6 +587,9 @@ class General
             // Ejecutar sentencia preparada
              if ($comando->execute()){
                   $id = Database::getInstance()->getDb()->lastInsertId();
+                 if ($id == 0){
+                    $id = $idconceptoLan;
+                 }
                   return  $id;
              }else{
                echo $e;
@@ -534,13 +603,19 @@ class General
         
     }
     
-    public static function setDefinicionTextLang ($idDefinicionLan, $idLang, $Text){
+    public static function setDefinicionTextLang ($user_session, $idDefinicionLan, $idLang, $Text){
         
-        $consulta = "INSERT INTO definicionLanguage (`idDefinicion`,`idLanguaje`,`textDefinicion`) 
+          if ($idDefinicionLan == ""){
+         $consulta = "INSERT INTO definicionLanguage (`idLanguaje`,`textDefinicion`) 
+         VALUES ('$idLang','$Text')";
+         }else{
+             $consulta = "INSERT INTO definicionLanguage (`idDefinicion`,`idLanguaje`,`textDefinicion`) 
          VALUES ('$idDefinicionLan', '$idLang','$Text')
          ON DUPLICATE KEY UPDATE 
          idLanguaje = '{$idLang}',
          textDefinicion = '{$Text}'";
+         }
+        
         
        try {
             // Preparar sentencia
@@ -548,6 +623,9 @@ class General
             // Ejecutar sentencia preparada
              if ($comando->execute()){
                   $id = Database::getInstance()->getDb()->lastInsertId();
+                 if ($id == 0){
+                    $id = $idDefinicionLan;
+                 }
                   return  $id;
              }else{
                echo $e;
@@ -561,12 +639,18 @@ class General
         
     }
    
-    public static function setInfoCompleTextLang ($idInfoLang, $idLang, $Text){
-        $consulta = "INSERT INTO infoComplLanguage (`idInfoCompl`,`idLanguaje`,`textInfoCompl`) 
+    public static function setInfoCompleTextLang ($user_session, $idInfoLang, $idLang, $Text){
+        if ($idInfoLang == ""){
+        $consulta = "INSERT INTO infoComplLanguage (`idLanguaje`,`textInfoCompl`) 
+         VALUES ('$idInfoLang', '$idLang','$Text')";
+        }else{
+           $consulta = "INSERT INTO infoComplLanguage (`idInfoCompl`,`idLanguaje`,`textInfoCompl`) 
          VALUES ('$idInfoLang', '$idLang','$Text')
          ON DUPLICATE KEY UPDATE 
          idLanguaje = '{$idLang}',
-         textInfoCompl = '{$Text}'";
+         textInfoCompl = '{$Text}'"; 
+        }
+        
         
        try {
             // Preparar sentencia
@@ -574,6 +658,9 @@ class General
             // Ejecutar sentencia preparada
              if ($comando->execute()){
                   $id = Database::getInstance()->getDb()->lastInsertId();
+                 if ($id == 0){
+                    $id = $idInfoLang;
+                 }
                   return  $id;
              }else{
                echo $e;
@@ -587,12 +674,18 @@ class General
         
     }
     
-    public static function setDocumAdiciTextLang ($idDocuAdiciLang, $idLang, $Text){
-        $consulta = "INSERT INTO documAdiciLanguage (`idDocumAdici`,`idLanguaje`,`textDocumAdici`) 
+    public static function setDocumAdiciTextLang ($user_session, $idDocuAdiciLang, $idLang, $Text){
+           if ($idDocuAdiciLang == ""){
+               $consulta = "INSERT INTO documAdiciLanguage (idLanguaje`,`textDocumAdici`) 
+         VALUES ('$idLang','$Text')";
+          }else{
+               $consulta = "INSERT INTO documAdiciLanguage (`idDocumAdici`,`idLanguaje`,`textDocumAdici`) 
          VALUES ('$idDocuAdiciLang', '$idLang','$Text')
          ON DUPLICATE KEY UPDATE 
          idLanguaje = '{$idLang}',
          textDocumAdici = '{$Text}'";
+          }
+       
         
        try {
             // Preparar sentencia
@@ -600,6 +693,9 @@ class General
             // Ejecutar sentencia preparada
              if ($comando->execute()){
                   $id = Database::getInstance()->getDb()->lastInsertId();
+                 if ($id == 0){
+                    $id = $idDocuAdiciLang;
+                 }
                   return  $id;
              }else{
                echo $e;
@@ -1031,7 +1127,7 @@ class General
      /***** Materia ********/
     public static function updateMateria($user_session, $idMateria, $idMateriaLan, $nombre1, $nombre2, $nombre3){
        
-        $id = General::setMateriaTextLang($idMateriaLan, $nombre1,$nombre2,$nombre3);
+        $id = General::setMateriaTextLang($user_session, $idMateriaLan, $nombre1,$nombre2,$nombre3);
        
         if($idMateria == 0){
            if ($user_session['rol']== "ADMIN"){
@@ -1240,13 +1336,22 @@ class General
         }
     } 
     
-    public static function setMateriaTextLang ($idMateriaLan, $nombre1, $nombre2, $nombre3){
-         $consulta = "INSERT INTO materiaLanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
+    public static function setMateriaTextLang ($user_session, $idMateriaLan, $nombre1, $nombre2, $nombre3){
+        error_log(print_r($user_session,true));
+        
+        if ($user_session['rol'] == "ADMIN"){
+           $consulta = "INSERT INTO materiaLanguage (`idLanguaje`,`textMateria`) 
+                VALUES (1,'$nombre1')"; 
+        }else{
+             $consulta = "INSERT INTO materiaLanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
          VALUES ('$idMateriaLan', 1,'$nombre1')
          ON DUPLICATE KEY UPDATE 
          idLanguaje = 1,
-         textMateria = '{$nombre1}'
-         ";
+         textMateria = '{$nombre1}'"; 
+           
+        }
+        
+
         
        try {
             // Preparar sentencia
@@ -1254,11 +1359,13 @@ class General
             // Ejecutar sentencia preparada
              if ($comando->execute()){
                   $id = Database::getInstance()->getDb()->lastInsertId();
+                 
                   $consulta2 = "INSERT INTO materiaLanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
                   VALUES ($id, 2,'$nombre2'), ($id, 3,'$nombre3') 
                   ON DUPLICATE KEY UPDATE 
                     idLanguaje = VALUES(idLanguaje),
                     textMateria = VALUES(textMateria)";
+                  
                   $comando2 = Database::getInstance()->getDb()->prepare($consulta2);
                   if ($comando2->execute()){
                        return  $id;

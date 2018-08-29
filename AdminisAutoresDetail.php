@@ -9,12 +9,13 @@ $idAutor = 1;
 if (isset($_GET['idAuto'])) {
     $idAutor = $_GET['idAuto'];
 }
-$rev = "false";
-if (isset($_GET['rev'])) {
-    $rev = $_GET['rev'];
+$tabla = 1;
+if (isset($_GET['tabla'])) {
+    $tabla = $_GET['tabla'];
+     
 }
 
-if ($rev == "false"){
+if ($tabla == 2){
     $autor = General::getAutor($idAutor);
 }else{
     $autor = General::getAutorSupervi($idAutor); 
@@ -30,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $imagen = $_POST['imagen'];
         $link = $_POST['link'];
       
-        if ($rev == "false"){
+        if ($tabla == 2){
          
             if(General::updateAutor($user_session, $idAutor,$nombre,$cargo,$imagen,$link)){
 

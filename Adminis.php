@@ -27,29 +27,24 @@ $rowGeneral = General::getConceptoMateria($page,$method);
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     if ($_POST['add']){
-         
-        if ($user_session['rol'] == "ADMIN"){
-             $revAdd = "false";
-         }else{
-              $revAdd = "true";
-         }
+       
        if ($method == 0){
-            header("location:AdminisDetail.php?idConcep=0&rev=".$revAdd."&lang=".$lang);
+            header("location:AdminisDetail.php?idConcep=0&tabla=2&lang=".$lang);
        }else  if ($method == 1){
-             header("location:AdminisMateriaDetail.php?idMat=0&rev=".$revAdd);
+             header("location:AdminisMateriaDetail.php?idMat=0&tabla=2");
        }else  if ($method == 2){
-            header("location:AdminisAutoresDetail.php?idAuto=0&rev=".$revAdd);
+            header("location:AdminisAutoresDetail.php?idAuto=0&tabla=2");
        }else  if ($method == 3){
-            header("location:AdminisUserDetail.php?idUser=0&rev=".$revAdd);
+            header("location:AdminisUserDetail.php?idUser=0&tabla=2");
        }
     }else{
-    $rev = $_POST['rev'];
+     $tabla = $_POST['tabla'];
      if ($method == 0){
       
         $idConcep = $_POST['idConce'];
        
         if(isset($_POST['mod'])){
-            header("location:AdminisDetail.php?idConcep=".$idConcep."&rev=".$rev."&lang=".$lang);
+            header("location:AdminisDetail.php?idConcep=".$idConcep."&tabla=".$tabla."&lang=".$lang);
         }else if(isset($_POST['del'])){
             echo '<script language="Javascript" type="text/javascript">';
             echo 'if (confirm("Estas seguro que quieres borrarlo?")){';
@@ -64,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $idMat = $_POST['idMat'];
        
        if(isset($_POST['mod'])){
-            header("location:AdminisMateriaDetail.php?idMat=".$idMat."&rev=".$rev);
+            header("location:AdminisMateriaDetail.php?idMat=".$idMat."&tabla=".$tabla);
         }else if(isset($_POST['del'])){
 
             echo '<script language="Javascript" type="text/javascript">';
@@ -79,7 +74,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         
         $idAuto = $_POST['idAuto'];
        if(isset($_POST['mod'])){
-            header("location:AdminisAutoresDetail.php?idAuto=".$idAuto."&rev=".$rev);
+            header("location:AdminisAutoresDetail.php?idAuto=".$idAuto."&tabla=".$tabla);
         }else if(isset($_POST['del'])){
             echo '<script language="Javascript" type="text/javascript">';
             echo 'if (confirm("Estas seguro que quieres borrarlo?")){';
@@ -95,7 +90,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
          $idUser = $_POST['idUser'];
         
         if(isset($_POST['mod'])){
-            header("location:AdminisUserDetail.php?idUser=".$idUser."&rev=".$rev);
+            header("location:AdminisUserDetail.php?idUser=".$idUser."&tabla=".$tabla);
         }else if(isset($_POST['del'])){
 
             echo '<script language="Javascript" type="text/javascript">';
@@ -229,7 +224,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         }else{
                              echo "<input type='submit' name='del' value='Eliminar'/>";
                         }
-                        echo "<input type='hidden' name='rev' value='true'/>
+                        echo "<input type='hidden' name='tabla' value='1'/>
                         <input type='hidden' name='idConce' value='".$rowSuper['idConcepto']."'/>
                         </form></td>";
                     }else  if ($method == 1){
@@ -243,7 +238,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         }else{
                              echo "<input type='submit' name='del' value='Eliminar'/>";
                         }
-                         echo "<input type='hidden' name='rev' value='true'/>
+                         echo "<input type='hidden' name='tabla' value='1'/>
                         <input type='hidden' name='idMat' value='".$rowSuper['idMateria']."'/>
                         </form></td>";
 		              
@@ -260,7 +255,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         }else{
                              echo "<input type='submit' name='del' value='Eliminar'/>";
                         }
-                         echo "<input type='hidden' name='rev' value='true'/>
+                         echo "<input type='hidden' name='tabla' value='1'/>
                         <input type='hidden' name='idAuto' value='".$rowSuper['idAutores']."'/>
                         </form></td>";
                     }else  if ($method == 3){
@@ -274,7 +269,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                         }else{
                              echo "<input type='submit' name='del' value='Eliminar'/>";
                         }
-                         echo "<input type='hidden' name='rev' value='true'/>
+                         echo "<input type='hidden' name='tabla' value='1'/>
                         <input type='hidden' name='idUser' value='".$rowSuper['idUsuario']."'/>
                         </form></td>";
                     
@@ -345,7 +340,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
-                         <input type='hidden' name='rev' value='false'/>
+                         <input type='hidden' name='tabla' value='2'/>
                         <input type='hidden' name='idConce' value='".$rowGene['idConcepto']."'/>
                         </form></td>";
                     }else  if ($method == 1){
@@ -354,7 +349,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
-                        <input type='hidden' name='rev' value='false'/>
+                        <input type='hidden' name='tabla' value='2'/>
                         <input type='hidden' name='idMat' value='".$rowGene['idMateria']."'/>
                         </form></td>";
 		              
@@ -367,7 +362,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
-                         <input type='hidden' name='rev' value='false'/>
+                         <input type='hidden' name='tabla' value='2'/>
                         <input type='hidden' name='idAuto' value='".$rowGene['idAutores']."'/>
                         </form></td>";
                     }else  if ($method == 3){
@@ -377,7 +372,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                         echo "<td><form method='post' name='form' id='form'>
                         <input type='submit' name='mod' value='Modificar'/>
                         <input type='submit' name='del' value='Eliminar'/>
-                         <input type='hidden' name='rev' value='false'/>
+                         <input type='hidden' name='tabla' value='2'/>
                         <input type='hidden' name='idUser' value='".$rowGene['idUsuario']."'/>
                         </form></td>";
                     
