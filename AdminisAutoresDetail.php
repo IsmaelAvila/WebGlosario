@@ -158,9 +158,13 @@ echo "<center><h2><b><u>Detalle Autores</u></b></h2></center>";
     <center><input type='file' name='fileToUpload' id='fileToUpload'>
     <input type='submit' value='Upload Image' name='submitImg'></center>";
      echo "<br><h3>Link:  <input type='text' name='link' value='".$autor['linkAutores']."'></h3>";
-    
+    if ($idAutor == 0){
+        echo "<input type='submit' name='submitMod' value='Añadir'/>";
+    }else{
+       echo "<input type='submit' name='submitMod' value='Modificar'/>";
+    }
     ?>
-        <input type='submit' name='submitMod' value='Modificar'/>
+        
 </form>
      <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
 </body>

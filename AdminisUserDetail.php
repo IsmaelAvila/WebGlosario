@@ -95,8 +95,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         echo "<h3>Nombre: <input type='text' name='nombre' value='".$user['nombreUsuario']."'></h3>";
         echo "<h3>Password: <input type='text' name='pass' value='".$user['password']."'></h3>";
         echo "<h3>Rol: <input type='text' name='rol' value='".$user['rol']."'></h3>";
+        if ($iduser == 0){
+        echo "<input type='submit' name='mod' value='Añadir'/>";
+    }else{
+       echo "<input type='submit' name='mod' value='Modificar'/>";
+    }
         ?>
-        <input type='submit' name='mod' value='Modificar'/>
+       
 </form>
      <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
 </body>

@@ -95,10 +95,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     echo "<h1>MATERIA <input type='text' name='materia1' value='".General::getMateriaTextLang($materia['idNombreMateria'], 1)."'>(Español)</h1>";
         echo "<h1>MATERIA <input type='text' name='materia2' value='".General::getMateriaTextLang($materia['idNombreMateria'], 2)."'>(Ingles)</h1>";
         echo "<h1>MATERIA <input type='text' name='materia3' value='".General::getMateriaTextLang($materia['idNombreMateria'], 3)."'>(Frances)</h1>";
-
+if ($idMat == 0){
+        echo "<input type='submit' name='mod' value='Añadir'/>";
+    }else{
+       echo "<input type='submit' name='mod' value='Modificar'/>";
+    }
      
     ?>
-        <input type='submit' name='mod' value='Modificar'/>
+        
 </form>
      <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
 </body>
