@@ -31,16 +31,18 @@ $rowVease = General::getVease($concepto['idVeaseConcepto']);
 
 $idFuente = $concepto['idfuenteConcepto'];
 $nombre = General::getConceptoTextLang($concepto['idNombreConcepto'],$lang);
-$def = General::getDefinicionTextLang($concepto['idNombreConcepto'],$lang);
+$def = General::getDefinicionTextLang($concepto['idDefinicionConcepto'],$lang);
 $compl = General::getInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang);
-$doc = General::getDocumAdiciTextLang($concepto['idInfoCompleConcepto'], $lang);
+$doc = General::getDocumAdiciTextLang($concepto['idDocumentacionAdicionalConcepto'], $lang);
 $idVease = $concepto['idVeaseConcepto'];
 $idFuenteCon = $concepto['idfuenteConcepto'];
 $idMateAudi = $concepto['idMaterialAudiovisualConcepto'];
 $error = "";
 
+
+
 if($_SERVER["REQUEST_METHOD"]=="POST"){
-    
+
         $nombre = $_POST['nombre'];
         $materia = $_POST['materiaSelec'];
         $def = $_POST['definicion'];
@@ -49,13 +51,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
        
   
      if (isset($_POST['next'])){
- 
+  
        if ($tabla == 2){
            if ($user_session['rol']== "ADMIN"){
-               $idconceptotemp = General::updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+               $idconceptotemp = General::updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, $idVease, $idFuenteCon, $idMateAudi);
            }else{
                 $idconceptotemp = General::updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
            }
+           
            if($idconceptotemp != 0){ 
                 
                  header("location:AdminisDetail.php?idConcep=".$idconceptotemp."&tabla=".$tabla."&lang=". ($lang + 1));
@@ -65,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             }
             
         }else{
-           $idconceptotemp = General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def,  $compl, $doc, $lang);
+           $idconceptotemp = General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def,  $compl, $doc, $lang, 0);
             if($idconceptotemp != 0){ 
                 
                 header("location:AdminisDetail.php?idConcep=".$idconceptotemp."&tabla=".$tabla."&lang=".($lang + 1));
@@ -77,14 +80,19 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
      }else if (isset($_POST['back'])){
          
         if ($tabla == 2){
-            $idconceptotemp = General::updateConcept($user_session, $idconcepto, $nombre, $materia, $def,  $compl, $doc, $lang);
+           if ($user_session['rol']== "ADMIN"){
+               $idconceptotemp = General::updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+           }else{
+                $idconceptotemp = General::updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+           }
+            
             if($idconceptotemp != 0){
                  header("location:AdminisDetail.php?idConcep=".$idconceptotemp."&tabla=".$tabla."&lang=".($lang - 1));
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
         }else{
-            $idconceptotemp = General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+            $idconceptotemp = General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, 0);
             if($idconceptotemp != 0){ 
                 header("location:AdminisDetail.php?idConcep=".$idconceptotemp."&tabla=".$tabla."&lang=".($lang - 1));
             }else{
@@ -95,9 +103,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     }else if (isset($_POST['end'])){       
          
         if ($tabla == 2){
-              if ($user_session['rol']== "ADMIN"){
-               $idconceptotemp = General::updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
-            
+             if ($user_session['rol']== "ADMIN"){
+               $idconceptotemp = General::updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, $idVease, $idFuenteCon, $idMateAudi);
            }else{
                 $idconceptotemp = General::updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
            } 
@@ -107,7 +114,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                 $error = "No se ha podido actualizar los datos";
             }
         }else{
-            $idconceptotemp = General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+            $idconceptotemp = General::updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, 1);
             if($idconceptotemp != 0){ 
                 header("location:Adminis.php");
             }else{
@@ -116,7 +123,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
          
      }else if (isset($_POST['addVease'])){
-         
+        
             echo "<script>";
          
          if ($idVease == ""){
@@ -127,7 +134,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             echo "</script>";
          
      }else if (isset($_POST['checkVease'])){
-        
+       
          General::deleteVease($idVease);
          if ($idVease == 0 && General::updateVeaseConcepto($idconcepto)){
             $idVease = $idconcepto;
@@ -149,7 +156,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             echo "</script>";
          
      }else if (isset($_POST['changeFuente'])){
-         
+        
          $fuenteValues = explode(',', $_POST['changeFuente']);
          
          $name = $fuenteValues[0];
@@ -161,7 +168,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
          General::updateFuenteConcepto($idFuente, $idconcepto);
          
      }else if (isset($_POST['addMaterial'])){
-         
+      
          if ($idMateAudi == ""){
              $idMateAudi = 0;
          }
@@ -172,7 +179,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             echo "</script>";
     
      }else if (isset($_POST['changeMatAV'])){
-         
+       
          $MatAVValues = explode(',', $_POST['changeMatAV']);
          
          $name = $MatAVValues[0];

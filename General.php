@@ -282,7 +282,7 @@ class General
         
     }
     
-    public static function updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang){
+    public static function updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, $idVease, $idFuenteCon, $idMateAudi){
         
         
         $concepto = General::getConceptoSuperviGene($idconcepto);
@@ -293,6 +293,7 @@ class General
             $concepto['idDefinicionConcepto'] = "";
             $concepto['idInfoCompleConcepto'] = "";
             $concepto['idDocumentacionAdicionalConcepto'] = "";
+            
         }
         
         $conceptoNombre = $concepto['idNombreConcepto'];
@@ -319,7 +320,10 @@ class General
                 idMateria='{$materia}', 
                 idDefinicionConcepto='{$idDefinicion}',
                 idInfoCompleConcepto='{$idInfoComple}',
-                idDocumentacionAdicionalConcepto='{$idDocumAdici}'";
+                idDocumentacionAdicionalConcepto='{$idDocumAdici}',
+                idVeaseConcepto='{$idVease}',
+                idfuenteConcepto='{$idFuenteCon}',
+                idMaterialAudiovisualConcepto='{$idMateAudi}'";
             
         }
        
@@ -403,7 +407,7 @@ class General
         
     }
     
-    public static function updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang){
+    public static function updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, $del){
        
         $concepto = General::getConceptoSuperviGene($idconcepto);
         
@@ -433,7 +437,10 @@ class General
             // Ejecutar sentencia preparada
             
             if($comando->execute()){
-               General::deleteConceptRev($idconcepto);
+                if ($del == 1){
+                     General::deleteConceptRev($idconcepto);
+                }
+              
                return $idconcepto;
                 
             }else{
@@ -516,7 +523,7 @@ class General
     public static function getDefinicionTextLang ($idDefinicionLan, $idLang){
        
         $consulta = "SELECT * FROM definicionLanguage WHERE idDefinicion='$idDefinicionLan' AND idLanguaje='$idLang'";
-        
+       
         try {
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
@@ -550,7 +557,6 @@ class General
     
     public static function getDocumAdiciTextLang ($idDocuAdiciLang, $idLang){
         $consulta = "SELECT * FROM documAdiciLanguage WHERE idDocumAdici='$idDocuAdiciLang' AND idLanguaje='$idLang'";
-        
         try {
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
@@ -642,7 +648,7 @@ class General
     public static function setInfoCompleTextLang ($user_session, $idInfoLang, $idLang, $Text){
         if ($idInfoLang == ""){
         $consulta = "INSERT INTO infoComplLanguage (`idLanguaje`,`textInfoCompl`) 
-         VALUES ('$idInfoLang', '$idLang','$Text')";
+         VALUES ('$idLang','$Text')";
         }else{
            $consulta = "INSERT INTO infoComplLanguage (`idInfoCompl`,`idLanguaje`,`textInfoCompl`) 
          VALUES ('$idInfoLang', '$idLang','$Text')
@@ -675,15 +681,15 @@ class General
     }
     
     public static function setDocumAdiciTextLang ($user_session, $idDocuAdiciLang, $idLang, $Text){
-           if ($idDocuAdiciLang == ""){
-               $consulta = "INSERT INTO documAdiciLanguage (idLanguaje`,`textDocumAdici`) 
-         VALUES ('$idLang','$Text')";
+        if ($idDocuAdiciLang == ""){
+            $consulta = "INSERT INTO documAdiciLanguage (idLanguaje`,`textDocumAdici`) 
+                        VALUES ('$idLang','$Text')";
           }else{
                $consulta = "INSERT INTO documAdiciLanguage (`idDocumAdici`,`idLanguaje`,`textDocumAdici`) 
-         VALUES ('$idDocuAdiciLang', '$idLang','$Text')
-         ON DUPLICATE KEY UPDATE 
-         idLanguaje = '{$idLang}',
-         textDocumAdici = '{$Text}'";
+                            VALUES ('$idDocuAdiciLang', '$idLang','$Text')
+                            ON DUPLICATE KEY UPDATE 
+                            idLanguaje = '{$idLang}',
+                        textDocumAdici = '{$Text}'";
           }
        
         
