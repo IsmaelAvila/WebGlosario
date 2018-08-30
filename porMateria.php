@@ -132,7 +132,7 @@ function getAutores(){
          echo '<div class="col-md-4 service-item2">';
          echo '<div class="service-icon"><i class="fa fa-book"></i></div>';
          echo '<h4 class="service-title"><a href="porMateriaExt.php?id='.$materia["idMateria"].'">'. General::getMateriaTextLang($materia['idNombreMateria'],$languaje).'</a></h4>';
-         echo '<p class="service-description">Pulsa en '. General::getMateriaTextLang($materia['idNombreMateria'],$languaje) .' y podrás acceder al contenido de la materia.</p></div>';
+         echo '<p class="service-description">  </p></div>';
         }
           ?>
         
