@@ -682,7 +682,7 @@ class General
     
     public static function setDocumAdiciTextLang ($user_session, $idDocuAdiciLang, $idLang, $Text){
         if ($idDocuAdiciLang == ""){
-            $consulta = "INSERT INTO documAdiciLanguage (idLanguaje`,`textDocumAdici`) 
+            $consulta = "INSERT INTO documAdiciLanguage (`idLanguaje`,`textDocumAdici`) 
                         VALUES ('$idLang','$Text')";
           }else{
                $consulta = "INSERT INTO documAdiciLanguage (`idDocumAdici`,`idLanguaje`,`textDocumAdici`) 
@@ -692,7 +692,7 @@ class General
                         textDocumAdici = '{$Text}'";
           }
        
-        
+
        try {
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
