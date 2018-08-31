@@ -94,12 +94,27 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         echo "<center><h2><b><u>Detalle Usuarios: </u></b></h2></center>";
         echo "<h3>Nombre: <input type='text' name='nombre' value='".$user['nombreUsuario']."'></h3>";
         echo "<h3>Password: <input type='text' name='pass' value='".$user['password']."'></h3>";
-        echo "<h3>Rol: <input type='text' name='rol' value='".$user['rol']."'></h3>";
+        $rowRoles = Array( "ADMIN", "PROPIETARIO");
+        echo "<select id='rol' name='rol'><h3>Rol:</h3>";
+        
+        foreach ($rowRoles as $rowRol)
+        {
+            echo "<option value='".$rowRol."' ";
+           
+            if ($rowRol == $user['rol']){
+               echo "selected ";
+           }
+           
+            echo " >".$rowRol."</option>";
+        }
+        
+        echo "</select>";
+        //echo "<h3>Rol: <input type='text' name='rol' value='".$user['rol']."'></h3>";
         if ($iduser == 0){
-        echo "<input type='submit' name='mod' value='Añadir'/>";
-    }else{
-       echo "<input type='submit' name='mod' value='Modificar'/>";
-    }
+            echo "<input type='submit' name='mod' value='Añadir'/>";
+        }else{
+            echo "<input type='submit' name='mod' value='Modificar'/>";
+        }
         ?>
        
 </form>
