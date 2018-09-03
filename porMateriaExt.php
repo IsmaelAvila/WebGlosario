@@ -68,13 +68,6 @@ if (isset($_GET['lang'])) {
 
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-    Theme Name: Imperial
-    Theme URL: https://bootstrapmade.com/imperial-free-onepage-bootstrap-theme/
-    Author: BootstrapMade.com
-    Author URL: https://bootstrapmade.com
-  ======================================================= -->
 </head>
 
 <body>
@@ -91,7 +84,7 @@ if (isset($_GET['lang'])) {
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="index.php#hero"><?php echo getTextGeneral(6); ?></a></li>
+          <li class="menu-active"><a href="index.php"><?php echo getTextGeneral(6); ?></a></li>
           <li><a href="index.php#about"><?php echo getTextGeneral(7); ?></a></li>
           <li><a href="index.php#services"><?php echo getTextGeneral(8); ?></a></li>
           <li><a href="index.php#team"><?php echo getTextGeneral(9); ?></a></li>
@@ -100,15 +93,8 @@ if (isset($_GET['lang'])) {
           <li><a href="<?php echo 'porMateriaExt.php?id='.$idMateria.'&lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
           <li><a href="<?php echo 'porMateriaExt.php?id='.$idMateria.'&lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
           <li><a href="<?php echo 'porMateriaExt.php?id='.$idMateria.'&lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
-          <!--li class="menu-active"><a href="#hero">Home</a></li-->
-          <!--li><a href="#about">Presentación</a></li-->
-          <!--li><a href="#services">Glosario</a></li-->
-          <!--li><a href="#team">Autores</a></li-->
-          <!--li><a href="#contact">Contacto</a></li-->
-          <!--li><a href="#contact">Buscador</a></li-->
         </ul>
       </nav>
-      <!-- #nav-menu-container -->
     </div>
   </header>
   <!-- #header -->
@@ -125,7 +111,7 @@ if (isset($_GET['lang'])) {
           echo "<h3 class='section-title'>". General::getMateriaTextLang($idMateria,$languaje)."</h3>";
                 ?>
           <div class="section-title-divider"></div>
-          <p class="section-description">- Concepto -</p>
+          <p class="section-description"><?php echo getTextGeneral(33); ?></p>
         </div>
       </div>
 
@@ -138,7 +124,7 @@ if (isset($_GET['lang'])) {
          echo '<div class="col-md-4 service-item2">';
          echo '<div class="service-icon"><i class="fa fa-file"></i></div>';
          echo '<h4 class="service-title"><a href="Concepto.php?id='.$concepto["idConcepto"].'">'. General::getConceptoTextLang($concepto['idNombreConcepto'],$languaje) .'</a></h4>';
-         echo '<p class="service-description">Pulsa en '.General::getConceptoTextLang($concepto['idNombreConcepto'],$languaje) .' y podrás acceder al contenido del concepto.</p></div>';
+         echo '<p class="service-description"> </p></div>';
         }
           ?>
         
@@ -154,7 +140,7 @@ if (isset($_GET['lang'])) {
       <div class="row">
         <div class="col-md-12">
           <div class="copyright">
-            &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2018</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
+            &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2019</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
           </div>
           <div class="credits">
             <img src="img/logoUco.png" alt="" title="" width="50" height="30"/>
