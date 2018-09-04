@@ -692,7 +692,7 @@ class General
                         textDocumAdici = '{$Text}'";
           }
        
-        
+
        try {
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);

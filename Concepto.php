@@ -88,12 +88,12 @@ if (isset($_GET['lang'])) {
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="index.php#hero"><?php echo getTextGeneral(6); ?></a></li>
+          <li class="menu-active"><a href="index.php"><?php echo getTextGeneral(6); ?></a></li>
           <li><a href="index.php#about"><?php echo getTextGeneral(7); ?></a></li>
           <li><a href="index.php#services"><?php echo getTextGeneral(8); ?></a></li>
           <li><a href="index.php#team"><?php echo getTextGeneral(9); ?></a></li>
           <li><a href="index.php#contact"><?php echo getTextGeneral(10); ?></a></li>
-          <li><a href=""><?php echo getTextGeneral(11); ?></a></li>
+           <li><a href="Buscador.php"><?php echo getTextGeneral(11); ?></a></li>
           <li><a href="<?php echo 'Concepto.php?id='.$idconcepto.'&lang=1' ?>"><img src="img/icon_sp.png" alt="" width="30" height="30" title="Spain" /></a></li>
           <li><a href="<?php echo 'Concepto.php?id='.$idconcepto.'&lang=2' ?>"><img src="img/icon_en.png" alt="" width="30" height="30" title="English" /></a></li>
           <li><a href="<?php echo 'Concepto.php?id='.$idconcepto.'&lang=3' ?>"><img src="img/icon_fr.png" alt="" width="30" height="30" title="France" /></a></li>
@@ -124,7 +124,7 @@ if (isset($_GET['lang'])) {
               ?>
           </h3>
           <div class="section-title-divider"></div>
-          <p class="section-description">Información del término</p>
+          <p class="section-description"><?php echo getTextGeneral(34); ?></p>
         </div>
       </div>
 </div>
@@ -136,7 +136,7 @@ if (isset($_GET['lang'])) {
               <table min-width="800%" height:"500px" border="1">
                 <tbody>
                   <tr>
-                    <td class="section-subheading text-muted cabeceraTabla margin" width="212" valign="middle" height="50" bgcolor="#ccc"><strong>Concepto</strong></td>
+                    <td class="section-subheading text-muted cabeceraTabla margin" width="212" valign="middle" height="50" bgcolor="#ccc"><strong><?php echo getTextGeneral(35); ?></strong></td>
                     <td class="large text-muted margin mayuscula" width="976" valign="middle" bgcolor="#ccc"><strong>
                       <?php 
                 echo General::getConceptoTextLang($row['idNombreConcepto'],$languaje);
@@ -144,7 +144,7 @@ if (isset($_GET['lang'])) {
                       </strong></td>
                   </tr>
                   <tr>
-                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Materias</strong></td>
+                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong><?php echo getTextGeneral(36); ?></strong></td>
                     <td class="large text-muted textoAzul margin" valign="middle">
                         <?php 
                         echo "<a href='porMateriaExt.php?id=" .$row['idMateria']. "'>" .General::getMateriaTextLang($row['idMateria'],$languaje). "</a>";
@@ -153,14 +153,14 @@ if (isset($_GET['lang'])) {
                   </tr>
                   <tr>
                   
-                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Definición</strong></td>
+                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong><?php echo getTextGeneral(37); ?></strong></td>
                     <td class="large text-muted margin" valign="middle" height="50" bgcolor="#f7f7f7" align="justify"><?php 
                      
                       echo General::getDefinicionTextLang($row['idDefinicionConcepto'],$languaje);
                           ?></td>
                   </tr>
                   <tr>
-                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Véase</strong></td>
+                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong><?php echo getTextGeneral(38); ?></strong></td>
                     <td class="large text-muted textoMagenta margin" valign="middle" height="50" align="justify">
                       
                       <ul>
@@ -181,7 +181,7 @@ if (isset($_GET['lang'])) {
                     </td>
                   </tr>
                   <tr>
-                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Fuente</strong></td>
+                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong><?php echo getTextGeneral(39); ?></strong></td>
                     <td class="large text-muted textoRojo margin" valign="middle" height="50" bgcolor="#f7f7f7" align="justify">
                         <?php 
                         $vease = General::getFuente($row['idfuenteConcepto']);
@@ -190,7 +190,7 @@ if (isset($_GET['lang'])) {
                         </td>
                   </tr>
                   <tr>
-                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify" ><strong>Información complementaria</strong></td>
+                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify" ><strong><?php echo getTextGeneral(40); ?></strong></td>
                     <td class="large text-muted margin" valign="middle" height="50" align="justify">
                         <?php 
                             echo General::getInfoCompleTextLang($row['idInfoCompleConcepto'],$languaje);
@@ -198,7 +198,7 @@ if (isset($_GET['lang'])) {
                       </td>
                   </tr>
                   <tr>
-                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Documentación adicional</strong></td>
+                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong><?php echo getTextGeneral(41); ?></strong></td>
                     <td class="large text-muted textoRojo margin" valign="middle" height="50" bgcolor="#f7f7f7" align="justify">
                         <?php 
                             echo  "<a class='textoRojo' href='../pdf/NTP41.pdf' targset='_new'>". General::getDocumAdiciTextLang($row['idDocumentacionAdicionalConcepto'],$languaje). "</a>";
@@ -206,7 +206,7 @@ if (isset($_GET['lang'])) {
                        </td>
                   </tr>
                   <tr>
-                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong>Material Audiovisual</strong></td>
+                    <td class="section-subheading text-muted margin" valign="middle" height="50" bgcolor="#ccc" align="justify"><strong><?php echo getTextGeneral(42); ?></strong></td>
                     <td class="large text-muted margin" valign="middle" height="50" align="justify">
                          <ul>
                         <?php 

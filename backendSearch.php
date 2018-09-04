@@ -23,16 +23,6 @@ if (isset($_POST['query'])) {
             
         echo "</tr>";
       }
-   
-  /* echo "<tr class='footer'> <th colspan= '6' style=' text-align: right;'>";
-
-    $totalRecods = count($rows);
-    $total_pages = ceil($totalRecods/10);
-    $pageLink = "<div class='pagination'>";
-     for($i; $i<=$total_pages;$i++){
-        $pageLink .= "<a href='Buscador.php?page=".$i."'>".$i."</a>";
-     }
-     echo $pageLink . "</div>";*/
    echo "</tr>";
     echo "</table>";
     
