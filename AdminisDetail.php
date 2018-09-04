@@ -34,9 +34,11 @@ $nombre = General::getConceptoTextLang($concepto['idNombreConcepto'],$lang);
 $def = General::getDefinicionTextLang($concepto['idDefinicionConcepto'],$lang);
 $compl = General::getInfoCompleTextLang($concepto['idInfoCompleConcepto'], $lang);
 $doc = General::getDocumAdiciTextLang($concepto['idDocumentacionAdicionalConcepto'], $lang);
+
 $idVease = $concepto['idVeaseConcepto'];
 $idFuenteCon = $concepto['idfuenteConcepto'];
 $idMateAudi = $concepto['idMaterialAudiovisualConcepto'];
+
 $error = "";
 
 
@@ -81,7 +83,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
          
         if ($tabla == 2){
            if ($user_session['rol']== "ADMIN"){
-               $idconceptotemp = General::updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
+               $idconceptotemp = General::updateConceptAdmin($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, $idVease, $idFuenteCon, $idMateAudi);
            }else{
                 $idconceptotemp = General::updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang);
            }
@@ -136,15 +138,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
      }else if (isset($_POST['checkVease'])){
        
          General::deleteVease($idVease);
-         if ($idVease == 0 && General::updateVeaseConcepto($idconcepto)){
-            $idVease = $idconcepto;
-         }
+         General::updateVeaseConcepto($idconcepto);
         
          $checkValues = explode(',', $_POST['checkVease']);
+         
          foreach ($checkValues as $check){
-            General::setVease($idVease, $check);
+           $idVease = General::setVease($idVease, $check);
          }
+         echo print_r($idVease,true);
+         
          $rowVease = General::getVease($idVease);
+         
      }else if (isset($_POST['addFuente'])){
          if ($idFuenteCon == ""){
              $idFuenteCon = 0;
@@ -157,15 +161,20 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
          
      }else if (isset($_POST['changeFuente'])){
         
+         
          $fuenteValues = explode(',', $_POST['changeFuente']);
          
          $name = $fuenteValues[0];
           
          $link = $fuenteValues[1];
          
-         $idFuente = General::setFuente($idFuente, $name, $link);
+         $idFuenteTemp = General::setFuente($idFuente, $name, $link);
          
-         General::updateFuenteConcepto($idFuente, $idconcepto);
+         if ($idFuente == 0){
+             $idFuente = $idFuenteTemp;
+         }else{
+              General::updateFuenteConcepto($idFuente, $idconcepto);
+         }
          
      }else if (isset($_POST['addMaterial'])){
       

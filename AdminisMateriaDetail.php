@@ -30,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
      $materiaName3 = $_POST['materia3'];
    
    if ($tabla == 2){
-        if(General::updateMateria($user_session, $idMat, $materia['idNombreMateria'],$materiaName1, $materiaName2, $materiaName3)){
+        if(General::updateMateria($user_session, $idMat, $materia['idNombreMateria'], $materiaName1, $materiaName2, $materiaName3)){
             header("location:Adminis.php"); 
         }else{
             $error = "No se ha podido actualizar los datos";

@@ -682,7 +682,7 @@ class General
     
     public static function setDocumAdiciTextLang ($user_session, $idDocuAdiciLang, $idLang, $Text){
         if ($idDocuAdiciLang == ""){
-            $consulta = "INSERT INTO documAdiciLanguage (idLanguaje`,`textDocumAdici`) 
+            $consulta = "INSERT INTO documAdiciLanguage (`idLanguaje`,`textDocumAdici`) 
                         VALUES ('$idLang','$Text')";
           }else{
                $consulta = "INSERT INTO documAdiciLanguage (`idDocumAdici`,`idLanguaje`,`textDocumAdici`) 
@@ -1133,7 +1133,7 @@ class General
      /***** Materia ********/
     public static function updateMateria($user_session, $idMateria, $idMateriaLan, $nombre1, $nombre2, $nombre3){
        
-        $id = General::setMateriaTextLang($user_session, $idMateriaLan, $nombre1,$nombre2,$nombre3);
+       $id = General::setMateriaTextLang($user_session, $idMateriaLan, $nombre1,$nombre2,$nombre3);
        
         if($idMateria == 0){
            if ($user_session['rol']== "ADMIN"){
@@ -1161,7 +1161,6 @@ class General
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
-            echo $id;
             return  $comando->execute();
 
         } catch (PDOException $e) {
@@ -1343,7 +1342,7 @@ class General
     } 
     
     public static function setMateriaTextLang ($user_session, $idMateriaLan, $nombre1, $nombre2, $nombre3){
-        error_log(print_r($user_session,true));
+       
         
         if ($user_session['rol'] == "ADMIN"){
            $consulta = "INSERT INTO materiaLanguage (`idLanguaje`,`textMateria`) 
@@ -1356,8 +1355,6 @@ class General
          textMateria = '{$nombre1}'"; 
            
         }
-        
-
         
        try {
             // Preparar sentencia
@@ -1576,7 +1573,9 @@ class General
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
-            return $comando->execute();
+            $comando->execute();
+            $id = Database::getInstance()->getDb()->lastInsertId();
+            return  $id;
            
         } catch (PDOException $e) {
         	echo $e;
