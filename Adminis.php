@@ -25,6 +25,10 @@ $rowSupervi = General::getConceptoSupervi($page,$method);
 $rowGeneral = General::getConceptoMateria($page,$method);
 
 
+          $_SESSION['idVease'] = '';
+          $_SESSION['idFuente'] = '';
+          $_SESSION['idMateAudi'] = '';
+
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     if ($_POST['add']){
        

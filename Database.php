@@ -59,6 +59,14 @@ class Database
                 PASSWORD,
                 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
             );
+            /* if (self::$pdo == null) {
+            self::$pdo = new PDO(
+                'mysql:host=' . HOSTNAME .
+                ';port=3306;dbname=' . DATABASE,
+                USERNAME,
+                PASSWORD,
+                array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
+            );*/
 
             // Habilitar excepciones
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

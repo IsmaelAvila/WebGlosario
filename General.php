@@ -16,7 +16,7 @@ class General
     
     public static function getText($idText, $idLang)
     {
-        $consulta = "SELECT `textLanguage` FROM `Language` WHERE idTextLanguage ='$idText' AND idLanguage='$idLang'";
+        $consulta = "SELECT `textLanguage` FROM `language` WHERE idTextLanguage ='$idText' AND idLanguage='$idLang'";
         
         try {
             // Preparar sentencia
@@ -310,11 +310,11 @@ class General
         
         if($idconcepto == 0){
             
-            $consulta = "INSERT INTO conceptoSupervi (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici')";
+            $consulta = "INSERT INTO conceptoSupervi (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici','$idVease','$idFuenteCon','$idMateAudi')";
             
         }else{
               
-              $consulta = "INSERT INTO conceptoSupervi (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici')
+              $consulta = "INSERT INTO conceptoSupervi (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici','$idVease','$idFuenteCon','$idMateAudi')
                 ON DUPLICATE KEY UPDATE 
                 idNombreConcepto='{$idNombreConcepto}', 
                 idMateria='{$materia}', 
@@ -352,7 +352,7 @@ class General
         
     }
     
-    public static function updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang){
+    public static function updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, $idVease, $idFuenteCon, $idMateAudi){
         
         $concepto = General::getConcepto($idconcepto);
         
@@ -370,16 +370,19 @@ class General
         
         if($idconcepto == 0){
             
-            $consulta = "INSERT INTO concepto (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici')";
+           $consulta = "INSERT INTO concepto (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici','$idVease','$idFuenteCon','$idMateAudi')";
             
         }else{
-                $consulta = "UPDATE concepto SET 
+                $consulta = "INSERT INTO concepto (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici','$idVease','$idFuenteCon','$idMateAudi')
+                ON DUPLICATE KEY UPDATE 
                 idNombreConcepto='{$idNombreConcepto}', 
                 idMateria='{$materia}', 
                 idDefinicionConcepto='{$idDefinicion}',
                 idInfoCompleConcepto='{$idInfoComple}',
-                idDocumentacionAdicionalConcepto='{$idDocumAdici}'
-                WHERE idConcepto='{$idconcepto}'";
+                idDocumentacionAdicionalConcepto='{$idDocumAdici}',
+                idVeaseConcepto='{$idVease}',
+                idfuenteConcepto='{$idFuenteCon}',
+                idMaterialAudiovisualConcepto='{$idMateAudi}'";
          }
        
         try {
@@ -407,7 +410,7 @@ class General
         
     }
     
-    public static function updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, $del){
+    public static function updateConceptRev($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, $idVease, $idFuenteCon, $idMateAudi, $del){
        
         $concepto = General::getConceptoSuperviGene($idconcepto);
         
@@ -420,14 +423,17 @@ class General
         $idDefinicion = General::setDefinicionTextLang($user_session, $conceptoDefinicion, $lang, $def);
         $idInfoComple = General::setInfoCompleTextLang($user_session, $conceptoInfo, $lang, $compl);
         $idDocumAdici = General::setDocumAdiciTextLang($user_session, $conceptoDocum, $lang, $doc);
-       
-        $consulta = "UPDATE concepto SET idNombreConcepto='{$idNombreConcepto}', 
-            idMateria='{$materia}', 
-            idDefinicionConcepto='{$idDefinicion}',
-            idInfoCompleConcepto='{$idInfoComple}',
-            idDocumentacionAdicionalConcepto='{$idDocumAdici}'
-            WHERE idConcepto='{$idconcepto}'";
-            
+        
+         $consulta = "INSERT INTO concepto (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici','$idVease','$idFuenteCon','$idMateAudi')
+                ON DUPLICATE KEY UPDATE 
+                idNombreConcepto='{$idNombreConcepto}', 
+                idMateria='{$materia}', 
+                idDefinicionConcepto='{$idDefinicion}',
+                idInfoCompleConcepto='{$idInfoComple}',
+                idDocumentacionAdicionalConcepto='{$idDocumAdici}',
+                idVeaseConcepto='{$idVease}',
+                idfuenteConcepto='{$idFuenteCon}',
+                idMaterialAudiovisualConcepto='{$idMateAudi}'";
        
         try {
            
@@ -1389,7 +1395,7 @@ class General
      /***** Fuente ********/
     
     public static function getFuente($idFuente){
-       $consulta = "SELECT * FROM fuenteconcepto WHERE idFuenteConcepto='$idFuente'";
+       $consulta = "SELECT * FROM fuenteConcepto WHERE idFuenteConcepto='$idFuente'";
         
         try {
             // Preparar sentencia
@@ -1538,7 +1544,9 @@ class General
              $comando = Database::getInstance()->getDb()->prepare($consulta);
             // Ejecutar sentencia preparada
             
-            return  $comando->execute();
+           $comando->execute();
+            $id = Database::getInstance()->getDb()->lastInsertId();
+            return  $id;
 
         } catch (PDOException $e) {
         	echo $e;
