@@ -61,6 +61,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
       <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
   </div>
 </div>  
-<center><a href="http://localhost/WebGlosario/" class="btn">Volver al Glosario</a></center>
+<center><a href="index.php" class="btn">Volver al Glosario</a></center>
     </body>
 </html>

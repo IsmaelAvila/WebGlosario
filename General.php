@@ -86,8 +86,8 @@ class General
        
       
        $consulta = "SELECT  * FROM concepto a 
-       LEFT JOIN conceptoLanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) 
-       LEFT JOIN materiaLanguage ml ON (ml.idMateriaLanguage = a.idMateria)
+       LEFT JOIN conceptolanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) 
+       LEFT JOIN materialanguage ml ON (ml.idMateriaLanguage = a.idMateria)
        WHERE (cl.textConcepto LIKE '%$text%' AND cl.idLanguaje = 1)  OR (ml.textMateria LIKE '%$text%' AND ml.idLanguaje = 1)";
        
         
@@ -147,13 +147,13 @@ class General
         $start = 10 * ($page - 1);
         $rows = 10;
         if ($method == 0){
-             $consulta = "SELECT a.*, b.idNombreMateria FROM conceptoSupervi a LEFT JOIN materia b ON (b.idMateria = a.idMateria) LIMIT $start, $rows";
+             $consulta = "SELECT a.*, b.idNombreMateria FROM conceptosupervi a LEFT JOIN materia b ON (b.idMateria = a.idMateria) LIMIT $start, $rows";
         }else if ($method == 1){
-            $consulta = "SELECT * FROM materiaSupervi LIMIT $start, $rows"; 
+            $consulta = "SELECT * FROM materiasupervi LIMIT $start, $rows"; 
         }else if ($method == 2){
-             $consulta = "SELECT * FROM autoresSupervi LIMIT $start, $rows";
+             $consulta = "SELECT * FROM autoressupervi LIMIT $start, $rows";
         }else if ($method == 3){
-             $consulta = "SELECT * FROM usuariosSupervi LIMIT $start, $rows";
+             $consulta = "SELECT * FROM usuariossupervi LIMIT $start, $rows";
         }
         try {
            
@@ -201,7 +201,7 @@ class General
     
     public static function getConceptoGene($idLang){
         $consulta = "SELECT * FROM concepto a 
-        LEFT JOIN conceptoLanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) WHERE cl.idLanguaje = '$idLang' ORDER BY textConcepto ASC";
+        LEFT JOIN conceptolanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) WHERE cl.idLanguaje = '$idLang' ORDER BY textConcepto ASC";
         
         try {
             // Preparar sentencia
@@ -234,7 +234,7 @@ class General
     }
     
     public static function getConceptoSuperviGene($idConcepto){
-       $consulta = "SELECT * FROM conceptoSupervi WHERE idConcepto='$idConcepto'";
+       $consulta = "SELECT * FROM conceptosupervi WHERE idConcepto='$idConcepto'";
         
         try {
             // Preparar sentencia
@@ -267,7 +267,7 @@ class General
     }
     
     public static function deleteConceptRev($idConcepto){
-       $consulta = "DELETE FROM conceptoSupervi WHERE idConcepto='$idConcepto'";
+       $consulta = "DELETE FROM conceptosupervi WHERE idConcepto='$idConcepto'";
         
         try {
             // Preparar sentencia
@@ -310,11 +310,11 @@ class General
         
         if($idconcepto == 0){
             
-            $consulta = "INSERT INTO conceptoSupervi (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici','$idVease','$idFuenteCon','$idMateAudi')";
+            $consulta = "INSERT INTO conceptosupervi (`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici','$idVease','$idFuenteCon','$idMateAudi')";
             
         }else{
               
-              $consulta = "INSERT INTO conceptoSupervi (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici','$idVease','$idFuenteCon','$idMateAudi')
+              $consulta = "INSERT INTO conceptosupervi (`idConcepto`,`idNombreConcepto`, `idMateria`, `idDefinicionConcepto`,`idInfoCompleConcepto`,`idDocumentacionAdicionalConcepto`,`idVeaseConcepto`,`idfuenteConcepto`,`idMaterialAudiovisualConcepto`) VALUES ('$idconcepto','$idNombreConcepto','$materia','$idDefinicion','$idInfoComple','$idDocumAdici','$idVease','$idFuenteCon','$idMateAudi')
                 ON DUPLICATE KEY UPDATE 
                 idNombreConcepto='{$idNombreConcepto}', 
                 idMateria='{$materia}', 
@@ -465,7 +465,7 @@ class General
        
        $concepto = General::getConcepto($idconcepto);
        
-       $consulta = "INSERT INTO conceptoSupervi 
+       $consulta = "INSERT INTO conceptosupervi 
        (`idConcepto`,
        `idNombreConcepto`, 
        `idMateria`, 
@@ -510,7 +510,7 @@ class General
      
     public static function getConceptoTextLang ($idconceptoLan, $idLang){
        
-        $consulta = "SELECT * FROM conceptoLanguage WHERE idConceptoLanguage='$idconceptoLan' AND idLanguaje='$idLang'";
+        $consulta = "SELECT * FROM conceptolanguage WHERE idConceptoLanguage='$idconceptoLan' AND idLanguaje='$idLang'";
         
         try {
             // Preparar sentencia
@@ -528,7 +528,7 @@ class General
     
     public static function getDefinicionTextLang ($idDefinicionLan, $idLang){
        
-        $consulta = "SELECT * FROM definicionLanguage WHERE idDefinicion='$idDefinicionLan' AND idLanguaje='$idLang'";
+        $consulta = "SELECT * FROM definicionlanguage WHERE idDefinicion='$idDefinicionLan' AND idLanguaje='$idLang'";
        
         try {
             // Preparar sentencia
@@ -545,7 +545,7 @@ class General
     }
    
     public static function getInfoCompleTextLang ($idInfoLang, $idLang){
-        $consulta = "SELECT * FROM infoComplLanguage WHERE idInfoCompl='$idInfoLang' AND idLanguaje='$idLang'";
+        $consulta = "SELECT * FROM infocompllanguage WHERE idInfoCompl='$idInfoLang' AND idLanguaje='$idLang'";
         
         try {
             // Preparar sentencia
@@ -562,7 +562,7 @@ class General
     }
     
     public static function getDocumAdiciTextLang ($idDocuAdiciLang, $idLang){
-        $consulta = "SELECT * FROM documAdiciLanguage WHERE idDocumAdici='$idDocuAdiciLang' AND idLanguaje='$idLang'";
+        $consulta = "SELECT * FROM documadicilanguage WHERE idDocumAdici='$idDocuAdiciLang' AND idLanguaje='$idLang'";
         try {
             // Preparar sentencia
              $comando = Database::getInstance()->getDb()->prepare($consulta);
@@ -580,10 +580,10 @@ class General
     public static function setConceptoTextLang ($user_session, $idconceptoLan, $idLang, $Text){
         
             if ($idconceptoLan == ""){
-                 $consulta = "INSERT INTO conceptoLanguage (`idLanguaje`,`textConcepto`) 
+                 $consulta = "INSERT INTO conceptolanguage (`idLanguaje`,`textConcepto`) 
                 VALUES ('$idLang','$Text')";
             }else{
-                 $consulta = "INSERT INTO conceptoLanguage (`idConceptoLanguage`,`idLanguaje`,`textConcepto`) 
+                 $consulta = "INSERT INTO conceptolanguage (`idConceptoLanguage`,`idLanguaje`,`textConcepto`) 
                     VALUES ('$idconceptoLan', '$idLang','$Text')
                     ON DUPLICATE KEY UPDATE 
                     idLanguaje = '{$idLang}',
@@ -621,7 +621,7 @@ class General
          $consulta = "INSERT INTO definicionLanguage (`idLanguaje`,`textDefinicion`) 
          VALUES ('$idLang','$Text')";
          }else{
-             $consulta = "INSERT INTO definicionLanguage (`idDefinicion`,`idLanguaje`,`textDefinicion`) 
+             $consulta = "INSERT INTO definicionlanguage (`idDefinicion`,`idLanguaje`,`textDefinicion`) 
          VALUES ('$idDefinicionLan', '$idLang','$Text')
          ON DUPLICATE KEY UPDATE 
          idLanguaje = '{$idLang}',
@@ -653,10 +653,10 @@ class General
    
     public static function setInfoCompleTextLang ($user_session, $idInfoLang, $idLang, $Text){
         if ($idInfoLang == ""){
-        $consulta = "INSERT INTO infoComplLanguage (`idLanguaje`,`textInfoCompl`) 
+        $consulta = "INSERT INTO infocompllanguage (`idLanguaje`,`textInfoCompl`) 
          VALUES ('$idLang','$Text')";
         }else{
-           $consulta = "INSERT INTO infoComplLanguage (`idInfoCompl`,`idLanguaje`,`textInfoCompl`) 
+           $consulta = "INSERT INTO infocompllanguage (`idInfoCompl`,`idLanguaje`,`textInfoCompl`) 
          VALUES ('$idInfoLang', '$idLang','$Text')
          ON DUPLICATE KEY UPDATE 
          idLanguaje = '{$idLang}',
@@ -688,10 +688,10 @@ class General
     
     public static function setDocumAdiciTextLang ($user_session, $idDocuAdiciLang, $idLang, $Text){
         if ($idDocuAdiciLang == ""){
-            $consulta = "INSERT INTO documAdiciLanguage (`idLanguaje`,`textDocumAdici`) 
+            $consulta = "INSERT INTO documadicilanguage (`idLanguaje`,`textDocumAdici`) 
                         VALUES ('$idLang','$Text')";
           }else{
-               $consulta = "INSERT INTO documAdiciLanguage (`idDocumAdici`,`idLanguaje`,`textDocumAdici`) 
+               $consulta = "INSERT INTO documadicilanguage (`idDocumAdici`,`idLanguaje`,`textDocumAdici`) 
                             VALUES ('$idDocuAdiciLang', '$idLang','$Text')
                             ON DUPLICATE KEY UPDATE 
                             idLanguaje = '{$idLang}',
@@ -724,7 +724,7 @@ class General
     /***** Usuarios ********/
     public static function updateUser($user_session, $idUser, $nombre, $pass, $rol){
        if ($user_session['rol']== "ADMIN"){
-                 $table = "usuariosSupervi";
+                 $table = "usuariossupervi";
                  
              }else{
                 $table = "usuarios";
@@ -757,7 +757,7 @@ class General
     
     public static function updateUserRev($user_session, $idUser, $nombre, $pass, $rol){
        if ($user_session['rol']== "ADMIN"){
-                 $table = "usuariosSupervi";
+                 $table = "usuariossupervi";
              }else{
                 $table = "usuarios";
              }
@@ -848,7 +848,7 @@ class General
     
      public static function getUserSupervi($idUser){
         
-         $consulta = "SELECT * FROM usuariosSupervi WHERE idUsuario ='$idUser'";
+         $consulta = "SELECT * FROM usuariossupervi WHERE idUsuario ='$idUser'";
         
         try {
             // Preparar sentencia
@@ -864,7 +864,7 @@ class General
     }
     
     public static function deleteUserRev($idUser){
-       $consulta = "DELETE FROM usuariosSupervi WHERE idUsuario='$idUser'";
+       $consulta = "DELETE FROM usuariossupervi WHERE idUsuario='$idUser'";
         
         try {
             // Preparar sentencia
@@ -883,7 +883,7 @@ class General
        
        $user = General::getUser($iduser);
        
-       $consulta = "INSERT INTO usuariosSupervi 
+       $consulta = "INSERT INTO usuariossupervi 
        (`idUsuario`,
        `nombreUsuario`, 
        `password`, 
@@ -919,7 +919,7 @@ class General
         if($idMateria == 0){
           
              if ($user_session['rol']== "ADMIN"){
-                 $table = "autoresSupervi";
+                 $table = "autoressupervi";
                  
              }else{
                 $table = "autores";
@@ -933,7 +933,7 @@ class General
             linkAutores='{$link}'";
         }else {
              if ($user_session['rol']== "ADMIN"){
-                $consulta = "INSERT INTO autoresSupervi (`idAutores`,`nombreAutores`,`cargoAutores`, `imagenAutores`, `linkAutores`) VALUES ('$idAutor','$nombre','$cargo','$imagen','$link')
+                $consulta = "INSERT INTO autoressupervi (`idAutores`,`nombreAutores`,`cargoAutores`, `imagenAutores`, `linkAutores`) VALUES ('$idAutor','$nombre','$cargo','$imagen','$link')
                 ON DUPLICATE KEY UPDATE 
                 nombreAutores='{$nombre}', 
                 cargoAutores='{$cargo}', 
@@ -978,7 +978,7 @@ class General
             WHERE idAutores='{$idAutor}'";
          }else{
             if ($user_session['rol']== "ADMIN"){
-                 $table = "autoresSupervi";
+                 $table = "autoressupervi";
              }else{
                 $table = "autores";
              }
@@ -1051,7 +1051,7 @@ class General
     }
     
     public static function deleteAutorRev($idAutor){
-       $consulta = "DELETE FROM autoresSupervi WHERE idAutores='$idAutor'";
+       $consulta = "DELETE FROM autoressupervi WHERE idAutores='$idAutor'";
         
         try {
             // Preparar sentencia
@@ -1070,7 +1070,7 @@ class General
        
         $autor = General::getAutor($idAutor);
        
-       $consulta = "INSERT INTO autoresSupervi 
+       $consulta = "INSERT INTO autoressupervi 
        (`idAutores`,
        `nombreAutores`, 
        `cargoAutores`, 
@@ -1120,7 +1120,7 @@ class General
     }
     
     public static function getAutorSupervi($idAutor){
-       $consulta = "SELECT * FROM autoresSupervi WHERE idAutores='$idAutor'";
+       $consulta = "SELECT * FROM autoressupervi WHERE idAutores='$idAutor'";
         
         try {
             // Preparar sentencia
@@ -1180,7 +1180,7 @@ class General
     public static function updateMateriaRev($user_session, $idMateria, $nombre){
         
         if ($user_session['rol']== "ADMIN"){
-                 $table = "materiaSupervi";
+                 $table = "materiasupervi";
              }else{
                 $table = "materia";
              }
@@ -1231,7 +1231,7 @@ class General
     }
     
     public static function deleteMateriaRev($idMateria){
-       $consulta = "DELETE FROM materiaSupervi WHERE idMateria='$idMateria'";
+       $consulta = "DELETE FROM materiasupervi WHERE idMateria='$idMateria'";
         
         try {
             // Preparar sentencia
@@ -1251,7 +1251,7 @@ class General
        
         $materia = General::getMateria($idMateria);
        
-       $consulta = "INSERT INTO materiaSupervi 
+       $consulta = "INSERT INTO materiasupervi 
        (`idMateria`,
        `idNombreMateria`, 
        `borrar`) 
@@ -1294,7 +1294,7 @@ class General
     }
     
     public static function getMateriaSupervi($idMat){
-       $consulta = "SELECT * FROM materiaSupervi WHERE idMateria='$idMat'";
+       $consulta = "SELECT * FROM materiasupervi WHERE idMateria='$idMat'";
         
         try {
             // Preparar sentencia
@@ -1331,7 +1331,7 @@ class General
        // $materia = General::getMateria($idMateriaLan);
        // $materiaLangu = $materia['idNombreMateria'];
         
-        $consulta = "SELECT * FROM materiaLanguage WHERE idMateriaLanguage='$idMateriaLan' AND idLanguaje='$idLang'";
+        $consulta = "SELECT * FROM materialanguage WHERE idMateriaLanguage='$idMateriaLan' AND idLanguaje='$idLang'";
         
        try {
             // Preparar sentencia
@@ -1351,10 +1351,10 @@ class General
        
         
         if ($user_session['rol'] == "ADMIN"){
-           $consulta = "INSERT INTO materiaLanguage (`idLanguaje`,`textMateria`) 
+           $consulta = "INSERT INTO materialanguage (`idLanguaje`,`textMateria`) 
                 VALUES (1,'$nombre1')"; 
         }else{
-             $consulta = "INSERT INTO materiaLanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
+             $consulta = "INSERT INTO materialanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
          VALUES ('$idMateriaLan', 1,'$nombre1')
          ON DUPLICATE KEY UPDATE 
          idLanguaje = 1,
@@ -1369,7 +1369,7 @@ class General
              if ($comando->execute()){
                   $id = Database::getInstance()->getDb()->lastInsertId();
                  
-                  $consulta2 = "INSERT INTO materiaLanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
+                  $consulta2 = "INSERT INTO materialanguage (`idMateriaLanguage`,`idLanguaje`,`textMateria`) 
                   VALUES ($id, 2,'$nombre2'), ($id, 3,'$nombre3') 
                   ON DUPLICATE KEY UPDATE 
                     idLanguaje = VALUES(idLanguaje),
@@ -1395,7 +1395,7 @@ class General
      /***** Fuente ********/
     
     public static function getFuente($idFuente){
-       $consulta = "SELECT * FROM fuenteConcepto WHERE idFuenteConcepto='$idFuente'";
+       $consulta = "SELECT * FROM fuenteconcepto WHERE idFuenteConcepto='$idFuente'";
         
         try {
             // Preparar sentencia
@@ -1422,7 +1422,7 @@ class General
        '{$linkFuente}')";
        }else {
              
-           $consulta = "UPDATE fuenteConcepto SET nombreFuente='{$nombreFuente}', linkFuente='{$linkFuente}' WHERE idFuenteConcepto='{$idFuente}' ";
+           $consulta = "UPDATE fuenteconcepto SET nombreFuente='{$nombreFuente}', linkFuente='{$linkFuente}' WHERE idFuenteConcepto='{$idFuente}' ";
        }
       
        
@@ -1445,7 +1445,7 @@ class General
     }
     
     public static function updateFuenteConcepto($idFuente, $idConcepto){
-       $consulta = "UPDATE concepto SET idfuenteConcepto='{$idFuente}' WHERE idConcepto='{$idConcepto}'";
+       $consulta = "UPDATE concepto SET idfuenteconcepto='{$idFuente}' WHERE idConcepto='{$idConcepto}'";
       
         try {
             // Preparar sentencia
@@ -1464,7 +1464,7 @@ class General
     /***** Material Audiovisual ********/
     
     public static function getAudioVisual($idAudioVi){
-       $consulta = "SELECT * FROM conexionMatAudiViConcep WHERE idConexion='$idAudioVi'";
+       $consulta = "SELECT * FROM conexionmataudiviconcep WHERE idConexion='$idAudioVi'";
         
         try {
             // Preparar sentencia
@@ -1481,7 +1481,7 @@ class General
     }
     
     public static function getAudioVisualID($idAudioVi){
-       $consulta = "SELECT * FROM matAudioViConcepto WHERE idMatAudioViConcepto='$idAudioVi'";
+       $consulta = "SELECT * FROM mataudioviconcepto WHERE idMatAudioViConcepto='$idAudioVi'";
         
         try {
             // Preparar sentencia
@@ -1500,7 +1500,7 @@ class General
     public static function setMaterialAudivo($idMatAudi, $nombreMata, $linkMateri){
        
        
-            $consulta = "INSERT INTO matAudioViConcepto 
+            $consulta = "INSERT INTO mataudioviConcepto 
             (`nombreMateAudioViCon`,
             `linkMateAudioViConcep`) 
             VALUES 
@@ -1527,12 +1527,12 @@ class General
     public static function updateMaterialAudivoConcepto($idFuente, $idConexion, $idConcepto){
         
         if ($idConexion == 0){
-             $consulta = "INSERT INTO conexionMatAudiViConcep (`idConexion`,
+             $consulta = "INSERT INTO conexionmataudiviconcep (`idConexion`,
        `idMatAudiViConcep`) VALUES 
        ('{$idConcepto}',
        '{$idFuente}')";
         }else{
-              $consulta = "INSERT INTO conexionMatAudiViConcep (`idConexion`,
+              $consulta = "INSERT INTO conexionmataudiviconcep (`idConexion`,
                             `idMatAudiViConcep`) VALUES 
                             ('{$idConexion}',
                             '{$idFuente}')";
@@ -1558,7 +1558,7 @@ class General
     
      /***** Vease ********/
     public static function getVease($idVease){
-       $consulta = "SELECT * FROM veaseConcepto WHERE idVeaseConcepto='$idVease'";
+       $consulta = "SELECT * FROM veaseconcepto WHERE idVeaseConcepto='$idVease'";
         
         try {
             // Preparar sentencia
@@ -1575,7 +1575,7 @@ class General
     }
     
     public static function setVease($idVease, $idConcepto){
-        $consulta = "INSERT INTO veaseConcepto (`idVeaseConcepto`, `idConcepto`) VALUES ('$idVease','$idConcepto')";
+        $consulta = "INSERT INTO veaseconcepto (`idVeaseConcepto`, `idConcepto`) VALUES ('$idVease','$idConcepto')";
         
         try {
             // Preparar sentencia
@@ -1592,7 +1592,7 @@ class General
      }
         
     public static function deleteVease($idVease){
-       $consulta = "DELETE FROM veaseConcepto WHERE idVeaseConcepto='$idVease'";
+       $consulta = "DELETE FROM veaseconcepto WHERE idVeaseConcepto='$idVease'";
         
         try {
             // Preparar sentencia
@@ -1608,7 +1608,7 @@ class General
     }
     
     public static function updateVeaseConcepto($idConcepto){
-       $consulta = "UPDATE concepto SET idVeaseConcepto='{$idConcepto}' WHERE idConcepto='{$idConcepto}'";
+       $consulta = "UPDATE concepto SET idveaseconcepto='{$idConcepto}' WHERE idConcepto='{$idConcepto}'";
       
         try {
             // Preparar sentencia
