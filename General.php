@@ -1500,7 +1500,7 @@ class General
     public static function setMaterialAudivo($idMatAudi, $nombreMata, $linkMateri){
        
        
-            $consulta = "INSERT INTO mataudioviConcepto 
+            $consulta = "INSERT INTO mataudioviconcepto 
             (`nombreMateAudioViCon`,
             `linkMateAudioViConcep`) 
             VALUES 
