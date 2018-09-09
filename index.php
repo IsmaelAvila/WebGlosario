@@ -26,10 +26,11 @@ function getAutores(){
 ?>-->
 
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-es" lang="es-es">
+    
 
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <title>Glosario</title>
   <link rel="shortcut icon" href="img/LOGO3.jpg">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">

@@ -5,9 +5,11 @@
  * almacenadas en la base de datos
  */
 require 'Database.php';
-
+header('Content-Type: text/html; charset=utf-8');
 class General
 {
+   
+    
     function __construct()
     {
     }
@@ -1035,7 +1037,7 @@ class General
     }
     
     public static function getAutorGeneral(){
-        $consulta = "SELECT * FROM Autores";
+        $consulta = "SELECT * FROM autores";
         
         try {
             // Preparar sentencia
@@ -1143,7 +1145,7 @@ class General
        
         if($idMateria == 0){
            if ($user_session['rol']== "ADMIN"){
-                 $table = "materiaSupervi";
+                 $table = "materiasupervi";
              }else{
                 $table = "materia";
              }
