@@ -70,7 +70,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $idMateAudi = $_POST['matAudi'];
         
     
-     if (isset($_POST['next'])){
+     if (isset($_POST['cancel'])){
+          echo '<script type="text/javascript">'; 
+                echo 'alert("Se ha cancelado la modificación de los datos.");'; 
+                echo 'window.location.href = "Adminis.php";';
+                echo '</script>';
+      
+     }else if (isset($_POST['next'])){
   
        if ($tabla == 2){
            if ($user_session['rol']== "ADMIN"){
@@ -128,7 +134,10 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                 $idconceptotemp = General::updateConceptOwner($user_session, $idconcepto, $nombre, $materia, $def, $compl, $doc, $lang, $idVease, $idFuenteCon, $idMateAudi);
            } 
             if($idconceptotemp != 0){
-                 header("location:Adminis.php");
+                echo '<script type="text/javascript">'; 
+                echo 'alert("Se ha guardado con éxito los datos");'; 
+                echo 'window.location.href = "Adminis.php";';
+                echo '</script>';
             }else{
                 $error = "No se ha podido actualizar los datos";
             }
@@ -273,7 +282,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         echo " <input type='hidden' name='fuente' value='".$idFuenteCon."'/>";
         echo " <input type='hidden' name='matAudi' value='".$idMateAudi."'/>";
         
-        echo "<center><h2><b><u>Detalle Concepto</u></b></h2></center>";
+        echo "<center><h2><b><u>Detalle Concepto";
+        if ($lang == 1){
+            echo " - Idioma: Español";
+        }else if ($lang == 2){
+             echo " - Language: English";
+        }else if ($lang == 3){
+             echo " - Langage: Française";
+        }
+        
+         echo "</u></b></h2></center>";
        
         echo "<h3>Nombre Concepto: <input type='text' name='nombre' value='".$nombre."'></h1>";
         
@@ -334,6 +352,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
            echo "<input type='submit' name='back' value='Atras'/>";
            echo "<br><input type='submit' name='end' value='Finalizar'/>";
        }
+         echo "<br><input type='submit' name='cancel' value='Cancelar'/>";
     ?>
 
 </form>

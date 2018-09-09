@@ -474,7 +474,7 @@ class General
        `idDefinicionConcepto`,
        `idVeaseConcepto`,
        `idfuenteConcepto`,
-       `idInformacionComplementariaConcepto`,
+       `idInfoCompleConcepto`,
        `idDocumentacionAdicionalConcepto`,
        `idMaterialAudiovisualConcepto`,
        `borrar`) 
@@ -485,9 +485,9 @@ class General
        '{$concepto['idDefinicionConcepto']}',
        '{$concepto['idVeaseConcepto']}',
        '{$concepto['idfuenteConcepto']}',
-       '{$concepto['idInformacionComplementariaConcepto']}',
+       '{$concepto['idInfoCompleConcepto']}',
        '{$concepto['idDocumentacionAdicionalConcepto']}',
-       '{$concepto['materialAudiovisualConcepto']}',
+       '{$concepto['idMaterialAudiovisualConcepto']}',
        '1')
         ON DUPLICATE KEY UPDATE borrar='1'";
        

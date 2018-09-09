@@ -212,7 +212,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                           <th style='width:20%;'><a>Rol  </a></td>";
                     }
 		              
-                       echo " <th style='width:20%;'><a>Validar </a></th>";
+                    echo " <th style='width:20%;'><a>Validar </a></th>";
                 
                 foreach ($rowSupervi as $rowSuper)
                   {
@@ -326,7 +326,7 @@ En el caso de la materia, sería mostrar listado de todas las materias y al puls
                           <th style='width:20%;'><a>Rol  </a></td>";
                     }
 		              
-                       echo " <th style='width:20%;'><a>Validar </a></th>";
+                       echo " <th style='width:20%;'><a>Modificar </a></th>";
                     ?>
 		          
 		             
