@@ -90,7 +90,12 @@ class General
        $consulta = "SELECT  * FROM concepto a 
        LEFT JOIN conceptolanguage cl ON (cl.idConceptoLanguage = a.idNombreConcepto) 
        LEFT JOIN materialanguage ml ON (ml.idMateriaLanguage = a.idMateria)
-       WHERE (cl.textConcepto LIKE '%$text%' AND cl.idLanguaje = 1)  OR (ml.textMateria LIKE '%$text%' AND ml.idLanguaje = 1)";
+       LEFT JOIN definicionLanguage dl ON (dl.idDefinicion = a.idDefinicionConcepto)
+       LEFT JOIN infoComplLanguage icl ON (icl.idInfoCompl = a.idInfoCompleConcepto)
+       WHERE (cl.textConcepto LIKE '%$text%' AND cl.idLanguaje = 1 AND ml.idLanguaje = 1 AND dl.idLanguaje = 1 AND icl.idLanguaje = 1)  
+       OR (ml.textMateria LIKE '%$text%' AND ml.idLanguaje = 1 AND cl.idLanguaje = 1 AND dl.idLanguaje = 1 AND icl.idLanguaje = 1)
+       OR (dl.textDefinicion LIKE '%$text%' AND ml.idLanguaje = 1 AND cl.idLanguaje = 1 AND dl.idLanguaje = 1 AND icl.idLanguaje = 1)
+       OR (icl.textInfoCompl LIKE '%$text%' AND ml.idLanguaje = 1 AND cl.idLanguaje = 1 AND dl.idLanguaje = 1 AND icl.idLanguaje = 1)";
        
         
         
