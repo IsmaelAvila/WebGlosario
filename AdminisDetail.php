@@ -65,9 +65,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $def = $_POST['definicion'];
         $compl = $_POST['compl'];
         $doc = $_POST['doc'];
-        $idVease = $_POST['vease'];
-        $idFuenteCon = $_POST['fuente'];
-        $idMateAudi = $_POST['matAudi'];
+        $idVease = $_POST['vease'] == '' ? 0 : $_POST['vease'];
+        $idFuenteCon = $_POST['fuente'] == '' ? 0 : $_POST['fuente'];
+        $idMateAudi = $_POST['matAudi'] == '' ? 0 : $_POST['matAudi'];
         
     
      if (isset($_POST['cancel'])){
