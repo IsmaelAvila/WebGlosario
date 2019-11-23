@@ -153,20 +153,20 @@ function getAutores(){
       <div class="row">
         <div class="col-md-6 col-md-push-6 about-content">
           <!--<h2 class="about-title">Presentación del Glosario</h2>-->
-          <p class="about-text">
+          <p class="about-text" align="justify">
           <?php echo getTextGeneral(13); ?>
           </p>
           <!--<h2 class="about-title">Presentación del Glosario</h2>-->
           <!--p class="about-text">
             La Prevención de Riesgos Laborales es una materia multidisciplinar que abarca grandes campos de estudio muy dispares entre sí, que sin embargo, tienen un denominador común: preservar la seguridad y salud de los trabajadores en el medio laboral. Por ello, es muy amplia la documentación y bibliografía que hay sobre esta temática en particular.
           </p-->
-          <p class="about-text">
+          <p class="about-text" align="justify">
             <?php echo getTextGeneral(14); ?>
           </p>
           <!--p class="about-text">
             Para facilitar la labor de estudio y comprensión del estudiante de Prevención de Riesgos Laborales en particular y de cualquier trabajador en general, se ha creado este glosario, que es una herramienta interactiva que permite recopilar y refundir conceptos en materia de seguridad y salud laboral, que se encuentran en la legislación y documentos técnicos elaborados por instituciones de reconocido prestigio como el Instituto Nacional de Seguridad e Higiene en el Trabajo. Con ello, se pretende lograr que cualquier estudiante o trabajador adquiera los conocimientos básicos de salud laboral que le capacite para identificar, evaluar y controlar los riesgos, generales y específicos, derivados de las condiciones de trabajo, con el fin de evitar daños para la salud.
           </p-->
-          <p class="about-text">
+          <p class="about-text" align="justify">
             <?php echo getTextGeneral(15); ?>
           </p>
           <!--p class="about-text">
@@ -326,7 +326,7 @@ and thought you might like it http://www.geocities.com/wowhtml/"-->
       <div class="row">
         <div class="col-md-12">
           <div class="copyright">
-            &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2019</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
+            &copy; Copyright <strong><?php echo getTextGeneral(20); ?> <?php echo getTextGeneral(2); ?> 2020</strong>. <?php echo getTextGeneral(21); ?> Ismael Ávila Ojeda.
           </div>
           <div class="credits">
             <img src="img/logoUco.png" alt="" title="" width="50" height="30"/>
