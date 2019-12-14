@@ -226,7 +226,7 @@ function getAutores(){
         </div>
       </div>
 
-      <div class="row">
+      <div class="row row-flex">
           <?php 
           $autores = getAutores(); 
          
@@ -234,7 +234,7 @@ function getAutores(){
           {
          
              
-            echo "<div class='col-md-3'>";
+            echo "<div class='col-md-3 col-flex'>";
             echo "<div class='member'>";
             echo "<div class='pic'><img src=".$autor['imagenAutores']." alt=''></div>";
             echo "<h4>". $autor['nombreAutores']."</h4>";

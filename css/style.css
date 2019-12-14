@@ -551,10 +551,49 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 /* Services Section
 --------------------------------*/
+.section_service{
+      float: none; 
+      width: 100%;
+    margin: 0 auto; 
+    max-width: 950px;
+}
+.aside_service{
+      padding: 20px;
+}
+.table_services{
+ border:none;
+}
+.table_services .table_head {
+    background: #ccc!important;
+}
+.table_services .table_head td {
+    color: #fff;
+    font-size: 14px;
+}
+.table_services td{
+     background: transparent;
+    border: none;
+    padding: 10px 15px!important;
+    height: auto;
+    font-size: 13px;
+}
+.table_services tr >td:nth-child(1){
+      border-right: 1px solid #b7b4b4;
+   font-size: 14px;
+}
+.table_services tr{
+      padding: 0px 10px;
+}
+.table_services tr:nth-child(odd){
+ background: #eee;
+}
+.table_services tr:nth-child(even){
+  background: #fff;
+}
 #services {
   background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("../img/ about-img1.jpg") fixed center center;
   background-size: cover;
-  padding: 80px 0 250px 0;
+  padding: 80px 0 80px 0;
 }
 
 .centrar{
@@ -828,7 +867,20 @@ body.mobile-nav-active #mobile-nav-toggle {
   font-size: 18px;
   margin: 0 2px;
 }
-
+#team .row-flex{
+      display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: center;
+}
+#team .row-flex .member .pic { 
+    overflow: hidden;
+    height: 200px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
 /* Contact Section
 --------------------------------*/
 #contact {

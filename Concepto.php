@@ -129,13 +129,13 @@ if (isset($_GET['lang'])) {
       </div>
 </div>
     <aside>
-      <aside>
-        <section class="col-md-offset-2 col-md-3 col-lg-offset-1 col-lg-10">
+      <aside class="aside_service">
+        <section class="section_service">
           <aside>
             <main>
-              <table min-width="800%" height:"500px" border="1">
+              <table min-width="800%" height:"500px" border="1" class="table_services">
                 <tbody>
-                  <tr>
+                  <tr class="table_head">
                     <td class="section-subheading text-muted cabeceraTabla margin" width="212" valign="middle" height="50" bgcolor="#ccc"><strong><?php echo getTextGeneral(35); ?></strong></td>
                     <td class="large text-muted margin mayuscula" width="976" valign="middle" bgcolor="#ccc"><strong>
                       <?php 
