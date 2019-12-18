@@ -125,7 +125,7 @@ function getAutores(){
           {
          echo '<div class="col-md-4 service-item2">';
          echo '<div class="service-icon"><i class="fa fa-file"></i></div>';
-         echo '<h4 class="service-title"><a href="concepto.php?id='.$concepto["idConcepto"].'">'. General::getConceptoTextLang($concepto['idNombreConcepto'],$languaje).'</a></h4>';
+         echo '<h4 class="service-title"><a href="Concepto.php?id='.$concepto["idConcepto"].'">'. General::getConceptoTextLang($concepto['idNombreConcepto'],$languaje).'</a></h4>';
          echo '<p class="service-description"></p></div>';
         }
           ?>
