@@ -118,10 +118,9 @@ if (isset($_GET['page'])) {
 <!--Concepto he pensado en estructurarlo primero accediendo alfabeticamente. El siguiente nivel es un listado de todos los conceptos de esa letra. Por último nivel mostrar el detalle de la letra.
 
 En el caso de la materia, sería mostrar listado de todas las materias y al pulsar en una de ellas mandarte al detalle para modificarlo.-->
-<input type="text" id="searchInput" name='search' placeholder="Buscar....">
-    <div id="result"></div>
-          </div> 
-    </div>
+        <input type="text" id="searchInput" name='search' placeholder="Buscar....">
+            <div id="result"></div>
+    </div> 
   </section>
 
   <!--==========================

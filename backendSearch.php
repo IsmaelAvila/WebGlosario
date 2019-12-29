@@ -18,8 +18,9 @@ if (isset($_POST['query'])) {
         echo "<tr>";
 
             echo "<td>".$row['idConcepto']."</td>";
+            
             echo "<td>". General::getMateriaTextLang($row['idMateria'], $_POST['lang']) ."</td>";
-            echo "<td>". General::getConceptoTextLang($row['idNombreConcepto'],$_POST['lang']) ."</td>";
+            echo "<td><a href=Concepto.php?id=".$row['idConcepto']."&lang=1>". General::getConceptoTextLang($row['idNombreConcepto'],$_POST['lang']) ."</td>";
             
         echo "</tr>";
       }
@@ -36,7 +37,7 @@ if (isset($_POST['query'])) {
 
             echo "<td>".$row['idConcepto']."</td>";
             echo "<td>". General::getMateriaTextLang($row['idMateria'], $_POST['lang']) ."</td>";
-            echo "<td>". General::getConceptoTextLang($row['idNombreConcepto'],$_POST['lang']) ."</td>";
+            echo "<td><a href=Concepto.php?id=".$row['idConcepto']."&lang=1>". General::getConceptoTextLang($row['idNombreConcepto'],$_POST['lang']) ."</td>";
 
         echo "</tr>";
       }

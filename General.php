@@ -96,7 +96,6 @@ class General
        OR (ml.textMateria LIKE '%$text%' AND ml.idLanguaje = 1 AND cl.idLanguaje = 1 AND dl.idLanguaje = 1 AND icl.idLanguaje = 1)
        OR (dl.textDefinicion LIKE '%$text%' AND ml.idLanguaje = 1 AND cl.idLanguaje = 1 AND dl.idLanguaje = 1 AND icl.idLanguaje = 1)
        OR (icl.textInfoCompl LIKE '%$text%' AND ml.idLanguaje = 1 AND cl.idLanguaje = 1 AND dl.idLanguaje = 1 AND icl.idLanguaje = 1)";
-       
         
         
         try {
